@@ -14,21 +14,6 @@ else
 fi
 msg_prefix='updating'
 script_dir=$(dirname $($cmd -f "$0"))
-if [ ! -d $saveDir ]; then
-	mkdir $saveDir
-	cd $saveDir
-	git init /dev/null
-	git symbolic-ref HEAD refs/heads/main
-	cd - >/dev/null
-	msg_prefix='creating'
-else
-	if [ ! -d $saveDir/.git ]; then
-		cd $saveDir
-		git init -b main>/dev/null
-		cd - >/dev/null
-	fi
-fi
-repo_list=$saveDir/module_list
 
 while getopts "hs:b:" opt
 do
@@ -62,8 +47,10 @@ do
 				if [ -d $OPTARG ]; then
 					saveDir=$OPTARG
 				else
-					echo unable to find backup folder $OPTARG
-					exit 2
+					echo creating backup folder $OPTARG
+					saveDir=$HOME/$OPTARG
+					# echo unable to find backup folder $OPTARG
+					#exit 2
 				fi
 			fi
 			echo backup folder is $saveDir;
@@ -72,6 +59,22 @@ do
 	 ;;
     esac
 done
+
+if [ ! -d $saveDir ]; then
+	mkdir $saveDir
+	cd $saveDir
+	git init &>/dev/null
+	git symbolic-ref HEAD refs/heads/main
+	cd - >/dev/null
+	msg_prefix='creating'
+else
+	if [ ! -d $saveDir/.git ]; then
+		cd $saveDir
+		git init -b main>/dev/null
+		cd - >/dev/null
+	fi
+fi
+repo_list=$saveDir/module_list
 
 echo $msg_prefix folder $saveDir
 #copy config.js
@@ -85,7 +88,9 @@ cp -p $base/config/config.js $saveDir
 	IFS=$SAVEIFS
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
-	rm $repo_list >/dev/null
+	if [ -e $repo_list ]; then
+		rm $repo_list >/dev/null
+	fi
 fi
 # loop thru the modules discovered
 for module in "${modules[@]}"
