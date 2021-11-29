@@ -5,6 +5,7 @@ these scripts will  save the config.js and the list of installed modules (and wh
 into a git repo, so they can be versioned and uploaded
 
 the restore script takes the info saved and copies back the config.js and re-installs each module 
+
 it assumes a new MagicMirror install has been completed
 
 both scripts support help with -h
