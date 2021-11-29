@@ -17,7 +17,8 @@ script_dir=$(dirname $($cmd -f "$0"))
 if [ ! -d $saveDir ]; then
 	mkdir $saveDir
 	cd $saveDir
-	git init -b main>/dev/null
+	git init /dev/null
+	git symbolic-ref HEAD refs/heads/main
 	cd - >/dev/null
 	msg_prefix='creating'
 else
