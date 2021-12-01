@@ -47,7 +47,7 @@ do
 				if [ -d $OPTARG ]; then
 					saveDir=$OPTARG
 				else
-					echo creating backup folder $OPTARG
+					echo creating backup folder $HOME/$OPTARG
 					saveDir=$HOME/$OPTARG
 					# echo unable to find backup folder $OPTARG
 					#exit 2
@@ -70,7 +70,8 @@ if [ ! -d $saveDir ]; then
 else
 	if [ ! -d $saveDir/.git ]; then
 		cd $saveDir
-		git init -b main>/dev/null
+		git init &>/dev/null
+		git symbolic-ref HEAD refs/heads/main
 		cd - >/dev/null
 	fi
 fi
@@ -86,6 +87,7 @@ cp -p $base/config/config.js $saveDir
 	# split putput on new lines, not spaces
 	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -i echo "{}"))
 	IFS=$SAVEIFS
+
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
 	if [ -e $repo_list ]; then
