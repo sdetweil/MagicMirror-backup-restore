@@ -80,6 +80,8 @@ repo_list=$saveDir/module_list
 echo $msg_prefix folder $saveDir
 #copy config.js
 cp -p $base/config/config.js $saveDir
+# copy custom.css, no error if not found
+cp -p $base/css/custom.css $saveDir 2>/dev/null
 
 	SAVEIFS=$IFS   # Save current IFS
 	IFS=$'\n'

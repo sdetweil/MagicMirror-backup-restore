@@ -77,6 +77,9 @@ if [ -e $repo_list ]; then
 
 		# restore the config for MM
 		cp -p $saveDir/config.js $base/config
+		# restore the custom/.css for MM (no error if not found)
+		cp -p $saveDir/custom/css $base/custom.css 2>/dev/null
+
 
 		# restore the repos
 
