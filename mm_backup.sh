@@ -20,9 +20,11 @@ do
     case $opt in
     	# help
     h) echo $0 takes 2 optional parameters
-			echo -e "\t -s source_dir"
+			echo -e "\t -s MagicMirror_dir"
+			echo -e	"\t\tdefault $base"
 			echo and
 			echo -e "\t -b backup_dir "
+			echo -e	"\t\tdefault $saveDir"
 			exit 1
 	 ;;
     s)

@@ -10,6 +10,6 @@ it assumes a new MagicMirror install has been completed
 
 both scripts support help with -h
 
-and parms for where the MagicMirror folder is  default ~/MagicMirror
+and parms for where the MagicMirror folder is  -s , default $HOME/MagicMirror
 
-and the name of the backup folder, default ~/MM-backup
+and the name of the backup folder, -b , default $HOME/MM-backup
