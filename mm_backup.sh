@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#  backup MM modules and config 
+#  backup MM modules  config
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
+
 # is this a mac
 mac=$(uname -s)
 
@@ -15,16 +16,41 @@ fi
 msg_prefix='updating'
 script_dir=$(dirname $($cmd -f "$0"))
 
-while getopts "hs:b:" opt
+OPTIND=1 # Reset if getopts used previously
+remote=
+next_tagnumber=1
+
+while getopts "hs:b:m:r:u:e:p" opt
 do
     case $opt in
     	# help
-    h) echo $0 takes 2 optional parameters
+
+    h) 		echo
+			echo $0 takes optional parameters
+			echo
 			echo -e "\t -s MagicMirror_dir"
 			echo -e	"\t\tdefault $base"
-			echo and
+			echo
 			echo -e "\t -b backup_dir "
 			echo -e	"\t\tdefault $saveDir"
+			echo
+			echo -e "\t -m backup message "
+			echo -e	"\t\t any message (in quotes) that you would like to attach to this change for later info"
+			echo -e	"\t\tdefault none"
+			echo
+			echo -e "\t -p auto push to github (will need repo name, username,  user password or token"
+			echo -e	"\t\tdefault false"
+			echo
+			echo -e "\t -r github repository name (reponame)"
+			echo -e	"\t\ttypically https://github.com/username/reponame.git"
+			echo -e	"\t\tdefault output of git remote -v (if set)"
+			echo -e "\t\t -r overrides the git remote setting"
+			echo
+			echo -e "\t -u github username"
+			echo -e	"\t\tdefault none"
+			echo
+			echo -e "\t -u github password or token"
+			echo -e	"\t\tdefault none"
 			exit 1
 	 ;;
     s)
@@ -57,6 +83,44 @@ do
 			fi
 			echo backup folder is $saveDir;
     ;;
+    m)
+		# message on the git tag
+		msg="because $OPTARG"
+    ;;
+    r)
+		# github repo name
+		repo=$OPTARG
+    ;;
+    p)
+		# push requested
+		push=true
+		repo=$(cd $saveDir && git remote -v| awk '{ print $2}')
+		if [ "$repo." == "." ]; then
+			echo to push, we need the repo name
+			see the help for the -r parm
+			exit 2
+		else
+			if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
+				echo   we will need the github userid
+				see the help for the -u parm
+				exit 3
+			else
+				if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == "." ]; then
+					echo   we will need the github user email
+					see the help for the -e parm
+					exit 4
+				fi
+			fi
+		fi
+	;;
+	u)
+		# username
+		user_name=$OPTARG
+	;;
+	e)
+		# email
+		email=$OPTARG
+	;;
     *) printf "Illegal option '-%s'\n" "$opt" && exit 3
 	 ;;
     esac
@@ -121,14 +185,86 @@ do
 	fi
 done
 cd $saveDir
+# check for local info on username  email so commits work
+#  get the git userid , if any
+if [ "$(git config user.email)." == "." ]; then
+	# git info not set
+	if [ "$user_name." == "." ]; then
+		# prompt for users name
+		git config --local user.name $user_name
+	fi
+	if [ "$email." == "." ]; then
+		# prompt for email address
+		git config --local user.email $email
+	fi
+fi
+savefile=temp
+cat $repo_list | sort -t/ -k5 >$savefile
+rm $repo_list
+mv $savefile $repo_list
+
 # add all the changed files
 git add .
 # commit them to the local repo
-git commit -m "updated on $(date)"
-# tag this update with date/time
-git tag -a $(date "+%d-%b-%Y-%H-%M-%S") -m "backup on $(date)"
+git commit -m "updated on $(date) $msg"
+	# check for any new named tags
+	last_tag=$(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep -v - | awk -F/ {'print $3'} | sort -r -g | head -n1)
+	# if we found some then we have the highest number
+	if [ "$last_tag." != "." ]; then
+		next_tagnumber=$((last_tag+1))
+	fi
+	# lets check  rename any old date named tags
+	SAVEIFS=$IFS   # Save current IFS
+	IFS=$'\n'
+	# split output on new lines, not spaces
+	tag_list=($(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep - | awk -F/ {'print $3'}))
+	IFS=$SAVEIFS
+	if [ ${#tag_list} -gt 0 ]; then
+		for tag in "${tag_list[@]}"
+		do
+			git tag $next_tagnumber $tag 2>/dev/null
+			git tag -d $tag 2>/dev/null
+			next_tagnumber=$((next_tagnumber+1))
+		done
+	else
+		:
+	fi
+
+git tag -a $next_tagnumber -m "backup on $(date) $msg"
 echo backup completed, see the git repo at $saveDir
-echo recommended you "git push --tags" from this folder to your backup repo on github
+# should we push now?
+if [ "$push." == "." ]; then
+	# no, tell user to do it
+	echo recommended you "git push --tags" from this folder ($saveDir) to backup your repo on github
+else
+	# yes push
+	# did they specify the repo
+	if [ "$repo."  == "." ]; then
+		# no, is it set already?
+		$repo=$(git remote -v)
+		# no, need to prompt for repo name
+		if [ "$repo."  == "." ]; then
+			# remote not set yet
+			#  name not specified
+			# need to prompt
+			# repo
+			# if we had their userid, we could get the list of repos to pick from
+			:
+		else
+			remote=true
+		fi
+	fi
+	# if the repo is set
+	if [ "$repo." != "." ]; then
+		if [ "$remote." !=  "." ]; then
+			git remote add origin https://github.com/$user_name/$repo.git
+			git branch -M main
+		fi
+		git push -u origin main --tags
+	fi
+
+fi
 echo see this link for how to fetch tags for restore
 echo https://devconnected.com/how-to-list-git-tags/
+
 cd - >/dev/null
