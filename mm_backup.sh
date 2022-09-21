@@ -197,6 +197,10 @@ if [ "$(git config user.email)." == "." ]; then
 		# prompt for email address
 		git config --local user.email $email
 	fi
+else
+	echo no  user name or email set, required to save chnages to git,
+	please see the -u and -e parameters
+	exit 3
 fi
 savefile=temp
 cat $repo_list | sort -t/ -k5 >$savefile
@@ -236,6 +240,8 @@ echo backup completed, see the git repo at $saveDir
 if [ "$push." == "." ]; then
 	# no, tell user to do it
 	echo recommended you "git push --tags" from this folder ($saveDir) to backup your repo on github
+	see https://github.com/new
+	to learn how to create a repo on github and the commands to sync your local system to the github repo
 else
 	# yes push
 	# did they specify the repo
