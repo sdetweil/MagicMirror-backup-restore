@@ -4,6 +4,8 @@
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
+user_name=temp
+email=$user_name@somemail.com
 
 # is this a mac
 mac=$(uname -s)
@@ -14,7 +16,7 @@ else
 	cmd=readlink
 fi
 msg_prefix='updating'
-script_dir=$(dirname $($cmd -f "$0"))
+#script_dir=$(dirname $($cmd -f "$0"))
 
 OPTIND=1 # Reset if getopts used previously
 remote=
@@ -161,29 +163,37 @@ if [ ${#modules[@]} -gt 0 ]; then
 	if [ -e $repo_list ]; then
 		rm $repo_list >/dev/null
 	fi
-fi
-# loop thru the modules discovered
-for module in "${modules[@]}"
-do
-	# if its not the base modules folder
-	if [ "$module" != "$base/modules" ]; then
 
-		# change to the that module folder
-		cd "$module"
-			# if it has a git repo, then it was cloned
-			if [ -d ".git" ]; then
-				# get the remote repo url
-			    repo=$(git remote -v | grep -m1 git | awk '{print $2}')
-			    # just the module name, not the path
-			    echo found module $(echo $module |awk -F/ '{print $NF}')
-			    echo -e " \t installed from $repo"
-			    # save it to the file
-			    echo $repo >>$repo_list
-			fi
-		# back to the current folder
-		cd - >/dev/null
-	fi
-done
+	# loop thru the modules discovered
+	for module in "${modules[@]}"
+	do
+		# if its not the base modules folder
+		if [ "$module" != "$base/modules" ]; then
+
+			# change to the that module folder
+			cd "$module"
+				# if it has a git repo, then it was cloned
+				if [ -d ".git" ]; then
+					# get the remote repo url
+				    repo=$(git remote -v | grep -m1 git | awk '{print $2}')
+				    # just the module name, not the path
+				    echo found module $(echo $module |awk -F/ '{print $NF}')
+				    echo -e " \t installed from $repo"
+				    # save it to the file
+				    echo $repo >>$repo_list
+				fi
+			# back to the current folder
+			cd - >/dev/null
+		fi
+	done
+	if [ -e $repo_list ]; then 
+		savefile=temp
+		cat $repo_list | sort -t/ -k5 >$savefile
+		rm $repo_list
+		mv $savefile $repo_list
+	fi 
+fi
+
 cd $saveDir
 # check for local info on username  email so commits work
 #  get the git userid , if any
@@ -192,9 +202,13 @@ if [ "$(git config user.email)." == "." ]; then
 	if [ "$user_name." == "." ]; then
 		# prompt for users name
 		git config --local user.name $user_name
+	else	
+		git config --local user.name $user_name
 	fi
 	if [ "$email." == "." ]; then
 		# prompt for email address
+		git config --local user.email $email
+	else
 		git config --local user.email $email
 	fi
 else
@@ -202,10 +216,6 @@ else
 	please see the -u and -e parameters
 	exit 3
 fi
-savefile=temp
-cat $repo_list | sort -t/ -k5 >$savefile
-rm $repo_list
-mv $savefile $repo_list
 
 # add all the changed files
 git add .
@@ -239,9 +249,9 @@ echo backup completed, see the git repo at $saveDir
 # should we push now?
 if [ "$push." == "." ]; then
 	# no, tell user to do it
-	echo recommended you "git push --tags" from this folder ($saveDir) to backup your repo on github
-	see https://github.com/new
-	to learn how to create a repo on github and the commands to sync your local system to the github repo
+	echo recommended you "git push --tags" from this folder \($saveDir\) to backup your repo on github
+	echo see "https://github.com/new"
+	echo to learn how to create a repo on github and the commands to sync your local system to the github repo
 else
 	# yes push
 	# did they specify the repo

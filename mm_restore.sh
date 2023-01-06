@@ -150,7 +150,7 @@ if [ -e $repo_list ]; then
 					if [ $gc_rc -eq 0 ]; then
 						cd $module
 						if [ -e package.json ]; then
-							npm install &>/dev/null
+							npm install --omit=dev --no-audit --no-fund 2>&1 | tee -a ~/restore.log 
 						fi
 						cd - >/dev/null
 					fi
