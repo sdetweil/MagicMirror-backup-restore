@@ -212,8 +212,7 @@ if [ "$(git config user.email)." == "." ]; then
 		git config --local user.email $email
 	fi
 else
-	echo no  user name or email set, required to save chnages to git,
-	please see the -u and -e parameters
+	echo no  user name or email set, required to save changes to git, please see the -u and -e parameters
 	exit 3
 fi
 
