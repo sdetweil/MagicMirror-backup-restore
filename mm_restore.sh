@@ -6,6 +6,7 @@ known_list="request valid-url"
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
+logfile=$HOME/MagicMirror/installers/restore.log
 # is this a mac
 mac=$(uname -s)
 fetch=
@@ -43,16 +44,16 @@ do
 				if [ -d $OPTARG ]; then
 					base=$OPTARG
 				else
-					echo unable to find MagicMirror folder $OPTARG
+					echo unable to find MagicMirror folder $OPTARG | tee -a $logfile
 					exit 2
 				fi
 			fi
-			echo MagicMirror folder to update is $base ;
+			echo MagicMirror folder to update is $base | tee -a $logfile
     ;;
     b)
 		# backup folder
 			saveDir=$OPTARG
-			echo backup folder is $saveDir;
+			echo backup folder is $saveDir | tee -a $logfile
     ;;
 	u)
 		# username
@@ -75,35 +76,39 @@ if [ $mac == 'Darwin' ]; then
 else
 	cmd=readlink
 fi
-echo restoring MM configuration from $saveDir to $base
-
+date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
+echo restoring MM configuration from $saveDir to $base | tee -a $logfile
+echo
 cd $HOME
 
 # fetch  use latest tag (bu highest number)
 
 if [ "$fetch." != "." ]; then
+	echo trying to fetch repo from github >> $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
+		echo folder $saveDir does not exist >> $logfile
 		# and we have username and repo name
 		if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 			git clone https://github.com/$user_name/$repo_name $saveDir >/dev/null 2>&1
 			cd $saveDir
 		else
-			echo -e "\t\t need both the github username and the github repository name"
+			echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
 			exit 4
 		fi
     else
     	cd $saveDir
     	if [ "$(git remote -v)." != "." ]; then
+    		echo $saveDir exists fetching all tags >>$logfile
 			git fetch --all --tags
 		else
-			echo -e "\t\t need both the github username and the github repository name"
+			echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
 			exit 5
 		fi
 	fi
 else
 	if [ ! -d $saveDir ]; then
-		echo Backup directory $saveDir not found, exiting
+		echo Backup directory $saveDir not found, exiting | tee -a $logfile
 		exit 1
 	fi
 	cd $saveDir
@@ -112,18 +117,22 @@ fi
 last_tag=$(git tag -l  | sort -g -r | head -n1)
 # get on some known branch
 git checkout main >/dev/null 2>&1
-# delete the temp branch foe the restore
+# delete the temp branch for the restore
 git branch -D restore-branch >/dev/null 2>&1
-# create the bracnh from the tag
+# create the branch from the tag
 git checkout tags/$last_tag -b restore-branch >/dev/null 2>&1
 
+echo created git branch from last tag = $last_tag >>$logfile
 # restore the config for MM
 cp -p $saveDir/config.js $base/config
 # restore the custom/.css for MM (no error if not found)
 cp -p $saveDir/custom.css $base/custom.css 2>/dev/null
 
+echo restored config.js and custom.css >>$logfile
+
 repo_list=$saveDir/module_list
 
+echo processing module_list >>$logfile
 if [ -e $repo_list ]; then
 
 	SAVEIFS=$IFS   # Save current IFS
@@ -143,23 +152,37 @@ if [ -e $repo_list ]; then
 			for repo_url in "${urls[@]}"
 			do
 				module=$(echo $repo_url | awk -F/ '{print $(NF)}' | awk -F. '{print $1}')
+				# if the module folder does not exist
 				if [ ! -d $module ]; then
-					echo restoring $module
-					gc=$(git clone $repo_url >/dev/null)
+					echo restoring $module | tee -a $logfile
+					gc=$(git clone $repo_url 2>&1)
 					gc_rc=$?
 					if [ $gc_rc -eq 0 ]; then
 						cd $module
 						if [ -e package.json ]; then
-							npm install --omit=dev --no-audit --no-fund 2>&1 | tee -a ~/restore.log 
+							echo module $module contains package.json, doing npm install | tee -a $logfile
+							npm install --omit=dev --no-audit --no-fund --loglevel error 2>&1 >> $logfile
+						else
+							echo module $module DOES NOT contain package.json | tee -a $logfile
+						fi
+						# if there is a folder of module specific files saved by backup
+						if [ -d $saveDir/$module ]; then
+							# copy them from the backup
+							cp -a $saveDir/$module/. ~/MagicMirror/modules/$module
 						fi
 						cd - >/dev/null
 					fi
+				else
+					echo -e "\e[91m $module folder already exists, skipping restore from $repo_url \e[90m" | tee -a $logfile
+					tput init 2>/dev/null
+					echo
 				fi
+				echo
 			done
 
 			# lets check for modules with missing requires (libs removed from MM base)
 			# this skips any default modules
-			echo Checking for modules with removed libraries
+			echo Checking for modules with removed libraries| tee -a $logfile
 			mods=($(find . -maxdepth 2 -type f -name  node_helper.js | awk -F/ '{print $2}'))
 
 			# loop thru all the installed modules
@@ -178,8 +201,8 @@ if [ -e $repo_list ]; then
 						cd $mod
 						if [ ! -e package.json ]; then
 							echo -e ' \n\t ' package.json not found for module $mod
-							echo adding package.json for module $mod
-							npm init -y >/dev/null
+							echo -e ' \n\t\t ' adding package.json for module $mod | tee -a $logfile
+							npm init -y >/dev/null 2>&1
 						fi
 						# if package.json exists, could have been just added
 						if [ -e package.json ]; then
@@ -187,9 +210,9 @@ if [ -e $repo_list ]; then
 							pk=$(grep $require package.json)
 							# if not present, need to do install
 							if [ "$pk." == "." ]; then
-								echo -e ' \n\t 'require for $require in module $mod not found in package.json package.json for module $mod
-								echo installing $require for module $mod
-								npm install $require --save
+								echo -e ' \n\t\t ' require for $require in module $mod not found in package.json | tee -a $logfile
+								echo -e ' \n\t\t ' installing $require for module $mod | tee -a $logfile
+								npm install $require --save --no-audit --no-fund --loglevel error 2>&1 >> $logfile
 							fi
 						fi
 						cd - >/dev/null
@@ -197,7 +220,9 @@ if [ -e $repo_list ]; then
 				done
 			done
 	fi
-	echo restore completed, u can start MagicMirror now
+	echo
+	echo restore completed, you can start MagicMirror now | tee -a $logfile
 else
-	echo no saved module repo list
+	echo no saved module repo list | tee -a $logfile
 fi
+date +"restore ended  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
