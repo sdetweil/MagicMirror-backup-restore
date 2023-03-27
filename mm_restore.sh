@@ -161,13 +161,14 @@ if [ -e $repo_list ]; then
 						cd $module
 						if [ -e package.json ]; then
 							echo module $module contains package.json, doing npm install | tee -a $logfile
-							npm install --omit=dev --no-audit --no-fund --loglevel error 2>&1 >> $logfile
+							npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>&1 >> $logfile
 						else
 							echo module $module DOES NOT contain package.json | tee -a $logfile
 						fi
 						# if there is a folder of module specific files saved by backup
 						if [ -d $saveDir/$module ]; then
 							# copy them from the backup
+							echo there were files saved for this module , restoring | tee -a $logfile
 							cp -a $saveDir/$module/. ~/MagicMirror/modules/$module
 						fi
 						cd - >/dev/null
@@ -212,7 +213,7 @@ if [ -e $repo_list ]; then
 							if [ "$pk." == "." ]; then
 								echo -e ' \n\t\t ' require for $require in module $mod not found in package.json | tee -a $logfile
 								echo -e ' \n\t\t ' installing $require for module $mod | tee -a $logfile
-								npm install $require --save --no-audit --no-fund --loglevel error 2>&1 >> $logfile
+								npm install $require --save --no-audit --no-fund --loglevel error --legacy-peer-deps --only=prod 2>&1 >> $logfile
 							fi
 						fi
 						cd - >/dev/null

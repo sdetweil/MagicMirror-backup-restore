@@ -193,7 +193,12 @@ if [ ${#modules[@]} -gt 0 ]; then
 					    untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json)
 					    if [ "$untracked." != "." ]; then
 					    	echo untracked files for module $module = $untracked >> $logfile
-					    	mkdir $saveDir/$mname 2>/dev/null
+					    	# if the folder doesn't exist
+					    	if [ !-d $saveDir/$mname ]; then
+					    		# create it.
+					    		mkdir $saveDir/$mname 2>/dev/null
+					    	fi
+					    	# copy the untracked(extra)  files to the backup for this module
 					    	cp -a $untracked $saveDir/$mname
 					    fi
 					else
