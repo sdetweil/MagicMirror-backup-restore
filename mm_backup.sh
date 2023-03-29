@@ -100,17 +100,17 @@ do
 		repo=$(cd $saveDir && git remote -v| awk '{ print $2}')
 		if [ "$repo." == "." ]; then
 			echo to push, we need the repo name | tee -a $logfile
-			see the help for the -r parm
+			echo see the help for the -r parm
 			exit 2
 		else
 			if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
 				echo   we will need the github userid | tee -a $logfile
-				see the help for the -u parm
+				echo see the help for the -u parm
 				exit 3
 			else
 				if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == "." ]; then
 					echo   we will need the github user email | tee -a $logfile
-					see the help for the -e parm
+					echo see the help for the -e parm
 					exit 4
 				fi
 			fi
@@ -241,9 +241,9 @@ if [ "$(git config user.email)." == "." ]; then
 	else
 		git config --local user.email $email
 	fi
-else
-	echo no  user name or email set, required to save changes to git, please see the -u and -e parameters | tee -a $logfile
-	exit 3
+#else
+#	echo no  user name or email set, required to save changes to git, please see the -u and -e parameters | tee -a $logfile
+#	exit 3
 fi
 
 # add all the changed files
