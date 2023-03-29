@@ -79,7 +79,7 @@ do
 					saveDir=$OPTARG
 				else
 					echo creating backup folder $HOME/$OPTARG | tee -a $logfile
-					saveDir=$HOME/$OPTARG
+bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/withfiles/mm_backup.sh)" 					saveDir=$HOME/$OPTARG
 					# echo unable to find backup folder $OPTARG
 					#exit 2
 				fi
@@ -194,7 +194,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 					    if [ "$untracked." != "." ]; then
 					    	echo untracked files for module $module = $untracked >> $logfile
 					    	# if the folder doesn't exist
-					    	if [ !-d $saveDir/$mname ]; then
+					    	if [ ! -d $saveDir/$mname ]; then
 					    		# create it.
 					    		mkdir $saveDir/$mname 2>/dev/null
 					    	fi
