@@ -224,7 +224,10 @@ if [ ${#modules[@]} -gt 0 ]; then
 						echo
 				    fi
 				    cd - >/dev/null
-
+				else
+                                    echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
+                                    tput init 2>/dev/null
+				    echo
 				fi
 			# back to the current folder
 			cd - >/dev/null
