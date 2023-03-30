@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  backup MM modules  config
-echo parms=$0
+
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
 user_name=temp
