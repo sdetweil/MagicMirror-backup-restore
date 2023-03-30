@@ -2,6 +2,7 @@
 
 #  backup MM modules  config
 
+
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
 user_name=temp
@@ -19,11 +20,14 @@ fi
 msg_prefix='updating'
 #script_dir=$(dirname $($cmd -f "$0"))
 
-OPTIND=1 # Reset if getopts used previously
+#OPTIND=1 # Reset if getopts used previously
 remote=
 next_tagnumber=1
 
-while getopts "hs:b:m:r:u:e:p" opt
+process_args(){
+local OPTIND
+
+while getopts ":hs:b:m:r:u:e:p" opt
 do
     case $opt in
     	# help
@@ -58,16 +62,18 @@ do
 	 ;;
     s)
 		# source MagicMirror folder
-			if [ -d $HOME/$OPTARG ]; then
-				base=$HOME/$OPTARG
+      b=$(echo $OPTARG | xargs)
+			if [ -d $HOME/$b ]; then
+				base=$HOME/$b
 			else
-				if [ -d $OPTARG ]; then
-					base=$OPTARG
+				if [ -d b ]; then
+					base=$b
 				else
 					echo unable to find Source folder $OPTARG | tee -a $logfile
 					exit 2
 				fi
 			fi
+			logfile=$base/installers/backup.log
 			echo source MagicMirror folder is $base | tee -a $logfile
     ;;
     b)
@@ -79,7 +85,7 @@ do
 					saveDir=$OPTARG
 				else
 					echo creating backup folder $HOME/$OPTARG | tee -a $logfile
-bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/withfiles/mm_backup.sh)" 					saveDir=$HOME/$OPTARG
+ 					saveDir=$HOME/$OPTARG
 					# echo unable to find backup folder $OPTARG
 					#exit 2
 				fi
@@ -124,10 +130,18 @@ bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-back
 		# email
 		email=$OPTARG
 	;;
-    *) printf "Illegal option '-%s'\n" "$opt" && exit 3
+    \?) echo "Illegal option '-$OPTARG'"  && exit 3
 	 ;;
     esac
 done
+ shift $((OPTIND-1))
+}
+# if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
+if [[ "$0" == *.sh ]]; then 
+  process_args "$@"
+else
+  process_args "$0 $@"
+fi
 
 date +"backup starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 

@@ -10,7 +10,9 @@ logfile=$HOME/MagicMirror/installers/restore.log
 # is this a mac
 mac=$(uname -s)
 fetch=
-while getopts "hs:b:r:u:f" opt
+process_args(){
+local OPTIND
+while getopts ":hs:b:r:u:f" opt
 do
     case $opt in
     	# help
@@ -38,13 +40,14 @@ do
 	 ;;
     s)
 		# source MagicMirror folder
-			if [ -d $HOME/$OPTARG ]; then
-				base=$HOME/$OPTARG
+      		b=$(echo $OPTARG | xargs)
+			if [ -d $HOME/$b ]; then
+				base=$HOME/$b
 			else
-				if [ -d $OPTARG ]; then
-					base=$OPTARG
+				if [ -d b ]; then
+					base=$b
 				else
-					echo unable to find MagicMirror folder $OPTARG | tee -a $logfile
+					echo unable to find Source folder $OPTARG | tee -a $logfile
 					exit 2
 				fi
 			fi
@@ -66,10 +69,18 @@ do
     f)
 		fetch=true
 	;;
-    *) printf "Illegal option '-%s'\n" "$opt" && exit 3
+    *) echo "Illegal option '-$OPTARG'" && exit 3
 	 ;;
     esac
 done
+}
+
+# if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
+if [[ "$0" == *.sh ]]; then 
+  process_args "$@"
+else
+  process_args "$0 $@"
+fi
 
 if [ $mac == 'Darwin' ]; then
 	cmd=greadlink
