@@ -52,7 +52,6 @@ help for backup is
 
 	 -e users_email_address
 		default none
-
 # and to restore
 ```bash
 bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/mm_restore.sh)" with any parms
