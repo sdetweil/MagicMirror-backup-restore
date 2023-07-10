@@ -18,7 +18,7 @@ one can execute the scripts directly from here
 
 # to execute Backup
 ```bash
-bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/withfiles/mm_backup.sh)" with any parms
+bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/mm_backup.sh)" with any parms
 ```
 
 
@@ -54,7 +54,7 @@ help for backup is
 		default none
 # and to restore
 ```bash
-bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/withfiles/mm_restore.sh)" with any parms
+bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/mm_restore.sh)" with any parms
 ```
 
 help for restore  is
