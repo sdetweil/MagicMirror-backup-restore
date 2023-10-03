@@ -2,10 +2,12 @@
 
 #  backup MM modules  config
 
+
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
 user_name=temp
 email=$user_name@somemail.com
+logfile=$base/installers/backup.log
 
 # is this a mac
 mac=$(uname -s)
@@ -18,11 +20,14 @@ fi
 msg_prefix='updating'
 #script_dir=$(dirname $($cmd -f "$0"))
 
-OPTIND=1 # Reset if getopts used previously
+#OPTIND=1 # Reset if getopts used previously
 remote=
 next_tagnumber=1
 
-while getopts "hs:b:m:r:u:e:p" opt
+process_args(){
+local OPTIND
+
+while getopts ":hs:b:m:r:u:e:p" opt
 do
     case $opt in
     	# help
@@ -57,17 +62,19 @@ do
 	 ;;
     s)
 		# source MagicMirror folder
-			if [ -d $HOME/$OPTARG ]; then
-				base=$HOME/$OPTARG
+      b=$(echo $OPTARG | xargs)
+			if [ -d $HOME/$b ]; then
+				base=$HOME/$b
 			else
-				if [ -d $OPTARG ]; then
-					base=$OPTARG
+				if [ -d b ]; then
+					base=$b
 				else
-					echo unable to find Source folder $OPTARG
+					echo unable to find Source folder $OPTARG | tee -a $logfile
 					exit 2
 				fi
 			fi
-			echo source MagicMirror folder is $base ;
+			logfile=$base/installers/backup.log
+			echo source MagicMirror folder is $base | tee -a $logfile
     ;;
     b)
 		# backup folder
@@ -77,13 +84,13 @@ do
 				if [ -d $OPTARG ]; then
 					saveDir=$OPTARG
 				else
-					echo creating backup folder $HOME/$OPTARG
-					saveDir=$HOME/$OPTARG
+					echo creating backup folder $HOME/$OPTARG | tee -a $logfile
+ 					saveDir=$HOME/$OPTARG
 					# echo unable to find backup folder $OPTARG
 					#exit 2
 				fi
 			fi
-			echo backup folder is $saveDir;
+			echo backup folder is $saveDir | tee -a $logfile
     ;;
     m)
 		# message on the git tag
@@ -98,18 +105,18 @@ do
 		push=true
 		repo=$(cd $saveDir && git remote -v| awk '{ print $2}')
 		if [ "$repo." == "." ]; then
-			echo to push, we need the repo name
-			see the help for the -r parm
+			echo to push, we need the repo name | tee -a $logfile
+			echo see the help for the -r parm
 			exit 2
 		else
 			if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
-				echo   we will need the github userid
-				see the help for the -u parm
+				echo   we will need the github userid | tee -a $logfile
+				echo see the help for the -u parm
 				exit 3
 			else
 				if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == "." ]; then
-					echo   we will need the github user email
-					see the help for the -e parm
+					echo   we will need the github user email | tee -a $logfile
+					echo see the help for the -e parm
 					exit 4
 				fi
 			fi
@@ -123,12 +130,23 @@ do
 		# email
 		email=$OPTARG
 	;;
-    *) printf "Illegal option '-%s'\n" "$opt" && exit 3
+    \?) echo "Illegal option '-$OPTARG'"  && exit 3
 	 ;;
     esac
 done
+ shift $((OPTIND-1))
+}
+# if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
+if [[ "$0" == *.sh ]]; then 
+  process_args "$@"
+else
+  process_args "$0 $@"
+fi
+
+date +"backup starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 
 if [ ! -d $saveDir ]; then
+	echo creating $savdir | tee -a $logfile
 	mkdir $saveDir
 	cd $saveDir
 	git init &>/dev/null
@@ -137,6 +155,7 @@ if [ ! -d $saveDir ]; then
 	msg_prefix='creating'
 else
 	if [ ! -d $saveDir/.git ]; then
+		echo using $savedir | tee -a $logfile
 		cd $saveDir
 		git init &>/dev/null
 		git symbolic-ref HEAD refs/heads/main
@@ -145,7 +164,7 @@ else
 fi
 repo_list=$saveDir/module_list
 
-echo $msg_prefix folder $saveDir
+echo $msg_prefix folder $saveDir | tee -a $logfile
 #copy config.js
 cp -p $base/config/config.js $saveDir
 # copy custom.css, no error if not found
@@ -161,6 +180,7 @@ cp -p $base/css/custom.css $saveDir 2>/dev/null
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
 	if [ -e $repo_list ]; then
+		echo will create new $repo_list | tee -a $logfile
 		rm $repo_list >/dev/null
 	fi
 
@@ -172,15 +192,42 @@ if [ ${#modules[@]} -gt 0 ]; then
 
 			# change to the that module folder
 			cd "$module"
+			    echo Backing up for $module | tee -a $logfile
 				# if it has a git repo, then it was cloned
 				if [ -d ".git" ]; then
 					# get the remote repo url
 				    repo=$(git remote -v | grep -m1 git | awk '{print $2}')
 				    # just the module name, not the path
-				    echo found module $(echo $module |awk -F/ '{print $NF}')
-				    echo -e " \t installed from $repo"
-				    # save it to the file
-				    echo $repo >>$repo_list
+				    mname=$(echo $module |awk -F/ '{print $NF}')
+				    if [[ "$repo" == *"$mname"* ]]; then
+					    echo -e "found module $mname \n\t installed from $repo" | tee -a $logfile
+					    # save it to the file
+					    echo $repo >>$repo_list
+					    cd $module
+					    untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json)
+					    if [ "$untracked." != "." ]; then
+					    	echo untracked files for module $module = $untracked >> $logfile
+					    	# if the folder doesn't exist
+					    	if [ ! -d $saveDir/$mname ]; then
+					    		# create it.
+					    		mkdir $saveDir/$mname 2>/dev/null
+					    	fi
+					    	# copy the untracked(extra)  files to the backup for this module
+					    	cp -a $untracked $saveDir/$mname
+					    fi
+					else
+						echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
+						# reset the echo ansi code back to default
+						# could save the folder name along with the url
+						# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
+						tput init 2>/dev/null
+						echo
+				    fi
+				    cd - >/dev/null
+				else
+                                    echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
+                                    tput init 2>/dev/null
+				    echo
 				fi
 			# back to the current folder
 			cd - >/dev/null
@@ -211,9 +258,9 @@ if [ "$(git config user.email)." == "." ]; then
 	else
 		git config --local user.email $email
 	fi
-else
-	echo no  user name or email set, required to save changes to git, please see the -u and -e parameters
-	exit 3
+#else
+#	echo no  user name or email set, required to save changes to git, please see the -u and -e parameters | tee -a $logfile
+#	exit 3
 fi
 
 # add all the changed files
@@ -244,11 +291,11 @@ git commit -m "updated on $(date) $msg"
 	fi
 
 git tag -a $next_tagnumber -m "backup on $(date) $msg"
-echo backup completed, see the git repo at $saveDir
+echo backup completed, see the git repo at $saveDir| tee -a $logfile
 # should we push now?
 if [ "$push." == "." ]; then
 	# no, tell user to do it
-	echo recommended you "git push --tags" from this folder \($saveDir\) to backup your repo on github
+	echo recommended you "git push --tags" from this folder \($saveDir\) to backup your repo on github | tee -a $logfile
 	echo see "https://github.com/new"
 	echo to learn how to create a repo on github and the commands to sync your local system to the github repo
 else
@@ -283,3 +330,5 @@ echo see this link for how to fetch tags for restore
 echo https://devconnected.com/how-to-list-git-tags/
 
 cd - >/dev/null
+
+date +"backup ended  - %a %b %e %H:%M:%S %Z %Y" >>$logfile

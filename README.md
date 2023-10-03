@@ -35,24 +35,23 @@ help for backup is
 	 -b backup_dir
 		default /home/sam/MM_backup
 
-	 -m backup message
+	 -m backup_message
 		 any message (in quotes) that you would like to attach to this change for later info
 		default none
 
 	 -p auto push to github (will need repo name, username,  user password or token
 		default false
 
-	 -r github repository name (reponame)
+	 -r github_repository_name (reponame)
 		typically https://github.com/username/reponame.git
 		default output of git remote -v (if set)
 		 -r overrides the git remote setting
 
-	 -u github username
+	 -u github_username
 		default none
 
-	 -u github password or token
+	 -e users_email_address
 		default none
-
 # and to restore
 ```bash
 bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/mm_restore.sh)" with any parms
