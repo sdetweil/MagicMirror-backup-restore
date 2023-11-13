@@ -98,16 +98,25 @@ do
     ;;
     r)
 		# github repo name
+		echo reponame = $OPTARG
 		repo=$OPTARG
+		reponame=$repo
     ;;
     p)
 		# push requested
 		push=true
 		repo=$(cd $saveDir && git remote -v| awk '{ print $2}')
 		if [ "$repo." == "." ]; then
-			echo to push, we need the repo name | tee -a $logfile
-			echo see the help for the -r parm
-			exit 2
+			# repo not connected to git
+			if [ "$reponame." == "." ]; then
+				echo to push, we need the repo name | tee -a $logfile
+				echo see the help for the -r parm
+				exit 2
+			else
+				cd $saveDir
+				git remote add origin https://github.com/$user_name/$reponame.git
+				cd -
+			fi
 		else
 			if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
 				echo   we will need the github userid | tee -a $logfile
