@@ -98,15 +98,15 @@ if [ "$fetch." != "." ]; then
 	echo trying to fetch repo from github >> $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
-		echo folder $saveDir does not exist >> $logfile
-		# and we have username and repo name
-		if [ "$user_name." != "." -a "$repo_name." != "." ]; then
-			git clone "https://github.com/$user_name/$repo_name" $saveDir # >/dev/null 2>&1
-			cd $saveDir
-		else
-			echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
-			exit 4
-		fi
+			echo folder $saveDir does not exist >> $logfile
+			# and we have username and repo name
+			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
+				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
+				cd $saveDir
+			else
+				echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
+				exit 4
+			fi
     else
     	cd $saveDir
     	if [ "$(git remote -v)." != "." ]; then
@@ -137,7 +137,7 @@ echo created git branch from last tag = $last_tag >>$logfile
 # restore the config for MM
 cp -p $saveDir/config.js $base/config
 # restore the custom/.css for MM (no error if not found)
-cp -p $saveDir/custom.css $base/custom.css 2>/dev/null
+cp -p $saveDir/custom.css $base/css 2>/dev/null
 
 echo restored config.js and custom.css >>$logfile
 
@@ -171,8 +171,10 @@ if [ -e $repo_list ]; then
 					if [ $gc_rc -eq 0 ]; then
 						cd $module
 						if [ -e package.json ]; then
-							echo module $module contains package.json, doing npm install | tee -a $logfile
-							npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>&1 >> $logfile
+							if [ $(grep \""dependencies\"" package.json | wc -l) -gt 0 ]; then
+								echo module $module contains package.json, doing npm install | tee -a $logfile
+								npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>&1 >> $logfile
+							fi
 						else
 							echo module $module DOES NOT contain package.json | tee -a $logfile
 						fi
