@@ -104,40 +104,16 @@ do
     p)
 		# push requested
 		push=true
-		repo=$(cd $saveDir && git remote -v| awk '{ print $2}')
-		if [ "$repo." == "." ]; then
-			# repo not connected to git
-			if [ "$reponame." == "." ]; then
-				echo to push, we need the repo name | tee -a $logfile
-				echo see the help for the -r parm
-				exit 2
-			else
-				cd $saveDir
-				git remote add origin https://github.com/$user_name/$reponame.git
-				cd -
-			fi
-		else
-			if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
-				echo   we will need the github userid | tee -a $logfile
-				echo see the help for the -u parm
-				exit 3
-			else
-				if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == "." ]; then
-					echo   we will need the github user email | tee -a $logfile
-					echo see the help for the -e parm
-					exit 4
-				fi
-			fi
-		fi
-	;;
-	u)
-		# username
-		user_name=$OPTARG
-	;;
-	e)
-		# email
-		email=$OPTARG
-	;;
+		repo=$(cd $saveDir 2>/dev/null && git remote -v| grep fetch -m1 | awk '{ print $2}')
+		;;
+		u)
+			# username
+			user_name=$OPTARG
+		;;
+		e)
+			# email
+			email=$OPTARG
+		;;
     \?) echo "Illegal option '-$OPTARG'"  && exit 3
 	 ;;
     esac
@@ -162,11 +138,38 @@ if [ ! -d $saveDir ]; then
 	cd - >/dev/null
 	msg_prefix='creating'
 else
+	:
 	if [ ! -d $saveDir/.git ]; then
 		echo using $savedir | tee -a $logfile
 		cd $saveDir
 		git init &>/dev/null
 		git symbolic-ref HEAD refs/heads/main
+		if [ $push == true ]; then
+			if [ "$repo." == "." ]; then
+				# repo not connected to git
+					if [ "$reponame." == "." ]; then
+						echo to push, we need the repo name | tee -a $logfile
+						echo see the help for the -r parm
+						exit 2
+					else
+						cd $saveDir
+						git remote add origin https://github.com/$user_name/$reponame.git
+						cd -
+					fi
+			else
+				if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
+					echo   we will need the github userid | tee -a $logfile
+					echo see the help for the -u parm
+					exit 3
+				else
+					if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == "." ]; then
+						echo   we will need the github user email | tee -a $logfile
+						echo see the help for the -e parm
+						exit 4
+					fi
+				fi
+			fi
+		fi
 		cd - >/dev/null
 	fi
 fi
@@ -204,13 +207,13 @@ if [ ${#modules[@]} -gt 0 ]; then
 				# if it has a git repo, then it was cloned
 				if [ -d ".git" ]; then
 					# get the remote repo url
-				    repo=$(git remote -v | grep -m1 git | awk '{print $2}')
+				    repo1=$(git remote -v | git remote -v| grep fetch -m1 | awk '{ print $2}')
 				    # just the module name, not the path
 				    mname=$(echo $module |awk -F/ '{print $NF}')
-				    if [[ "$repo" == *"$mname"* ]]; then
-					    echo -e "found module $mname \n\t installed from $repo" | tee -a $logfile
+				    if [[ "$repo1" == *"$mname"* ]]; then
+					    echo -e "found module $mname \n\t installed from $repo1" | tee -a $logfile
 					    # save it to the file
-					    echo $repo >>$repo_list
+					    echo $repo1 >>$repo_list
 					    cd $module
 					    untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json)
 					    if [ "$untracked." != "." ]; then
@@ -300,6 +303,7 @@ git commit -m "updated on $(date) $msg"
 
 git tag -a $next_tagnumber -m "backup on $(date) $msg"
 echo backup completed, see the git repo at $saveDir| tee -a $logfile
+remote=false
 # should we push now?
 if [ "$push." == "." ]; then
 	# no, tell user to do it
@@ -308,10 +312,11 @@ if [ "$push." == "." ]; then
 	echo to learn how to create a repo on github and the commands to sync your local system to the github repo
 else
 	# yes push
+	cd $saveDir
 	# did they specify the repo
-	if [ "$repo."  == "." ]; then
+	if [ "$reponame."  == "." ]; then
 		# no, is it set already?
-		$repo=$(git remote -v)
+		repo=$(git remote -v| grep fetch -m1 | awk '{ print $2}')
 		# no, need to prompt for repo name
 		if [ "$repo."  == "." ]; then
 			# remote not set yet
@@ -319,15 +324,18 @@ else
 			# need to prompt
 			# repo
 			# if we had their userid, we could get the list of repos to pick from
+			git remote add origin "https://github.com/$user_name/$reponame.git"
+			git branch -M main
+			repo=$(git remote -v)
 			:
 		else
 			remote=true
 		fi
 	fi
 	# if the repo is set
-	if [ "$repo." != "." ]; then
+	if [ "$reponame." != "." ]; then
 		if [ "$remote." !=  "." ]; then
-			git remote add origin https://github.com/$user_name/$repo.git
+			git remote add origin https://github.com/$user_name/$reponame.git
 			git branch -M main
 		fi
 		git push -u origin main --tags
