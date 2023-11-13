@@ -108,7 +108,8 @@ do
 		;;
 		u)
 			# username
-			user_name=$OPTARG
+			#echo username=$OPTARG
+			user_name=$(echo $OPTARG | tr -d [:blank:])
 		;;
 		e)
 			# email
