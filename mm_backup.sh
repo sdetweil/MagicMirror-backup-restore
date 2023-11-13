@@ -98,7 +98,6 @@ do
     ;;
     r)
 		# github repo name
-		echo reponame = $OPTARG
 		repo=$OPTARG
 		reponame=$repo
     ;;
