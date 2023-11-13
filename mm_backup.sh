@@ -314,7 +314,8 @@ else
 	# yes push
 	cd $saveDir
 	# did they specify the repo
-	if [ "$reponame."  == "." ]; then
+	if [ "$reponame."  != "." ]; then
+		remote=true
 		# no, is it set already?
 		repo=$(git remote -v| grep fetch -m1 | awk '{ print $2}')
 		# no, need to prompt for repo name
@@ -326,18 +327,15 @@ else
 			# if we had their userid, we could get the list of repos to pick from
 			git remote add origin "https://github.com/$user_name/$reponame.git"
 			git branch -M main
-			repo=$(git remote -v)
+			repo=$(git remote -v| grep fetch -m1 | awk '{ print $2}')
 			:
-		else
-			remote=true
 		fi
 	fi
 	# if the repo is set
 	if [ "$reponame." != "." ]; then
-		if [ "$remote." !=  "." ]; then
-			git remote add origin https://github.com/$user_name/$reponame.git
-			git branch -M main
-		fi
+		#	git remote add origin https://github.com/$user_name/$reponame.git
+		#	git branch -M main
+		#fi
 		git push -u origin main --tags
 	fi
 
