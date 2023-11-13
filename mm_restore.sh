@@ -40,7 +40,7 @@ do
 	 ;;
     s)
 		# source MagicMirror folder
-      		b=$(echo $OPTARG | xargs)
+      b=$(echo $OPTARG | tr -d [:blank:])
 			if [ -d $HOME/$b ]; then
 				base=$HOME/$b
 			else
@@ -55,16 +55,16 @@ do
     ;;
     b)
 		# backup folder
-			saveDir=$OPTARG
+			saveDir=$(echo $OPTARG | tr -d [:blank:])
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
 	u)
 		# username
-		user_name=$OPTARG
+		user_name=$(echo $OPTARG | tr -d [:blank:])
 	;;
 	r)
 		# username
-		repo_name=$OPTARG
+		repo_name=$(echo $OPTARG | tr -d [:blank:])
 	;;
     f)
 		fetch=true
@@ -101,7 +101,7 @@ if [ "$fetch." != "." ]; then
 		echo folder $saveDir does not exist >> $logfile
 		# and we have username and repo name
 		if [ "$user_name." != "." -a "$repo_name." != "." ]; then
-			git clone https://github.com/$user_name/$repo_name $saveDir >/dev/null 2>&1
+			git clone "https://github.com/$user_name/$repo_name" $saveDir # >/dev/null 2>&1
 			cd $saveDir
 		else
 			echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
