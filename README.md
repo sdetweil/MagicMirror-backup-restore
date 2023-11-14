@@ -93,7 +93,7 @@ help for list_tags  is
 ./list_tags.sh takes optional parameters
 
 	 -b backup_dir
-		default /home/sam/MM_backup
+		default /home/username/MM_backup
 
 
 # to list the tags copy/paste this command
