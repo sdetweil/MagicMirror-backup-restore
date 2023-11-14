@@ -69,8 +69,8 @@ help for restore  is
 	 -b backup_dir
 		default /home/sam/MM_backup
 
-	 -f
-		fetch/clone repo and restore latest tag
+	 -f [tag_number]
+		fetch/clone repo and restore latest, or selected tag_number
 
 	 -r github repository name (reponame)
 		typically https://github.com/username/reponame.git

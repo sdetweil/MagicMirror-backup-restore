@@ -16,35 +16,35 @@ while getopts ":hs:b:r:u:f" opt
 do
     case $opt in
     	# help
-    h) 		echo
-			echo $0 takes optional parameters
-			echo
-			echo -e "\t -s MagicMirror_dir"
-			echo -e	"\t\tdefault $base"
-			echo
-			echo -e "\t -b backup_dir "
-			echo -e	"\t\tdefault $saveDir"
-			echo
-			echo -e "\t -f "
-			echo -e	"\t\tfetch/clone repo and restore latest tag"
-			echo
-			echo -e "\t -r github repository name (reponame)"
-			echo -e	"\t\ttypically https://github.com/username/reponame.git"
-			echo -e	"\t\tdefault output of git remote -v (if set)"
-			echo -e "\t\t -r overrides the git remote setting"
-			echo
-			echo -e "\t -u github username"
-			echo -e	"\t\tdefault none"
+	    h) 		echo
+				echo $0 takes optional parameters
+				echo
+				echo -e "\t -s MagicMirror_dir"
+				echo -e	"\t\tdefault $base"
+				echo
+				echo -e "\t -b backup_dir "
+				echo -e	"\t\tdefault $saveDir"
+				echo
+				echo -e "\t -f "
+				echo -e	"\t\tfetch/clone repo and restore latest tag"
+				echo
+				echo -e "\t -r github repository name (reponame)"
+				echo -e	"\t\ttypically https://github.com/username/reponame.git"
+				echo -e	"\t\tdefault output of git remote -v (if set)"
+				echo -e "\t\t -r overrides the git remote setting"
+				echo
+				echo -e "\t -u github username"
+				echo -e	"\t\tdefault none"
 
-			exit 1
-	 ;;
+				exit 1
+		 ;;
     s)
 		# source MagicMirror folder
       b=$(echo $OPTARG | tr -d [:blank:])
 			if [ -d $HOME/$b ]; then
 				base=$HOME/$b
 			else
-				if [ -d b ]; then
+				if [ -d $b ]; then
 					base=$b
 				else
 					echo unable to find Source folder $OPTARG | tee -a $logfile
@@ -58,18 +58,24 @@ do
 			saveDir=$(echo $OPTARG | tr -d [:blank:])
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
-	u)
-		# username
-		user_name=$(echo $OPTARG | tr -d [:blank:])
-	;;
-	r)
-		# username
-		repo_name=$(echo $OPTARG | tr -d [:blank:])
-	;;
-    f)
-		fetch=true
-	;;
-    *) echo "Illegal option '-$OPTARG'" && exit 3
+		u)
+			# username
+			user_name=$(echo $OPTARG | tr -d [:blank:])
+		;;
+		r)
+			# username
+			repo_name=$(echo $OPTARG | tr -d [:blank:])
+		;;
+	  f)
+			fetch=true
+			fetch_tag=
+			vparm=${@:$OPTIND}
+			if [[ ${vparm:0:1} != "-" ]];then
+          fetch_tag=$(echo ${@:$OPTIND}| cut -d' ' -f1)
+          OPTIND=$((OPTIND+1))
+      fi
+		;;
+	  *) echo "Illegal option '-$OPTARG'" && exit 3
 	 ;;
     esac
 done
@@ -125,7 +131,11 @@ else
 	cd $saveDir
 fi
 # fet the last numeric tag
-last_tag=$(git tag -l  | sort -g -r | head -n1)
+if [ "$fetch_tag." != "." ]; then
+	last_tag=$fetch_tag
+else
+	last_tag=$(git tag -l  | sort -g -r | head -n1)
+fi
 # get on some known branch
 git checkout main >/dev/null 2>&1
 # delete the temp branch for the restore
@@ -133,7 +143,7 @@ git branch -D restore-branch >/dev/null 2>&1
 # create the branch from the tag
 git checkout tags/$last_tag -b restore-branch >/dev/null 2>&1
 
-echo created git branch from last tag = $last_tag >>$logfile
+echo created git branch from last tag = $last_tag | tee -a $logfile
 # restore the config for MM
 cp -p $saveDir/config.js $base/config
 # restore the custom/.css for MM (no error if not found)
