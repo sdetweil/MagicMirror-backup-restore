@@ -70,7 +70,7 @@ help for restore  is
 		default /home/sam/MM_backup
 
 	 -f [tag_number]
-		fetch/clone repo and restore latest, or selected tag_number
+		fetch/clone repo and restore latest, or optional tag_number
 
 	 -r github repository name (reponame)
 		typically https://github.com/username/reponame.git
@@ -79,3 +79,24 @@ help for restore  is
 
 	 -u github username
 		default none
+
+
+on backup, each collection of files is given a label, called a tag in git.
+for this application the tag is a number, starting at 1
+
+by default list-tags will use the ~/MM_backup folder name
+
+help for list_tags  is
+
+./list_tags.sh -h
+
+./list_tags.sh takes optional parameters
+
+	 -b backup_dir
+		default /home/sam/MM_backup
+
+
+#to list the tags copy/paste this command
+```bash
+bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/list_tags.sh)" with any parms
+```

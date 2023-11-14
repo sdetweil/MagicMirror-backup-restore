@@ -94,7 +94,12 @@ do
     ;;
     m)
 		# message on the git tag
-		msg="because $OPTARG"
+		msg=""
+		mparm=${@:$OPTIND}
+		if [[ ${vparm:0:1} != "-" ]];then
+        msg=$(echo ${@:$OPTIND}| cut -d' ' -f1)
+        OPTIND=$((OPTIND+1))
+		fi
     ;;
     r)
 		# github repo name
