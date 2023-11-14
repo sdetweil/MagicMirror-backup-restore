@@ -35,5 +35,5 @@ else
   process_args "$0 $@"
 fi
 cd ~/$savedir
-git for-each-ref --sort=creatordate --format '%(tag)  %(creatordate) label-> %(contents)' | sort -h |grep -v '^[[:space:]]*$'
+git for-each-ref --sort=creatordate --format '%(tag)  %(creatordate) label-> %(contents)' | sort -h |grep -v '^[[:space:]]*$'| egrep '^[^[:space:]]'
 cd - >/dev/null
