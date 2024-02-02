@@ -2,7 +2,7 @@
 scripts for backing up magicmirror config and module github urls  and using that to restore at a later time
 
 these scripts will  save the config.js , custom.css and the list of installed modules (and where they are loaded from (github urls)
-into a git repo, so they can be versioned and uploaded
+into a git repo, so they can be versioned and uploaded to a **private**  github repository
 
 the restore script takes the info saved and copies back the config.js, custom.css  and re-installs each module
 
