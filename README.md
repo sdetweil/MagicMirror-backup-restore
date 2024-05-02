@@ -12,7 +12,7 @@ both scripts support help with -h
 
 and parms for where the MagicMirror folder is  -s , default $HOME/MagicMirror
 
-and the name of the backup folder, -b , default $HOME/MM-backup
+and the name of the backup folder, -b , default $HOME/MM_backup
 
 one can execute the scripts directly from here
 
