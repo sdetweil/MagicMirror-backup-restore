@@ -1,6 +1,6 @@
 #!/bin/bash
 
-known_list="request valid-url"
+known_list="request valid-url jsdom node-fetch digest-fetch"
 
 #  backup MM modules  config
 
