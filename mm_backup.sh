@@ -81,13 +81,13 @@ do
 			if [ -d $HOME/$OPTARG ]; then
 				saveDir=$HOME/$OPTARG
 			else
+				echo checking for backup folder $OPTARG | tee -a $logfile
 				if [ -d $OPTARG ]; then
+					echo backup folder $OPTARG exists | tee -a $logfile
 					saveDir=$OPTARG
 				else
-					echo creating backup folder $HOME/$OPTARG | tee -a $logfile
+					echo folder doesn\'t exist, creating backup folder $HOME/$OPTARG | tee -a $logfile
  					saveDir=$HOME/$OPTARG
-					# echo unable to find backup folder $OPTARG
-					#exit 2
 				fi
 			fi
 			echo backup folder is $saveDir | tee -a $logfile

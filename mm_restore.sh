@@ -113,14 +113,19 @@ if [ "$fetch." != "." ]; then
 				echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
 				exit 4
 			fi
-    else
-    	cd $saveDir
-    	if [ "$(git remote -v)." != "." ]; then
-    		echo $saveDir exists fetching all tags >>$logfile
-			git fetch --all --tags
+  else
+  	cd $saveDir
+  	if [ "$(git remote -v)." != "." ]; then
+  		echo $saveDir exists fetching all tags >>$logfile
+  		if [ "$user_name." != "." -a "$repo_name." != "." ]; then
+				git fetch --all --tags
+			else
+				echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
+				exit 5
+			fi
 		else
-			echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
-			exit 5
+			echo -e "$saveDir exists, but its not a git repo, can't fetch or clone" | tee -a $logfile
+			exit 6
 		fi
 	fi
 else
