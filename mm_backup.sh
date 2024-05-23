@@ -184,15 +184,25 @@ do
 			# if there were slashes
 			if [ ${#repoIN[@]} -gt 0 ]; then
 				# get the last element of split array
-				index=$((${#repoIN[@]} -1))
+				index=${#repoIN[@]}
 				# get the  name
-				repot=${repoIN[$index]}
+				repot=${repoIN[$((index -1))]}
 				# user is one array element earlier
-				user_name=${repoIN[$(($index-1))]}
+				# get the user name from the URL
+				useru=${repoIN[$(($index-2))]}
 				# check for '.git'
-				IFS='.'; repoIN=($repot); unset IFS;
+				IFS='.'; repoN=($repot); unset IFS;
 				# get just the name
-				repo=${repoIN[0]}
+				repo=${repoN[0]}
+
+				# if we already processed the -u parm
+				if [ $user_name != default_user ]; then
+					# and the url username is not the same
+					if [ $useru != $user_name ]; then
+						echo "username specified with -u $user_name doesn't match the user in the github repo $useru, aborting" | tee -a $logfile
+						exit 6
+					fi
+				fi
 			fi
 			reponame=$repo
     ;;
