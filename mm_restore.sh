@@ -56,6 +56,10 @@ do
     b)
 		# backup folder
 			saveDir=$(echo $OPTARG | tr -d [:blank:])
+			if [ ! -d $saveDir ]; then
+				echo backup folder $saveDir not found | tee -a $logfile
+				exit 2
+			fi
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
 		u)
@@ -104,13 +108,13 @@ if [ "$fetch." != "." ]; then
 	echo trying to fetch repo from github >> $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
-			echo folder $saveDir does not exist >> $logfile
-			# and we have username and repo name
+						# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
+				echo folder $saveDir does not exist clone it from github >> $logfile
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
 				cd $saveDir
 			else
-				echo -e "\t\t need both the github username and the github repository name" | tee -a $logfile
+				echo -e "\t\t need both the github username and the github repository name to retrieve the github repo" | tee -a $logfile
 				exit 4
 			fi
   else
@@ -135,7 +139,7 @@ else
 	fi
 	cd $saveDir
 fi
-# fet the last numeric tag
+# get the last numeric tag
 if [ "$fetch_tag." != "." ]; then
 	last_tag=$fetch_tag
 else

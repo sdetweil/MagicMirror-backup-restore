@@ -5,9 +5,12 @@
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
-user_name=temp
+default_user=temp
+user_name=$default_user
 email=$user_name@somemail.com
+default_email=$email
 logfile=$base/installers/backup.log
+push=false
 
 # is this a mac
 mac=$(uname -s)
@@ -23,6 +26,69 @@ msg_prefix='updating'
 #OPTIND=1 # Reset if getopts used previously
 remote=
 next_tagnumber=1
+
+beginswith() {
+  l=$(expr length "$2")
+  leading="${1:0:$l}"
+	case $2 in
+		$leading):
+			true
+			;;
+		*):
+		  false
+		  ;;
+	esac
+
+}
+
+check_for_push(){
+	if [ $push == true ]; then
+		if [ "$repo." == "." ]; then
+			# repo not connected to git
+				if [ "$reponame." == "." ]; then
+					echo to push, we need the repo name | tee -a $logfile
+					echo see the help for the -r parm
+					exit 2
+				else
+					if [ "$user_name" != $default_user ]; then
+						cd $saveDir
+						echo adding the git repmote https://github.com/$user_name/$reponame.git | tee -a $logfile
+						git remote add origin https://github.com/$user_name/$reponame.git
+						cd -
+					else
+						echo "you requested to push the local backup repository to github, but didn't specify the username" | tee -a $logfile
+						exit 3
+					fi
+				fi
+		else
+			if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name" == $default_user ]; then
+				echo  we will need the github userid | tee -a $logfile
+				echo see the help for the -u parm
+				exit 3
+			else
+				if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == $default_email ]; then
+					echo   we will need the github user email | tee -a $logfile
+					echo see the help for the -e parm
+					exit 4
+				fi
+			fi
+		fi
+	else
+		# if not push, but repo specified
+		if [ "$repo." != "." ]; then
+			echo "you specified a github repository name , but didn't request push" | tee -a $logfile
+			read -p "do you want to save the results of this backup to github now? (Y/n)?" choice
+			choice="${choice:-Y}"
+			choice=${choice,,}
+			echo user selection for push now is $choice >>$logfile
+			if [ $choice == "y" ]; then
+				push=true
+				check_for_push
+			fi
+		fi
+	fi
+
+}
 
 process_args(){
 local OPTIND
@@ -78,7 +144,11 @@ do
     ;;
     b)
 		# backup folder
-			if [ -d $HOME/$OPTARG ]; then
+		  full_path=false
+		  if beginswith "$OPTARG" "/"; then
+		  	full_path=true
+		  fi
+			if [ -d $HOME/$OPTARG -a $full_path == false ]; then
 				saveDir=$HOME/$OPTARG
 			else
 				echo checking for backup folder $OPTARG | tee -a $logfile
@@ -86,30 +156,57 @@ do
 					echo backup folder $OPTARG exists | tee -a $logfile
 					saveDir=$OPTARG
 				else
-					echo folder doesn\'t exist, creating backup folder $HOME/$OPTARG | tee -a $logfile
- 					saveDir=$HOME/$OPTARG
+					if [ $full_path == false ]; then
+						echo folder doesn\'t exist, creating backup folder $HOME/$OPTARG | tee -a $logfile
+	 					saveDir=$HOME/$OPTARG
+	 				else
+	 					echo folder doesn\'t exist, creating backup folder $OPTARG | tee -a $logfile
+	 					saveDir=$OPTARG
+	 				fi
 				fi
 			fi
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
     m)
-		# message on the git tag
-		msg=""
-		mparm=${@:$OPTIND}
-		if [[ ${vparm:0:1} != "-" ]];then
-        msg=$(echo ${@:$OPTIND}| cut -d' ' -f1)
-        OPTIND=$((OPTIND+1))
-		fi
+			# message on the git tag
+			msg=""
+			mparm=${@:$OPTIND}
+			if [[ ${vparm:0:1} != "-" ]];then
+	        msg=$(echo ${@:$OPTIND}| cut -d' ' -f1)
+	        OPTIND=$((OPTIND+1))
+			fi
     ;;
     r)
-		# github repo name
-		repo=$OPTARG
-		reponame=$repo
+			# github repo name
+			repo=$OPTARG
+			# check for fulll url specified, we only want the name
+			IFS='/'; repoIN=($OPTARG); unset IFS;
+			# if there were slashes
+			if [ ${#repoIN[@]} -gt 0 ]; then
+				# get the last element of split array
+				index=$((${#repoIN[@]} -1))
+				# get the  name
+				repot=${repoIN[$index]}
+				# user is one array element earlier
+				user_name=${repoIN[$(($index-1))]}
+				# check for '.git'
+				IFS='.'; repoIN=($repot); unset IFS;
+				# get just the name
+				repo=${repoIN[0]}
+			fi
+			reponame=$repo
     ;;
     p)
-		# push requested
-		push=true
-		repo=$(cd $saveDir 2>/dev/null && git remote -v| grep fetch -m1 | awk '{ print $2}')
+			# push requested
+			push=true
+			# ignore the repo name , get the one from the save folder, if the folder exists and remote is set
+			if [ -d $saveDir ]; then
+				configured_repo=$(cd $saveDir 2>/dev/null && git remote -v 2>/dev/null| grep fetch -m1 | awk '{ print $2}')
+				if [ "$configured_repo." != "." ]; then
+					repo=$configured_repo
+					reponame=$repo
+				fi
+			fi
 		;;
 		u)
 			# username
@@ -126,6 +223,7 @@ do
 done
  shift $((OPTIND-1))
 }
+
 # if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
 if [[ "$0" == *.sh ]]; then 
   process_args "$@"
@@ -136,49 +234,32 @@ fi
 date +"backup starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 
 if [ ! -d $saveDir ]; then
-	echo creating $savdir | tee -a $logfile
-	mkdir $saveDir
-	cd $saveDir
-	git init &>/dev/null
-	git symbolic-ref HEAD refs/heads/main
-	cd - >/dev/null
-	msg_prefix='creating'
-else
-	:
-	if [ ! -d $saveDir/.git ]; then
-		echo using $savedir | tee -a $logfile
+	echo creating $saveDir | tee -a $logfile
+	mkdir $saveDir 2>./make_error
+	if [ $? -eq 0 ]; then
 		cd $saveDir
 		git init &>/dev/null
 		git symbolic-ref HEAD refs/heads/main
-		if [ $push == true ]; then
-			if [ "$repo." == "." ]; then
-				# repo not connected to git
-					if [ "$reponame." == "." ]; then
-						echo to push, we need the repo name | tee -a $logfile
-						echo see the help for the -r parm
-						exit 2
-					else
-						cd $saveDir
-						git remote add origin https://github.com/$user_name/$reponame.git
-						cd -
-					fi
-			else
-				if [ "$(cd $saveDir && git config user.email)." == "." -a "$user_name." == "." ]; then
-					echo   we will need the github userid | tee -a $logfile
-					echo see the help for the -u parm
-					exit 3
-				else
-					if [ "$(cd $saveDir && git config user.email)." == "." -a "$email." == "." ]; then
-						echo   we will need the github user email | tee -a $logfile
-						echo see the help for the -e parm
-						exit 4
-					fi
-				fi
-			fi
-		fi
+		cd - >/dev/null
+		msg_prefix='creating'
+	else
+		echo unable to create $saveDir $(cat ./make_error)
+		rm ./make_error
+		exit 1
+	fi
+else
+	if [ ! -d $saveDir/.git ]; then
+		echo using $savedir | tee -a $logfile
+		cd $saveDir
+		echo "creating local git repo" | tee -a $logfile
+		# create local repo
+		git init &>/dev/null
+		git symbolic-ref HEAD refs/heads/main
 		cd - >/dev/null
 	fi
 fi
+check_for_push
+
 repo_list=$saveDir/module_list
 
 echo $msg_prefix folder $saveDir | tee -a $logfile
@@ -242,8 +323,8 @@ if [ ${#modules[@]} -gt 0 ]; then
 				    fi
 				    cd - >/dev/null
 				else
-                                    echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
-                                    tput init 2>/dev/null
+            echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
+            tput init 2>/dev/null
 				    echo
 				fi
 			# back to the current folder
