@@ -98,5 +98,5 @@ help for list_tags  is
 
 # to list the tags copy/paste this command
 ```bash
-bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/list_tags.sh)" with any parms
+bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/list_tags.sh)" ??
 ```

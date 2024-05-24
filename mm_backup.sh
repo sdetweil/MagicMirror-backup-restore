@@ -92,7 +92,11 @@ check_for_push(){
 
 process_args(){
 local OPTIND
-
+r=${1:0:1}
+if [ $r != '-' ]; then
+	echo "Illegal option '$1'"
+	exit 3
+fi
 while getopts ":hs:b:m:r:u:e:p" opt
 do
     case $opt in
@@ -177,7 +181,7 @@ do
 			fi
     ;;
     r)
-			# github repo name
+			# github repo name or url
 			repo=$OPTARG
 			# check for fulll url specified, we only want the name
 			IFS='/'; repoIN=($OPTARG); unset IFS;
@@ -193,7 +197,7 @@ do
 				# check for '.git'
 				IFS='.'; repoN=($repot); unset IFS;
 				# get just the name
-				repo=${repoN[0]}
+				reponame=${repoN[0]}
 
 				# if we already processed the -u parm
 				if [ $user_name != default_user ]; then
@@ -202,9 +206,11 @@ do
 						echo "username specified with -u $user_name doesn't match the user in the github repo $useru, aborting" | tee -a $logfile
 						exit 6
 					fi
+
 				fi
+			else
+				reponame=$repo
 			fi
-			reponame=$repo
     ;;
     p)
 			# push requested
@@ -404,6 +410,7 @@ remote=false
 # should we push now?
 if [ "$push." == "." ]; then
 	# no, tell user to do it
+	echo "because you didn't request push"
 	echo recommended you "git push --tags" from this folder \($saveDir\) to backup your repo on github | tee -a $logfile
 	echo see "https://github.com/new"
 	echo to learn how to create a repo on github and the commands to sync your local system to the github repo
@@ -414,7 +421,7 @@ else
 	if [ "$reponame."  != "." ]; then
 		remote=true
 		# no, is it set already?
-		repo=$(git remote -v| grep fetch -m1 | awk '{ print $2}')
+		repo=$(git remote -v 2>/dev/null| grep fetch -m1 | awk '{ print $2}')
 		# no, need to prompt for repo name
 		if [ "$repo."  == "." ]; then
 			# remote not set yet
@@ -425,11 +432,7 @@ else
 			git remote add origin "https://github.com/$user_name/$reponame.git"
 			git branch -M main
 			repo=$(git remote -v| grep fetch -m1 | awk '{ print $2}')
-			:
 		fi
-	fi
-	# if the repo is set
-	if [ "$reponame." != "." ]; then
 		#	git remote add origin https://github.com/$user_name/$reponame.git
 		#	git branch -M main
 		#fi
@@ -439,6 +442,7 @@ else
 fi
 echo see this link for how to fetch tags for restore
 echo https://devconnected.com/how-to-list-git-tags/
+echo or run the list_tags.sh command from this repo
 
 cd - >/dev/null
 

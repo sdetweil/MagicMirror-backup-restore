@@ -12,6 +12,11 @@ mac=$(uname -s)
 fetch=
 process_args(){
 local OPTIND
+r=${1:0:1}
+if [ $r != '-' ]; then
+	echo "Illegal option '$1'"
+	exit 3
+fi
 while getopts ":hs:b:r:u:f" opt
 do
     case $opt in

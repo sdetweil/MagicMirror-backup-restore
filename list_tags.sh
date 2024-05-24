@@ -4,25 +4,35 @@ savedir=MM_backup
 process_args(){
 local OPTIND
 
+r=${1:0:1}
+if [ $r != '-' ]; then
+	echo "Illegal option '$1'"
+	exit 3
+fi
+
 while getopts ":hb:" opt
 do
-    case $opt in
+
+	echo "opt = $opt"
+  case $opt in
     	# help
 
-    h) 		echo
+   h) echo
 			echo $0 takes optional parameters
 			echo
 			echo -e "\t -b backup_dir "
 			echo -e	"\t\tdefault $saveDir"
 			echo
 			exit 1
-	;;
-    b)
+		;;
+   b)
 		# message on the git tag
 		savedir=$(echo $OPTARG | tr -d [:blank:])
     ;;
-
-    \?) echo "Illegal option '-$OPTARG'"  && exit 3
+   *)
+		#
+		echo "Illegal option '-$OPTARG'"
+		exit 3
 	 ;;
     esac
 done
