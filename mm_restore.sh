@@ -85,9 +85,28 @@ do
 			user_name=$(echo $OPTARG | tr -d [:blank:])
 		;;
 		r)
-			# username
-			repo_name=$(echo $OPTARG | tr -d [:blank:])
-			fetch=true
+			# github repo name or url
+			repo=$OPTARG
+			# check for fulll url specified, we only want the name
+			IFS='/'; repoIN=($OPTARG); unset IFS;
+			# if there were slashes
+			if [ ${#repoIN[@]} -gt 0 ]; then
+				# get the last element of split array
+				index=${#repoIN[@]}
+				# get the  name
+				repot=${repoIN[$((index -1))]}
+				# user is one array element earlier
+				# get the user name from the URL
+				user_name=${repoIN[$(($index-2))]}
+				# check for '.git'
+				IFS='.'; repoN=($repot); unset IFS;
+				# get just the name
+				repo_name=${repoN[0]}
+				fetch=true
+			else
+				repo_name=$repo
+				fetch=true
+			fi
 		;;
 	  f)
 			fetch=true
@@ -124,12 +143,12 @@ cd $HOME
 # fetch  use latest tag (bu highest number)
 
 if [ "$fetch." != "." ]; then
-	echo trying to fetch repo from github >> $logfile
+	echo trying to fetch repo from github | tee -a $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
 						# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
-				echo folder $saveDir does not exist clone it from github >> $logfile
+				echo folder $saveDir does not exist, will clone it from github | tee -a $logfile
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
 				cd $saveDir
 			else
@@ -139,7 +158,8 @@ if [ "$fetch." != "." ]; then
   else
   	cd $saveDir
   	if [ "$(git remote -v)." != "." ]; then
-  		echo $saveDir exists fetching all tags >>$logfile
+  		repo_name=$(git remote -v | head -n1 | awk '{print $2}')
+  		echo $saveDir exists fetching all tags from $repo_name | tee -a $logfile
   		if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 				git fetch --all --tags
 			else
@@ -147,7 +167,7 @@ if [ "$fetch." != "." ]; then
 				exit 5
 			fi
 		else
-			echo -e "$saveDir exists, but its not a git repo, can't fetch or clone" | tee -a $logfile
+			echo -e "$saveDir exists, but its not a linked git repo, can't fetch or clone" | tee -a $logfile
 			exit 6
 		fi
 	fi
@@ -177,7 +197,7 @@ cp -p $saveDir/config.js $base/config
 # restore the custom/.css for MM (no error if not found)
 cp -p $saveDir/custom.css $base/css 2>/dev/null
 
-echo restored config.js and custom.css >>$logfile
+echo restored config.js and custom.css | tee -a $logfile
 
 repo_list=$saveDir/module_list
 
