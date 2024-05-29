@@ -61,12 +61,21 @@ do
     b)
 		# backup folder
 			saveDir=$(echo $OPTARG | tr -d [:blank:])
-			if [ ! -d $saveDir ]; then
-				echo backup folder $saveDir not found | tee -a $logfile
-				exit 2
-			else
-				if [ ${saveDir:0:1} != "/" ]; then
+			# if the backup/restrore folder exists in users home
+			if [ -d $HOME/$saveDir ]; then
+				  # use it
 					saveDir=$HOME/$saveDir
+			else
+				# if the folder doesn't exist
+			  if [ ! -d $saveDir ]; then
+			  	# check to see if it starts with a /
+			  	if [ ${saveDir:0:1} != "/" ]; then
+			  		# if its a full path to the home folder
+			  		# it will be created on clone
+			  		if [ $HOME/$saveDir != $saveDir ]; then
+							echo backup folder $saveDir not found, will be created on git clone | tee -a $logfile
+						fi
+					fi
 				fi
 			fi
 			echo backup folder is $saveDir | tee -a $logfile
@@ -78,6 +87,7 @@ do
 		r)
 			# username
 			repo_name=$(echo $OPTARG | tr -d [:blank:])
+			fetch=true
 		;;
 	  f)
 			fetch=true
