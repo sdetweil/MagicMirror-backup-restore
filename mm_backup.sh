@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 #  backup MM modules  config
 
@@ -93,7 +93,8 @@ check_for_push(){
 process_args(){
 local OPTIND
 r=${1:0:1}
-if [ $r != '-' ]; then
+echo "$r='$r'"
+if [ "$r." != '-.' ]; then
 	echo "Illegal option '$1'"
 	exit 3
 fi
@@ -136,7 +137,7 @@ do
 			if [ -d $HOME/$b ]; then
 				base=$HOME/$b
 			else
-				if [ -d b ]; then
+				if [ -d $b ]; then
 					base=$b
 				else
 					echo unable to find Source folder $OPTARG | tee -a $logfile
@@ -200,7 +201,7 @@ do
 				reponame=${repoN[0]}
 
 				# if we already processed the -u parm
-				if [ $user_name != default_user ]; then
+				if [ $user_name != $default_user ]; then
 					# and the url username is not the same
 					if [ $useru != $user_name ]; then
 						echo "username specified with -u $user_name doesn't match the user in the github repo $useru, aborting" | tee -a $logfile

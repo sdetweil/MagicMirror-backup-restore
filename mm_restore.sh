@@ -64,6 +64,10 @@ do
 			if [ ! -d $saveDir ]; then
 				echo backup folder $saveDir not found | tee -a $logfile
 				exit 2
+			else
+				if [ ${saveDir:0:1} != "/" ]; then
+					saveDir=$HOME/$saveDir
+				fi
 			fi
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
