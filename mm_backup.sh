@@ -151,23 +151,24 @@ do
     b)
 		# backup folder
 		  full_path=false
-		  if beginswith "$OPTARG" "/"; then
+		  b=$(echo $OPTARG | xargs)
+		  if beginswith "$b" "/"; then
 		  	full_path=true
 		  fi
-			if [ -d $HOME/$OPTARG -a $full_path == false ]; then
-				saveDir=$HOME/$OPTARG
+			if [ -d $HOME/$b -a $full_path == false ]; then
+				saveDir=$HOME/$b
 			else
-				echo checking for backup folder $OPTARG | tee -a $logfile
-				if [ -d $OPTARG ]; then
-					echo backup folder $OPTARG exists | tee -a $logfile
-					saveDir=$OPTARG
+				echo checking for backup folder $b | tee -a $logfile
+				if [ -d $b ]; then
+					echo backup folder $b exists | tee -a $logfile
+					saveDir=$b
 				else
 					if [ $full_path == false ]; then
-						echo folder doesn\'t exist, creating backup folder $HOME/$OPTARG | tee -a $logfile
-	 					saveDir=$HOME/$OPTARG
+						echo folder doesn\'t exist, creating backup folder $HOME/$b | tee -a $logfile
+	 					saveDir=$HOME/$b
 	 				else
-	 					echo folder doesn\'t exist, creating backup folder $OPTARG | tee -a $logfile
-	 					saveDir=$OPTARG
+	 					echo folder doesn\'t exist, creating backup folder $b | tee -a $logfile
+	 					saveDir=$b
 	 				fi
 				fi
 			fi
