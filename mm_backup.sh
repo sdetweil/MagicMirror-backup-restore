@@ -299,6 +299,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 	if [ -e $repo_list ]; then
 		echo will create new $repo_list | tee -a $logfile
 		rm $repo_list >/dev/null
+		touch $repo_list
 	fi
 
 	# loop thru the modules discovered
