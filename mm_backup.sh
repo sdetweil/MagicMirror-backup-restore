@@ -152,33 +152,38 @@ do
 		# backup folder
 		  full_path=false
 		  b=$(echo $OPTARG | xargs)
-		  if beginswith "$b" "/"; then
-		  	full_path=true
-		  fi
-			if [ -d $HOME/$b -a $full_path == false ]; then
-				saveDir=$HOME/$b
-			else
-				echo checking for backup folder $b | tee -a $logfile
-				if [ -d $b ]; then
-					echo backup folder $b exists | tee -a $logfile
-					saveDir=$b
+		  if [ "$b." != "." ]; then
+			  if beginswith "$b" "/"; then
+			  	full_path=true
+			  fi
+				if [ -d $HOME/$b -a $full_path == false ]; then
+					saveDir=$HOME/$b
 				else
-					if [ $full_path == false ]; then
-						echo folder doesn\'t exist, creating backup folder $HOME/$b | tee -a $logfile
-	 					saveDir=$HOME/$b
-	 				else
-	 					echo folder doesn\'t exist, creating backup folder $b | tee -a $logfile
-	 					saveDir=$b
-	 				fi
+					echo checking for backup folder $b | tee -a $logfile
+					if [ -d $b ]; then
+						echo backup folder $b exists | tee -a $logfile
+						saveDir=$b
+					else
+						if [ $full_path == false ]; then
+							echo folder doesn\'t exist, creating backup folder $HOME/$b | tee -a $logfile
+		 					saveDir=$HOME/$b
+		 				else
+		 					echo folder doesn\'t exist, creating backup folder $b | tee -a $logfile
+		 					saveDir=$b
+		 				fi
+					fi
 				fi
+				echo backup folder is $saveDir | tee -a $logfile
+			else
+				echo no folder was specified for backup | tee -a $logfile
+				exit 4
 			fi
-			echo backup folder is $saveDir | tee -a $logfile
     ;;
     m)
 			# message on the git tag
 			msg=""
 			mparm=${@:$OPTIND}
-			if [[ ${vparm:0:1} != "-" ]];then
+			if [[ ${mparm:0:1} != "-" ]];then
 	        msg=$(echo ${@:$OPTIND}| cut -d' ' -f1)
 	        OPTIND=$((OPTIND+1))
 			fi
