@@ -12,13 +12,10 @@ mac=$(uname -s)
 fetch=
 process_args(){
 local OPTIND
-r=${1:0:1}
-if [ $r != '-' ]; then
-	echo "Illegal option '$1'"
-	exit 3
-fi
+
 while getopts ":hs:b:r:u:f" opt
 do
+		echo opt=$opt
     case $opt in
     	# help
 	    h) 		echo
@@ -59,6 +56,7 @@ do
 			echo MagicMirror folder to update is $base | tee -a $logfile
     ;;
     b)
+			echo processing backup parm
 		# backup folder
 			saveDir=$(echo $OPTARG | tr -d [:blank:])
 			# if the backup/restrore folder exists in users home
@@ -124,8 +122,9 @@ done
 }
 
 # if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
-if [[ "$0" == *.sh ]]; then 
-  process_args "$@"
+
+if [[ $0 == *.sh ]]; then
+  process_args "$0 $@"
 else
   process_args "$0 $@"
 fi
@@ -139,6 +138,7 @@ date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
 echo
 cd $HOME
+exit
 
 # fetch  use latest tag (bu highest number)
 

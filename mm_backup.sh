@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 #  backup MM modules  config
 
@@ -92,12 +92,13 @@ check_for_push(){
 
 process_args(){
 local OPTIND
-r=${1:0:1}
-echo "$r='$r'"
-if [ "$r." != '-.' ]; then
-	echo "Illegal option '$1'"
-	exit 3
-fi
+
+#r=${1:0:1}
+#echo "$r='$r'"
+#if [ "$r." != '-.' ]; then
+#echo "Illegal option '$1'"
+	#exit 3
+#fi
 while getopts ":hs:b:m:r:u:e:p" opt
 do
     case $opt in
