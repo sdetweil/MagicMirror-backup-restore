@@ -138,7 +138,6 @@ date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
 echo
 cd $HOME
-exit
 
 # fetch  use latest tag (bu highest number)
 
