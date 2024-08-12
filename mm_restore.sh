@@ -15,7 +15,7 @@ local OPTIND
 
 while getopts ":hs:b:r:u:f" opt
 do
-		echo opt=$opt
+    #echo opt=$opt
     case $opt in
     	# help
 	    h) 		echo
@@ -85,7 +85,7 @@ do
 		r)
 			# github repo name or url
 			repo=$OPTARG
-			# check for fulll url specified, we only want the name
+			# check for full url specified, we only want the name
 			IFS='/'; repoIN=($OPTARG); unset IFS;
 			# if there were slashes
 			if [ ${#repoIN[@]} -gt 0 ]; then
@@ -106,14 +106,14 @@ do
 				fetch=true
 			fi
 		;;
-	  f)
+	  	f)
 			fetch=true
 			fetch_tag=
 			vparm=${@:$OPTIND}
 			if [[ ${vparm:0:1} != "-" ]];then
-          fetch_tag=$(echo ${@:$OPTIND}| cut -d' ' -f1)
-          OPTIND=$((OPTIND+1))
-      fi
+          		   fetch_tag=$(echo ${@:$OPTIND}| cut -d' ' -f1)
+          		   OPTIND=$((OPTIND+1))
+      			fi
 		;;
 	  *) echo "Illegal option '-$OPTARG'" && exit 3
 	 ;;
