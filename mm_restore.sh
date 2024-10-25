@@ -202,12 +202,15 @@ repo_list=$saveDir/module_list
 
 echo processing module_list >>$logfile
 if [ -e $repo_list ]; then
-
-	SAVEIFS=$IFS   # Save current IFS
-	IFS=$'\n'
+	if [ $mac != 'Darwin' ]; then
+		SAVEIFS=$IFS   # Save current IFS
+		IFS=$'\n'
+	fi
 	# split output on new lines, not spaces
 	urls=($(cat $repo_list))
-	IFS=$SAVEIFS
+	if [ $mac != 'Darwin' ]; then
+			IFS=$SAVEIFS
+	fi
 
 	# if there modules to restore
 	if [ ${#urls} -gt 0 ]; then

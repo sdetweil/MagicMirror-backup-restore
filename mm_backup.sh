@@ -104,7 +104,7 @@ do
     case $opt in
     	# help
 
-    h) 		echo
+	   	 h)	echo
 			echo $0 takes optional parameters
 			echo
 			echo -e "\t -s MagicMirror_dir"
@@ -131,10 +131,10 @@ do
 			echo -e "\t -u github password or token"
 			echo -e	"\t\tdefault none"
 			exit 1
-	 ;;
-    s)
+	 	;;
+    		s)
 		# source MagicMirror folder
-      b=$(echo $OPTARG | xargs)
+      			b=$(echo $OPTARG | xargs)
 			if [ -d $HOME/$b ]; then
 				base=$HOME/$b
 			else
@@ -147,8 +147,8 @@ do
 			fi
 			logfile=$base/installers/backup.log
 			echo source MagicMirror folder is $base | tee -a $logfile
-    ;;
-    b)
+    		;;
+    		b)
 		# backup folder
 		  full_path=false
 		  b=$(echo $OPTARG | xargs)
@@ -178,17 +178,17 @@ do
 				echo no folder was specified for backup | tee -a $logfile
 				exit 4
 			fi
-    ;;
-    m)
+    		;;
+   		m)
 			# message on the git tag
 			msg=""
 			mparm=${@:$OPTIND}
 			if [[ ${mparm:0:1} != "-" ]];then
-	        msg=$(echo ${@:$OPTIND}| cut -d' ' -f1)
-	        OPTIND=$((OPTIND+1))
+	        		msg=$(echo ${@:$OPTIND}| cut -d' ' -f1)
+	        		OPTIND=$((OPTIND+1))
 			fi
-    ;;
-    r)
+    		;;
+    		r)
 			# github repo name or url
 			repo=$OPTARG
 			# check for fulll url specified, we only want the name
@@ -219,13 +219,13 @@ do
 			else
 				reponame=$repo
 			fi
-    ;;
-    p)
+		;;
+    		p)
 			# push requested
 			push=true
 			# ignore the repo name , get the one from the save folder, if the folder exists and remote is set
 			if [ -d $saveDir ]; then
-				configured_repo=$(cd $saveDir 2>/dev/null && git remote -v 2>/dev/null| grep fetch -m1 | awk '{ print $2}')
+				configured_repo=$(cd $saveDir 2>/dev/null && git remote -v 2>/dev/null| grep fetch -m1 | awk '{print $2}')
 				if [ "$configured_repo." != "." ]; then
 					repo=$configured_repo
 					reponame=$repo
@@ -241,7 +241,7 @@ do
 			# email
 			email=$OPTARG
 		;;
-    \?) echo "Illegal option '-$OPTARG'"  && exit 3
+		    \?) echo "Illegal option '-$OPTARG'"  && exit 3
 	 ;;
     esac
 done
@@ -292,12 +292,16 @@ cp -p $base/config/config.js $saveDir
 # copy custom.css, no error if not found
 cp -p $base/css/custom.css $saveDir 2>/dev/null
 
-	SAVEIFS=$IFS   # Save current IFS
-	IFS=$'\n'
+	if [ $mac != 'Darwin' ]; then
+		SAVEIFS=$IFS   # Save current IFS
+		IFS=$'\n'
+	fi 
 	# get the installed module list
 	# split putput on new lines, not spaces
-	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -i echo "{}"))
-	IFS=$SAVEIFS
+	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -J % echo "%"))
+	if [ $mac != 'Darwin' ]; then
+		IFS=$SAVEIFS
+	fi
 
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
@@ -338,7 +342,8 @@ if [ ${#modules[@]} -gt 0 ]; then
 					    	# copy the untracked(extra)  files to the backup for this module
 					    	cp -a $untracked $saveDir/$mname
 					    fi
-					else
+                                    	    cd - >/dev/null
+        			    else
 						echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
 						# reset the echo ansi code back to default
 						# could save the folder name along with the url
@@ -346,10 +351,9 @@ if [ ${#modules[@]} -gt 0 ]; then
 						tput init 2>/dev/null
 						echo
 				    fi
-				    cd - >/dev/null
 				else
-            echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
-            tput init 2>/dev/null
+           			    echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
+			            tput init 2>/dev/null
 				    echo
 				fi
 			# back to the current folder
@@ -397,11 +401,15 @@ git commit -m "updated on $(date) $msg"
 		next_tagnumber=$((last_tag+1))
 	fi
 	# lets check  rename any old date named tags
-	SAVEIFS=$IFS   # Save current IFS
-	IFS=$'\n'
+	if [ $mac != 'Darwin' ]; then
+		SAVEIFS=$IFS   # Save current IFS
+		IFS=$'\n'
+	fi
 	# split output on new lines, not spaces
 	tag_list=($(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep - | awk -F/ {'print $3'}))
-	IFS=$SAVEIFS
+	if [ $mac != 'Darwin' ]; then
+		IFS=$SAVEIFS
+	fi
 	if [ ${#tag_list} -gt 0 ]; then
 		for tag in "${tag_list[@]}"
 		do
