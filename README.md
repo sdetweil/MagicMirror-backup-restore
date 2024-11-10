@@ -30,10 +30,10 @@ help for backup is
 ./mm_backup.sh takes optional parameters
 
 	 -s MagicMirror_dir
-		default /home/sam/MagicMirror
+		default $HOME/MagicMirror
 
 	 -b backup_dir
-		default /home/sam/MM_backup
+		default $HOME/MM_backup
 
 	 -m backup_message
 		 any message (in quotes) that you would like to attach to this change for later info
@@ -43,7 +43,7 @@ help for backup is
 		default false
 
 	 -r github_repository_name (reponame)
-		typically https://github.com/username/reponame.git
+		typically https://github.com/${username}/reponame.git
 		default output of git remote -v (if set)
 		 -r overrides the git remote setting
 
@@ -64,16 +64,16 @@ help for restore  is
 ./mm_restore.sh takes optional parameters
 
 	 -s MagicMirror_dir
-		default /home/sam/MagicMirror
+		default $HOME/MagicMirror
 
 	 -b backup_dir
-		default /home/sam/MM_backup
+		default $HOME/MM_backup
 
 	 -f [tag_number]
 		fetch/clone repo and restore latest, or optional tag_number
 
 	 -r github repository name (reponame)
-		typically https://github.com/username/reponame.git
+		typically https://github.com/${username}/reponame.git
 		default output of git remote -v (if set)
 		 -r overrides the git remote setting
 
@@ -84,7 +84,7 @@ help for restore  is
 on backup, each collection of files is given a label, called a tag in git.
 for this application the tag is a number, starting at 1
 
-by default list-tags will use the ~/MM_backup folder name
+by default list-tags will use the $HOME/MM_backup folder name
 
 help for list_tags  is
 
@@ -93,7 +93,7 @@ help for list_tags  is
 ./list_tags.sh takes optional parameters
 
 	 -b backup_dir
-		default /home/username/MM_backup
+		default $HOME/MM_backup
 
 
 # to list the tags copy/paste this command
