@@ -298,7 +298,7 @@ cp -p $base/css/custom.css $saveDir 2>/dev/null
 	fi 
 	# get the installed module list
 	# split putput on new lines, not spaces
-	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -J % echo "%"))
+	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
 	if [ $mac != 'Darwin' ]; then
 		IFS=$SAVEIFS
 	fi
