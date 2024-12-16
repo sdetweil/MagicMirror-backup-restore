@@ -2,7 +2,8 @@
 scripts for backing up magicmirror config and module github urls  and using that to restore at a later time
 
 these scripts will  save the config.js , custom.css and the list of installed modules (and where they are loaded from (github urls)
-into a git repo, so they can be versioned and uploaded to a **private**  github repository
+into a git repo, so they can be versioned and uploaded to a ===>**private**<===  github repository
+  if you wish to use github and never have, see below for how to get the required access token
 
 the restore script takes the info saved and copies back the config.js, custom.css  and re-installs each module
 
@@ -100,3 +101,17 @@ help for list_tags  is
 ```bash
 bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/list_tags.sh)" ??
 ```
+
+# getting the github access token
+* on github, select your profile
+
+* select password and authentication <br>
+* select developer settings <br>
+* personal access tokens <br>
+* classic token <br>
+* generate <br>
+
+ >you will use this string for your password on the command prompt for the git password
+
+ Note: github  will NOT SHOW you this token again. so if you forget it, you have to generate a new token
+ 
