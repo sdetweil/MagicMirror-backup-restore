@@ -6,6 +6,7 @@ known_list="request valid-url jsdom node-fetch digest-fetch"
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
+logpath=$HOME/MagicMirror/installers
 logfile=$HOME/MagicMirror/installers/restore.log
 # is this a mac
 mac=$(uname -s)
@@ -133,6 +134,10 @@ if [ $mac == 'Darwin' ]; then
 	cmd=greadlink
 else
 	cmd=readlink
+fi
+
+if [ ! -d $logpath ]; then
+	mkdir $logpath
 fi
 date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
