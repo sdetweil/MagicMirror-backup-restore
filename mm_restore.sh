@@ -153,6 +153,13 @@ if [ "$fetch." != "." ]; then
 						# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 				echo folder $saveDir does not exist, will clone it from github | tee -a $logfile
+				touch $savedir &>/dev/null
+				if [ $? -ne 0 ]; then
+					echo unable to create backup folder $saveDir
+					exit
+				else
+				  rm $savedir
+				fi
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
 				cd $saveDir
 			else
