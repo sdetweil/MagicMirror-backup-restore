@@ -214,7 +214,9 @@ do
 						echo "username specified with -u $user_name doesn't match the user in the github repo $useru, aborting" | tee -a $logfile
 						exit 6
 					fi
-
+				else
+					# no -u parm, taken from repo url
+					user_name=$useru
 				fi
 			else
 				reponame=$repo

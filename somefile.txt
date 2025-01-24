@@ -1,0 +1,2452 @@
++ base=/home/sam/MagicMirror
++ saveDir=/home/sam/MM_backup
++ default_user=temp
++ user_name=temp
++ email=temp@somemail.com
++ default_email=temp@somemail.com
++ logfile=/home/sam/MagicMirror/installers/backup.log
++ push=false
+++ uname -s
++ mac=Linux
++ '[' Linux == Darwin ']'
++ cmd=readlink
++ msg_prefix=updating
++ remote=
++ next_tagnumber=1
++ [[ ./mm_backup.sh == *.sh ]]
++ process_args -m 'MagicMirror Pi Backup' -p -r https://github.com/sdetweil/mm_backup -u sdetweil
++ local OPTIND
++ getopts :hs:b:m:r:u:e:p opt
++ case $opt in
++ msg=
++ mparm='-p -r https://github.com/sdetweil/mm_backup -u sdetweil'
++ [[ - != \- ]]
++ getopts :hs:b:m:r:u:e:p opt
++ case $opt in
++ push=true
++ '[' -d /home/sam/MM_backup ']'
+++ cd /home/sam/MM_backup
+++ git remote -v
+++ grep fetch -m1
+++ awk '{print $2}'
++ configured_repo=
++ '[' . '!=' . ']'
++ getopts :hs:b:m:r:u:e:p opt
++ case $opt in
++ repo=https://github.com/sdetweil/mm_backup
++ IFS=/
++ repoIN=($OPTARG)
++ unset IFS
++ '[' 5 -gt 0 ']'
++ index=5
++ repot=mm_backup
++ useru=sdetweil
++ IFS=.
++ repoN=($repot)
++ unset IFS
++ reponame=mm_backup
++ '[' temp '!=' temp ']'
++ getopts :hs:b:m:r:u:e:p opt
++ case $opt in
+++ echo sdetweil
+++ tr -d '[:blank:]'
++ user_name=sdetweil
++ getopts :hs:b:m:r:u:e:p opt
++ shift 7
++ date '+backup starting  - %a %b %e %H:%M:%S %Z %Y'
++ '[' '!' -d /home/sam/MM_backup ']'
++ '[' '!' -d /home/sam/MM_backup/.git ']'
++ check_for_push
++ '[' true == true ']'
++ '[' https://github.com/sdetweil/mm_backup. == . ']'
+++ cd /home/sam/MM_backup
+++ git config user.email
++ '[' sdetweil@gmail.com. == . -a sdetweil == temp ']'
+++ cd /home/sam/MM_backup
+++ git config user.email
++ '[' sdetweil@gmail.com. == . -a temp@somemail.com. == temp@somemail.com ']'
++ repo_list=/home/sam/MM_backup/module_list
++ echo updating folder /home/sam/MM_backup
++ tee -a /home/sam/MagicMirror/installers/backup.log
+updating folder /home/sam/MM_backup
++ cp -p /home/sam/MagicMirror/config/config.js /home/sam/MM_backup
++ cp -p /home/sam/MagicMirror/css/custom.css /home/sam/MM_backup
++ '[' Linux '!=' Darwin ']'
++ SAVEIFS=
++ IFS='
+'
++ modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
+++ find /home/sam/MagicMirror/modules -maxdepth 1 -type d
+++ grep -v default
+++ xargs -I % echo %
++ '[' Linux '!=' Darwin ']'
++ IFS=
++ '[' 73 -gt 0 ']'
++ '[' -e /home/sam/MM_backup/module_list ']'
++ echo will create new /home/sam/MM_backup/module_list
++ tee -a /home/sam/MagicMirror/installers/backup.log
+will create new /home/sam/MM_backup/module_list
++ rm /home/sam/MM_backup/module_list
++ touch /home/sam/MM_backup/module_list
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules '!=' /home/sam/MagicMirror/modules ']'
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/WallberryTheme '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/WallberryTheme
++ echo Backing up for /home/sam/MagicMirror/modules/WallberryTheme
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/WallberryTheme
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/delightedCrow/WallberryTheme.git
+++ echo /home/sam/MagicMirror/modules/WallberryTheme
+++ awk -F/ '{print $NF}'
++ mname=WallberryTheme
++ [[ https://github.com/delightedCrow/WallberryTheme.git == *\W\a\l\l\b\e\r\r\y\T\h\e\m\e* ]]
++ echo -e 'found module WallberryTheme \n\t installed from https://github.com/delightedCrow/WallberryTheme.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module WallberryTheme 
+	 installed from https://github.com/delightedCrow/WallberryTheme.git
++ echo https://github.com/delightedCrow/WallberryTheme.git
++ cd /home/sam/MagicMirror/modules/WallberryTheme
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-GoogleMapsTraffic '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-GoogleMapsTraffic
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-GoogleMapsTraffic
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-GoogleMapsTraffic
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-GoogleMapsTraffic.git
+++ echo /home/sam/MagicMirror/modules/MMM-GoogleMapsTraffic
+++ awk -F/ '{print $NF}'
++ mname=MMM-GoogleMapsTraffic
++ [[ https://github.com/sdetweil/MMM-GoogleMapsTraffic.git == *\M\M\M\-\G\o\o\g\l\e\M\a\p\s\T\r\a\f\f\i\c* ]]
++ echo -e 'found module MMM-GoogleMapsTraffic \n\t installed from https://github.com/sdetweil/MMM-GoogleMapsTraffic.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-GoogleMapsTraffic 
+	 installed from https://github.com/sdetweil/MMM-GoogleMapsTraffic.git
++ echo https://github.com/sdetweil/MMM-GoogleMapsTraffic.git
++ cd /home/sam/MagicMirror/modules/MMM-GoogleMapsTraffic
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-DynamicWeather '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-DynamicWeather
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-DynamicWeather
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-DynamicWeather
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-DynamicWeather.git
+++ echo /home/sam/MagicMirror/modules/MMM-DynamicWeather
+++ awk -F/ '{print $NF}'
++ mname=MMM-DynamicWeather
++ [[ https://github.com/sdetweil/MMM-DynamicWeather.git == *\M\M\M\-\D\y\n\a\m\i\c\W\e\a\t\h\e\r* ]]
++ echo -e 'found module MMM-DynamicWeather \n\t installed from https://github.com/sdetweil/MMM-DynamicWeather.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-DynamicWeather 
+	 installed from https://github.com/sdetweil/MMM-DynamicWeather.git
++ echo https://github.com/sdetweil/MMM-DynamicWeather.git
++ cd /home/sam/MagicMirror/modules/MMM-DynamicWeather
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-WiFiPassword '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-WiFiPassword
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-WiFiPassword
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-WiFiPassword
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/TeraTech/MMM-WiFiPassword.git
+++ echo /home/sam/MagicMirror/modules/MMM-WiFiPassword
+++ awk -F/ '{print $NF}'
++ mname=MMM-WiFiPassword
++ [[ https://github.com/TeraTech/MMM-WiFiPassword.git == *\M\M\M\-\W\i\F\i\P\a\s\s\w\o\r\d* ]]
++ echo -e 'found module MMM-WiFiPassword \n\t installed from https://github.com/TeraTech/MMM-WiFiPassword.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-WiFiPassword 
+	 installed from https://github.com/TeraTech/MMM-WiFiPassword.git
++ echo https://github.com/TeraTech/MMM-WiFiPassword.git
++ cd /home/sam/MagicMirror/modules/MMM-WiFiPassword
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Carousel-o '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Carousel-o
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Carousel-o
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Carousel-o
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/barnabycolby/MMM-Carousel.git
+++ echo /home/sam/MagicMirror/modules/MMM-Carousel-o
+++ awk -F/ '{print $NF}'
++ mname=MMM-Carousel-o
++ [[ https://github.com/barnabycolby/MMM-Carousel.git == *\M\M\M\-\C\a\r\o\u\s\e\l\-\o* ]]
++ echo -e '\e[91m module https://github.com/sdetweil/mm_backup cloned to unique folder name MMM-Carousel-o not backed up \e[90m'
+[91m module https://github.com/sdetweil/mm_backup cloned to unique folder name MMM-Carousel-o not backed up [90m
++ tput init
+[!p[?3;4l[4l>[?69l+ echo
+
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/getip '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/getip
++ echo Backing up for /home/sam/MagicMirror/modules/getip
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/getip
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/getip.git
+++ echo /home/sam/MagicMirror/modules/getip
+++ awk -F/ '{print $NF}'
++ mname=getip
++ [[ https://github.com/sdetweil/getip.git == *\g\e\t\i\p* ]]
++ echo -e 'found module getip \n\t installed from https://github.com/sdetweil/getip.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module getip 
+	 installed from https://github.com/sdetweil/getip.git
++ echo https://github.com/sdetweil/getip.git
++ cd /home/sam/MagicMirror/modules/getip
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-OpenWeatherMapForecast '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-OpenWeatherMapForecast
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-OpenWeatherMapForecast
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-OpenWeatherMapForecast
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/MarcLandis/MMM-OpenWeatherMapForecast.git
+++ echo /home/sam/MagicMirror/modules/MMM-OpenWeatherMapForecast
+++ awk -F/ '{print $NF}'
++ mname=MMM-OpenWeatherMapForecast
++ [[ https://github.com/MarcLandis/MMM-OpenWeatherMapForecast.git == *\M\M\M\-\O\p\e\n\W\e\a\t\h\e\r\M\a\p\F\o\r\e\c\a\s\t* ]]
++ echo -e 'found module MMM-OpenWeatherMapForecast \n\t installed from https://github.com/MarcLandis/MMM-OpenWeatherMapForecast.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-OpenWeatherMapForecast 
+	 installed from https://github.com/MarcLandis/MMM-OpenWeatherMapForecast.git
++ echo https://github.com/MarcLandis/MMM-OpenWeatherMapForecast.git
++ cd /home/sam/MagicMirror/modules/MMM-OpenWeatherMapForecast
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/ImageScheduler '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/ImageScheduler
++ echo Backing up for /home/sam/MagicMirror/modules/ImageScheduler
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/ImageScheduler
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/ImageScheduler.git
+++ echo /home/sam/MagicMirror/modules/ImageScheduler
+++ awk -F/ '{print $NF}'
++ mname=ImageScheduler
++ [[ https://github.com/sdetweil/ImageScheduler.git == *\I\m\a\g\e\S\c\h\e\d\u\l\e\r* ]]
++ echo -e 'found module ImageScheduler \n\t installed from https://github.com/sdetweil/ImageScheduler.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module ImageScheduler 
+	 installed from https://github.com/sdetweil/ImageScheduler.git
++ echo https://github.com/sdetweil/ImageScheduler.git
++ cd /home/sam/MagicMirror/modules/ImageScheduler
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-CalendarExt3Agenda.git
+++ echo /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda
+++ awk -F/ '{print $NF}'
++ mname=MMM-CalendarExt3Agenda
++ [[ https://github.com/sdetweil/MMM-CalendarExt3Agenda.git == *\M\M\M\-\C\a\l\e\n\d\a\r\E\x\t\3\A\g\e\n\d\a* ]]
++ echo -e 'found module MMM-CalendarExt3Agenda \n\t installed from https://github.com/sdetweil/MMM-CalendarExt3Agenda.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-CalendarExt3Agenda 
+	 installed from https://github.com/sdetweil/MMM-CalendarExt3Agenda.git
++ echo https://github.com/sdetweil/MMM-CalendarExt3Agenda.git
++ cd /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=MMM-Config.json
++ '[' MMM-Config.json. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-CalendarExt3Agenda = MMM-Config.json
++ '[' '!' -d /home/sam/MM_backup/MMM-CalendarExt3Agenda ']'
++ cp -a MMM-Config.json /home/sam/MM_backup/MMM-CalendarExt3Agenda
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Forum '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Forum
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Forum
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Forum
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/KristjanESPERANTO/MMM-Forum
+++ echo /home/sam/MagicMirror/modules/MMM-Forum
+++ awk -F/ '{print $NF}'
++ mname=MMM-Forum
++ [[ https://github.com/KristjanESPERANTO/MMM-Forum == *\M\M\M\-\F\o\r\u\m* ]]
++ echo -e 'found module MMM-Forum \n\t installed from https://github.com/KristjanESPERANTO/MMM-Forum'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Forum 
+	 installed from https://github.com/KristjanESPERANTO/MMM-Forum
++ echo https://github.com/KristjanESPERANTO/MMM-Forum
++ cd /home/sam/MagicMirror/modules/MMM-Forum
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Forum = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-Forum ']'
++ mkdir /home/sam/MM_backup/MMM-Forum
++ cp -a install.log /home/sam/MM_backup/MMM-Forum
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-MealieMenu '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-MealieMenu
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-MealieMenu
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-MealieMenu
++ '[' -d .git ']'
+++ git remote -v
+++ grep fetch -m1
+++ git remote -v
+++ awk '{ print $2}'
++ repo1=https://github.com/zanix/MMM-MealieMenu.git
+++ echo /home/sam/MagicMirror/modules/MMM-MealieMenu
+++ awk -F/ '{print $NF}'
++ mname=MMM-MealieMenu
++ [[ https://github.com/zanix/MMM-MealieMenu.git == *\M\M\M\-\M\e\a\l\i\e\M\e\n\u* ]]
++ echo -e 'found module MMM-MealieMenu \n\t installed from https://github.com/zanix/MMM-MealieMenu.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-MealieMenu 
+	 installed from https://github.com/zanix/MMM-MealieMenu.git
++ echo https://github.com/zanix/MMM-MealieMenu.git
++ cd /home/sam/MagicMirror/modules/MMM-MealieMenu
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Surf '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Surf
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Surf
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Surf
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/Privacywonk/MMM-Surf
+++ echo /home/sam/MagicMirror/modules/MMM-Surf
+++ awk -F/ '{print $NF}'
++ mname=MMM-Surf
++ [[ https://github.com/Privacywonk/MMM-Surf == *\M\M\M\-\S\u\r\f* ]]
++ echo -e 'found module MMM-Surf \n\t installed from https://github.com/Privacywonk/MMM-Surf'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Surf 
+	 installed from https://github.com/Privacywonk/MMM-Surf
++ echo https://github.com/Privacywonk/MMM-Surf
++ cd /home/sam/MagicMirror/modules/MMM-Surf
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Surf = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-Surf ']'
++ mkdir /home/sam/MM_backup/MMM-Surf
++ cp -a install.log /home/sam/MM_backup/MMM-Surf
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-euro2024 '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-euro2024
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-euro2024
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-euro2024
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/0m4r/MMM-euro2024.git
+++ echo /home/sam/MagicMirror/modules/MMM-euro2024
+++ awk -F/ '{print $NF}'
++ mname=MMM-euro2024
++ [[ https://github.com/0m4r/MMM-euro2024.git == *\M\M\M\-\e\u\r\o\2\0\2\4* ]]
++ echo -e 'found module MMM-euro2024 \n\t installed from https://github.com/0m4r/MMM-euro2024.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-euro2024 
+	 installed from https://github.com/0m4r/MMM-euro2024.git
++ echo https://github.com/0m4r/MMM-euro2024.git
++ cd /home/sam/MagicMirror/modules/MMM-euro2024
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-WeatherBackground '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-WeatherBackground
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-WeatherBackground
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-WeatherBackground
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/BrianHepler/MMM-WeatherBackground.git
+++ echo /home/sam/MagicMirror/modules/MMM-WeatherBackground
+++ awk -F/ '{print $NF}'
++ mname=MMM-WeatherBackground
++ [[ https://github.com/BrianHepler/MMM-WeatherBackground.git == *\M\M\M\-\W\e\a\t\h\e\r\B\a\c\k\g\r\o\u\n\d* ]]
++ echo -e 'found module MMM-WeatherBackground \n\t installed from https://github.com/BrianHepler/MMM-WeatherBackground.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-WeatherBackground 
+	 installed from https://github.com/BrianHepler/MMM-WeatherBackground.git
++ echo https://github.com/BrianHepler/MMM-WeatherBackground.git
++ cd /home/sam/MagicMirror/modules/MMM-WeatherBackground
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-page-indicator '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-page-indicator
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-page-indicator
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-page-indicator
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/edward-shen/MMM-page-indicator.git
+++ echo /home/sam/MagicMirror/modules/MMM-page-indicator
+++ awk -F/ '{print $NF}'
++ mname=MMM-page-indicator
++ [[ https://github.com/edward-shen/MMM-page-indicator.git == *\M\M\M\-\p\a\g\e\-\i\n\d\i\c\a\t\o\r* ]]
++ echo -e 'found module MMM-page-indicator \n\t installed from https://github.com/edward-shen/MMM-page-indicator.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-page-indicator 
+	 installed from https://github.com/edward-shen/MMM-page-indicator.git
++ echo https://github.com/edward-shen/MMM-page-indicator.git
++ cd /home/sam/MagicMirror/modules/MMM-page-indicator
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/birthdaylist '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/birthdaylist
++ echo Backing up for /home/sam/MagicMirror/modules/birthdaylist
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/birthdaylist
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/birthdaylist
+++ echo /home/sam/MagicMirror/modules/birthdaylist
+++ awk -F/ '{print $NF}'
++ mname=birthdaylist
++ [[ https://github.com/sdetweil/birthdaylist == *\b\i\r\t\h\d\a\y\l\i\s\t* ]]
++ tee -a /home/sam/MagicMirror/installers/backup.log
++ echo -e 'found module birthdaylist \n\t installed from https://github.com/sdetweil/birthdaylist'
+found module birthdaylist 
+	 installed from https://github.com/sdetweil/birthdaylist
++ echo https://github.com/sdetweil/birthdaylist
++ cd /home/sam/MagicMirror/modules/birthdaylist
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/SampleModule '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/SampleModule
++ echo Backing up for /home/sam/MagicMirror/modules/SampleModule
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/SampleModule
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/SampleModule.git
+++ echo /home/sam/MagicMirror/modules/SampleModule
+++ awk -F/ '{print $NF}'
++ mname=SampleModule
++ [[ https://github.com/sdetweil/SampleModule.git == *\S\a\m\p\l\e\M\o\d\u\l\e* ]]
++ echo -e 'found module SampleModule \n\t installed from https://github.com/sdetweil/SampleModule.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module SampleModule 
+	 installed from https://github.com/sdetweil/SampleModule.git
++ echo https://github.com/sdetweil/SampleModule.git
++ cd /home/sam/MagicMirror/modules/SampleModule
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Config '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Config
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Config
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Config
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-Config.git
+++ echo /home/sam/MagicMirror/modules/MMM-Config
+++ awk -F/ '{print $NF}'
++ mname=MMM-Config
++ [[ https://github.com/sdetweil/MMM-Config.git == *\M\M\M\-\C\o\n\f\i\g* ]]
++ echo -e 'found module MMM-Config \n\t installed from https://github.com/sdetweil/MMM-Config.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Config 
+	 installed from https://github.com/sdetweil/MMM-Config.git
++ echo https://github.com/sdetweil/MMM-Config.git
++ cd /home/sam/MagicMirror/modules/MMM-Config
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked='config.html
+config_lastchange_
+config_lastchange_18097557808090
+defaults_.js
+defaults_18097557808090.js
+fribble.js
+local.css
+module_url_hash.json
+modules_lastchange_
+modules_lastchange_18097557808090
+newtext.txt
+qrfile.png
+save_module_list.json
+schema3_18097557808090.json
+sss.txt
+ssssss.txt
+testpage.html'
++ '[' 'config.html
+config_lastchange_
+config_lastchange_18097557808090
+defaults_.js
+defaults_18097557808090.js
+fribble.js
+local.css
+module_url_hash.json
+modules_lastchange_
+modules_lastchange_18097557808090
+newtext.txt
+qrfile.png
+save_module_list.json
+schema3_18097557808090.json
+sss.txt
+ssssss.txt
+testpage.html.' '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Config = 'config.html
+config_lastchange_
+config_lastchange_18097557808090
+defaults_.js
+defaults_18097557808090.js
+fribble.js
+local.css
+module_url_hash.json
+modules_lastchange_
+modules_lastchange_18097557808090
+newtext.txt
+qrfile.png
+save_module_list.json
+schema3_18097557808090.json
+sss.txt
+ssssss.txt
+testpage.html'
++ '[' '!' -d /home/sam/MM_backup/MMM-Config ']'
++ cp -a 'config.html
+config_lastchange_
+config_lastchange_18097557808090
+defaults_.js
+defaults_18097557808090.js
+fribble.js
+local.css
+module_url_hash.json
+modules_lastchange_
+modules_lastchange_18097557808090
+newtext.txt
+qrfile.png
+save_module_list.json
+schema3_18097557808090.json
+sss.txt
+ssssss.txt
+testpage.html' /home/sam/MM_backup/MMM-Config
+cp: cannot stat 'config.html'$'\n''config_lastchange_'$'\n''config_lastchange_18097557808090'$'\n''defaults_.js'$'\n''defaults_18097557808090.js'$'\n''fribble.js'$'\n''local.css'$'\n''module_url_hash.json'$'\n''modules_lastchange_'$'\n''modules_lastchange_18097557808090'$'\n''newtext.txt'$'\n''qrfile.png'$'\n''save_module_list.json'$'\n''schema3_18097557808090.json'$'\n''sss.txt'$'\n''ssssss.txt'$'\n''testpage.html': File name too long
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-transitfeed '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-transitfeed
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-transitfeed
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-transitfeed
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/bnitkin/MMM-transitfeed.git
+++ echo /home/sam/MagicMirror/modules/MMM-transitfeed
+++ awk -F/ '{print $NF}'
++ mname=MMM-transitfeed
++ [[ https://github.com/bnitkin/MMM-transitfeed.git == *\M\M\M\-\t\r\a\n\s\i\t\f\e\e\d* ]]
++ echo -e 'found module MMM-transitfeed \n\t installed from https://github.com/bnitkin/MMM-transitfeed.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-transitfeed 
+	 installed from https://github.com/bnitkin/MMM-transitfeed.git
++ echo https://github.com/bnitkin/MMM-transitfeed.git
++ cd /home/sam/MagicMirror/modules/MMM-transitfeed
+++ grep -v /
+++ git ls-files --other
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-NewsAPI '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-NewsAPI
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-NewsAPI
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-NewsAPI
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/mumblebaj/MMM-NewsAPI.git
+++ echo /home/sam/MagicMirror/modules/MMM-NewsAPI
+++ awk -F/ '{print $NF}'
++ mname=MMM-NewsAPI
++ [[ https://github.com/mumblebaj/MMM-NewsAPI.git == *\M\M\M\-\N\e\w\s\A\P\I* ]]
++ echo -e 'found module MMM-NewsAPI \n\t installed from https://github.com/mumblebaj/MMM-NewsAPI.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-NewsAPI 
+	 installed from https://github.com/mumblebaj/MMM-NewsAPI.git
++ echo https://github.com/mumblebaj/MMM-NewsAPI.git
++ cd /home/sam/MagicMirror/modules/MMM-NewsAPI
+++ git ls-files --other
+++ grep -v package-lock.json
+++ grep -v /
+++ grep -v package.json
++ untracked=MMM-Config.overrides.json
++ '[' MMM-Config.overrides.json. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-NewsAPI = MMM-Config.overrides.json
++ '[' '!' -d /home/sam/MM_backup/MMM-NewsAPI ']'
++ cp -a MMM-Config.overrides.json /home/sam/MM_backup/MMM-NewsAPI
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-PinToggleTest '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-PinToggleTest
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-PinToggleTest
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-PinToggleTest
++ '[' -d .git ']'
++ echo -e '\e[91m module /home/sam/MagicMirror/modules/MMM-PinToggleTest was not cloned from github, so no link can be saved, not backed up \e[90m'
+[91m module /home/sam/MagicMirror/modules/MMM-PinToggleTest was not cloned from github, so no link can be saved, not backed up [90m
++ tput init
+[!p[?3;4l[4l>[?69l+ echo
+
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Ternary-clock '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Ternary-clock
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Ternary-clock
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Ternary-clock
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-Ternary-clock.git
+++ echo /home/sam/MagicMirror/modules/MMM-Ternary-clock
+++ awk -F/ '{print $NF}'
++ mname=MMM-Ternary-clock
++ [[ https://github.com/sdetweil/MMM-Ternary-clock.git == *\M\M\M\-\T\e\r\n\a\r\y\-\c\l\o\c\k* ]]
++ echo -e 'found module MMM-Ternary-clock \n\t installed from https://github.com/sdetweil/MMM-Ternary-clock.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Ternary-clock 
+	 installed from https://github.com/sdetweil/MMM-Ternary-clock.git
++ echo https://github.com/sdetweil/MMM-Ternary-clock.git
++ cd /home/sam/MagicMirror/modules/MMM-Ternary-clock
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Facts '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Facts
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Facts
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Facts
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/alanshen111/MMM-Facts
+++ echo /home/sam/MagicMirror/modules/MMM-Facts
+++ awk -F/ '{print $NF}'
++ mname=MMM-Facts
++ [[ https://github.com/alanshen111/MMM-Facts == *\M\M\M\-\F\a\c\t\s* ]]
++ echo -e 'found module MMM-Facts \n\t installed from https://github.com/alanshen111/MMM-Facts'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Facts 
+	 installed from https://github.com/alanshen111/MMM-Facts
++ echo https://github.com/alanshen111/MMM-Facts
++ cd /home/sam/MagicMirror/modules/MMM-Facts
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Facts = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-Facts ']'
++ mkdir /home/sam/MM_backup/MMM-Facts
++ cp -a install.log /home/sam/MM_backup/MMM-Facts
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Fuel '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Fuel
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Fuel
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Fuel
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/fewieden/MMM-Fuel.git
+++ echo /home/sam/MagicMirror/modules/MMM-Fuel
+++ awk -F/ '{print $NF}'
++ mname=MMM-Fuel
++ [[ https://github.com/fewieden/MMM-Fuel.git == *\M\M\M\-\F\u\e\l* ]]
++ echo -e 'found module MMM-Fuel \n\t installed from https://github.com/fewieden/MMM-Fuel.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Fuel 
+	 installed from https://github.com/fewieden/MMM-Fuel.git
++ echo https://github.com/fewieden/MMM-Fuel.git
++ cd /home/sam/MagicMirror/modules/MMM-Fuel
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Wallpaper '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Wallpaper
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Wallpaper
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Wallpaper
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/kolbyjack/MMM-Wallpaper.git
+++ echo /home/sam/MagicMirror/modules/MMM-Wallpaper
+++ awk -F/ '{print $NF}'
++ mname=MMM-Wallpaper
++ [[ https://github.com/kolbyjack/MMM-Wallpaper.git == *\M\M\M\-\W\a\l\l\p\a\p\e\r* ]]
++ echo -e 'found module MMM-Wallpaper \n\t installed from https://github.com/kolbyjack/MMM-Wallpaper.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Wallpaper 
+	 installed from https://github.com/kolbyjack/MMM-Wallpaper.git
++ echo https://github.com/kolbyjack/MMM-Wallpaper.git
++ cd /home/sam/MagicMirror/modules/MMM-Wallpaper
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Lunar '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Lunar
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Lunar
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Lunar
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-Lunar.git
+++ echo /home/sam/MagicMirror/modules/MMM-Lunar
+++ awk -F/ '{print $NF}'
++ mname=MMM-Lunar
++ [[ https://github.com/sdetweil/MMM-Lunar.git == *\M\M\M\-\L\u\n\a\r* ]]
++ echo -e 'found module MMM-Lunar \n\t installed from https://github.com/sdetweil/MMM-Lunar.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Lunar 
+	 installed from https://github.com/sdetweil/MMM-Lunar.git
++ echo https://github.com/sdetweil/MMM-Lunar.git
++ cd /home/sam/MagicMirror/modules/MMM-Lunar
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-MyPrayerTimes '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-MyPrayerTimes
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-MyPrayerTimes
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-MyPrayerTimes
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-MyPrayerTimes.git
+++ echo /home/sam/MagicMirror/modules/MMM-MyPrayerTimes
+++ awk -F/ '{print $NF}'
++ mname=MMM-MyPrayerTimes
++ [[ https://github.com/sdetweil/MMM-MyPrayerTimes.git == *\M\M\M\-\M\y\P\r\a\y\e\r\T\i\m\e\s* ]]
++ echo -e 'found module MMM-MyPrayerTimes \n\t installed from https://github.com/sdetweil/MMM-MyPrayerTimes.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-MyPrayerTimes 
+	 installed from https://github.com/sdetweil/MMM-MyPrayerTimes.git
++ echo https://github.com/sdetweil/MMM-MyPrayerTimes.git
++ cd /home/sam/MagicMirror/modules/MMM-MyPrayerTimes
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Reddit '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Reddit
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Reddit
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Reddit
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/kjb085/MMM-Reddit.git
+++ echo /home/sam/MagicMirror/modules/MMM-Reddit
+++ awk -F/ '{print $NF}'
++ mname=MMM-Reddit
++ [[ https://github.com/kjb085/MMM-Reddit.git == *\M\M\M\-\R\e\d\d\i\t* ]]
++ echo -e 'found module MMM-Reddit \n\t installed from https://github.com/kjb085/MMM-Reddit.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Reddit 
+	 installed from https://github.com/kjb085/MMM-Reddit.git
++ echo https://github.com/kjb085/MMM-Reddit.git
++ cd /home/sam/MagicMirror/modules/MMM-Reddit
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-MARS '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-MARS
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-MARS
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-MARS
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/mykle1/MMM-MARS
+++ echo /home/sam/MagicMirror/modules/MMM-MARS
+++ awk -F/ '{print $NF}'
++ mname=MMM-MARS
++ [[ https://github.com/mykle1/MMM-MARS == *\M\M\M\-\M\A\R\S* ]]
++ echo -e 'found module MMM-MARS \n\t installed from https://github.com/mykle1/MMM-MARS'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-MARS 
+	 installed from https://github.com/mykle1/MMM-MARS
++ echo https://github.com/mykle1/MMM-MARS
++ cd /home/sam/MagicMirror/modules/MMM-MARS
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-MARS = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-MARS ']'
++ mkdir /home/sam/MM_backup/MMM-MARS
++ cp -a install.log /home/sam/MM_backup/MMM-MARS
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/.save '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/.save
++ echo Backing up for /home/sam/MagicMirror/modules/.save
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/.save
++ '[' -d .git ']'
++ echo -e '\e[91m module /home/sam/MagicMirror/modules/.save was not cloned from github, so no link can be saved, not backed up \e[90m'
+[91m module /home/sam/MagicMirror/modules/.save was not cloned from github, so no link can be saved, not backed up [90m
++ tput init
+[!p[?3;4l[4l>[?69l+ echo
+
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-MP3Player1 '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-MP3Player1
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-MP3Player1
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-MP3Player1
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-MP3Player1
+++ echo /home/sam/MagicMirror/modules/MMM-MP3Player1
+++ awk -F/ '{print $NF}'
++ mname=MMM-MP3Player1
++ [[ https://github.com/sdetweil/MMM-MP3Player1 == *\M\M\M\-\M\P\3\P\l\a\y\e\r\1* ]]
++ echo -e 'found module MMM-MP3Player1 \n\t installed from https://github.com/sdetweil/MMM-MP3Player1'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-MP3Player1 
+	 installed from https://github.com/sdetweil/MMM-MP3Player1
++ echo https://github.com/sdetweil/MMM-MP3Player1
++ cd /home/sam/MagicMirror/modules/MMM-MP3Player1
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Remote-Control '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Remote-Control
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Remote-Control
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Remote-Control
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-Remote-Control.git
+++ echo /home/sam/MagicMirror/modules/MMM-Remote-Control
+++ awk -F/ '{print $NF}'
++ mname=MMM-Remote-Control
++ [[ https://github.com/sdetweil/MMM-Remote-Control.git == *\M\M\M\-\R\e\m\o\t\e\-\C\o\n\t\r\o\l* ]]
++ echo -e 'found module MMM-Remote-Control \n\t installed from https://github.com/sdetweil/MMM-Remote-Control.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Remote-Control 
+	 installed from https://github.com/sdetweil/MMM-Remote-Control.git
++ echo https://github.com/sdetweil/MMM-Remote-Control.git
++ cd /home/sam/MagicMirror/modules/MMM-Remote-Control
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-SendNotification '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-SendNotification
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-SendNotification
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-SendNotification
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-SendNotification.git
+++ echo /home/sam/MagicMirror/modules/MMM-SendNotification
+++ awk -F/ '{print $NF}'
++ mname=MMM-SendNotification
++ [[ https://github.com/sdetweil/MMM-SendNotification.git == *\M\M\M\-\S\e\n\d\N\o\t\i\f\i\c\a\t\i\o\n* ]]
++ echo -e 'found module MMM-SendNotification \n\t installed from https://github.com/sdetweil/MMM-SendNotification.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-SendNotification 
+	 installed from https://github.com/sdetweil/MMM-SendNotification.git
++ echo https://github.com/sdetweil/MMM-SendNotification.git
++ cd /home/sam/MagicMirror/modules/MMM-SendNotification
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-AirQuality '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-AirQuality
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-AirQuality
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-AirQuality
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/CFenner/MMM-AirQuality
+++ echo /home/sam/MagicMirror/modules/MMM-AirQuality
+++ awk -F/ '{print $NF}'
++ mname=MMM-AirQuality
++ [[ https://github.com/CFenner/MMM-AirQuality == *\M\M\M\-\A\i\r\Q\u\a\l\i\t\y* ]]
++ echo -e 'found module MMM-AirQuality \n\t installed from https://github.com/CFenner/MMM-AirQuality'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-AirQuality 
+	 installed from https://github.com/CFenner/MMM-AirQuality
++ echo https://github.com/CFenner/MMM-AirQuality
++ cd /home/sam/MagicMirror/modules/MMM-AirQuality
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-AirQuality = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-AirQuality ']'
++ mkdir /home/sam/MM_backup/MMM-AirQuality
++ cp -a install.log /home/sam/MM_backup/MMM-AirQuality
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/uploadPics '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/uploadPics
++ echo Backing up for /home/sam/MagicMirror/modules/uploadPics
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/uploadPics
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/uploadPics.git
+++ echo /home/sam/MagicMirror/modules/uploadPics
+++ awk -F/ '{print $NF}'
++ mname=uploadPics
++ [[ https://github.com/sdetweil/uploadPics.git == *\u\p\l\o\a\d\P\i\c\s* ]]
++ echo -e 'found module uploadPics \n\t installed from https://github.com/sdetweil/uploadPics.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module uploadPics 
+	 installed from https://github.com/sdetweil/uploadPics.git
++ echo https://github.com/sdetweil/uploadPics.git
++ cd /home/sam/MagicMirror/modules/uploadPics
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked='install.log
+qrcp.json
+sss.deb
+xx.deb'
++ '[' 'install.log
+qrcp.json
+sss.deb
+xx.deb.' '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/uploadPics = 'install.log
+qrcp.json
+sss.deb
+xx.deb'
++ '[' '!' -d /home/sam/MM_backup/uploadPics ']'
++ cp -a 'install.log
+qrcp.json
+sss.deb
+xx.deb' /home/sam/MM_backup/uploadPics
+cp: cannot stat 'install.log'$'\n''qrcp.json'$'\n''sss.deb'$'\n''xx.deb': No such file or directory
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Lottery '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Lottery
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Lottery
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Lottery
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/mykle1/MMM-Lottery
+++ echo /home/sam/MagicMirror/modules/MMM-Lottery
+++ awk -F/ '{print $NF}'
++ mname=MMM-Lottery
++ [[ https://github.com/mykle1/MMM-Lottery == *\M\M\M\-\L\o\t\t\e\r\y* ]]
++ echo -e 'found module MMM-Lottery \n\t installed from https://github.com/mykle1/MMM-Lottery'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Lottery 
+	 installed from https://github.com/mykle1/MMM-Lottery
++ echo https://github.com/mykle1/MMM-Lottery
++ cd /home/sam/MagicMirror/modules/MMM-Lottery
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Lottery = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-Lottery ']'
++ mkdir /home/sam/MM_backup/MMM-Lottery
++ cp -a install.log /home/sam/MM_backup/MMM-Lottery
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-BMI '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-BMI
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-BMI
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-BMI
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/mykle1/MMM-BMI
+++ echo /home/sam/MagicMirror/modules/MMM-BMI
+++ awk -F/ '{print $NF}'
++ mname=MMM-BMI
++ [[ https://github.com/mykle1/MMM-BMI == *\M\M\M\-\B\M\I* ]]
++ tee -a /home/sam/MagicMirror/installers/backup.log
++ echo -e 'found module MMM-BMI \n\t installed from https://github.com/mykle1/MMM-BMI'
+found module MMM-BMI 
+	 installed from https://github.com/mykle1/MMM-BMI
++ echo https://github.com/mykle1/MMM-BMI
++ cd /home/sam/MagicMirror/modules/MMM-BMI
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-BMI = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-BMI ']'
++ mkdir /home/sam/MM_backup/MMM-BMI
++ cp -a install.log /home/sam/MM_backup/MMM-BMI
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/new-MP3Player '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/new-MP3Player
++ echo Backing up for /home/sam/MagicMirror/modules/new-MP3Player
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/new-MP3Player
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/new-MP3Player
+++ echo /home/sam/MagicMirror/modules/new-MP3Player
+++ awk -F/ '{print $NF}'
++ mname=new-MP3Player
++ [[ https://github.com/sdetweil/new-MP3Player == *\n\e\w\-\M\P\3\P\l\a\y\e\r* ]]
++ echo -e 'found module new-MP3Player \n\t installed from https://github.com/sdetweil/new-MP3Player'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module new-MP3Player 
+	 installed from https://github.com/sdetweil/new-MP3Player
++ echo https://github.com/sdetweil/new-MP3Player
++ cd /home/sam/MagicMirror/modules/new-MP3Player
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/mm-hide-all '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/mm-hide-all
++ echo Backing up for /home/sam/MagicMirror/modules/mm-hide-all
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/mm-hide-all
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/masters1222/mm-hide-all
+++ echo /home/sam/MagicMirror/modules/mm-hide-all
+++ awk -F/ '{print $NF}'
++ mname=mm-hide-all
++ [[ https://github.com/masters1222/mm-hide-all == *\m\m\-\h\i\d\e\-\a\l\l* ]]
++ echo -e 'found module mm-hide-all \n\t installed from https://github.com/masters1222/mm-hide-all'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module mm-hide-all 
+	 installed from https://github.com/masters1222/mm-hide-all
++ echo https://github.com/masters1222/mm-hide-all
++ cd /home/sam/MagicMirror/modules/mm-hide-all
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/mm-hide-all = install.log
++ '[' '!' -d /home/sam/MM_backup/mm-hide-all ']'
++ mkdir /home/sam/MM_backup/mm-hide-all
++ cp -a install.log /home/sam/MM_backup/mm-hide-all
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-ModulesGroupsRotation '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-ModulesGroupsRotation
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-ModulesGroupsRotation
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-ModulesGroupsRotation
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-ModulesGroupsRotation.git
+++ echo /home/sam/MagicMirror/modules/MMM-ModulesGroupsRotation
+++ awk -F/ '{print $NF}'
++ mname=MMM-ModulesGroupsRotation
++ [[ https://github.com/sdetweil/MMM-ModulesGroupsRotation.git == *\M\M\M\-\M\o\d\u\l\e\s\G\r\o\u\p\s\R\o\t\a\t\i\o\n* ]]
++ echo -e 'found module MMM-ModulesGroupsRotation \n\t installed from https://github.com/sdetweil/MMM-ModulesGroupsRotation.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-ModulesGroupsRotation 
+	 installed from https://github.com/sdetweil/MMM-ModulesGroupsRotation.git
++ echo https://github.com/sdetweil/MMM-ModulesGroupsRotation.git
++ cd /home/sam/MagicMirror/modules/MMM-ModulesGroupsRotation
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-EmbedURL '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-EmbedURL
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-EmbedURL
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-EmbedURL
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-EmbedURL.git
+++ echo /home/sam/MagicMirror/modules/MMM-EmbedURL
+++ awk -F/ '{print $NF}'
++ mname=MMM-EmbedURL
++ [[ https://github.com/sdetweil/MMM-EmbedURL.git == *\M\M\M\-\E\m\b\e\d\U\R\L* ]]
++ echo -e 'found module MMM-EmbedURL \n\t installed from https://github.com/sdetweil/MMM-EmbedURL.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-EmbedURL 
+	 installed from https://github.com/sdetweil/MMM-EmbedURL.git
++ echo https://github.com/sdetweil/MMM-EmbedURL.git
++ cd /home/sam/MagicMirror/modules/MMM-EmbedURL
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-EmbedURL = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-EmbedURL ']'
++ mkdir /home/sam/MM_backup/MMM-EmbedURL
++ cp -a install.log /home/sam/MM_backup/MMM-EmbedURL
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/wonderslug/MMM-HomeAssistantDisplay.git
+++ echo /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay
+++ awk -F/ '{print $NF}'
++ mname=MMM-HomeAssistantDisplay
++ [[ https://github.com/wonderslug/MMM-HomeAssistantDisplay.git == *\M\M\M\-\H\o\m\e\A\s\s\i\s\t\a\n\t\D\i\s\p\l\a\y* ]]
++ echo -e 'found module MMM-HomeAssistantDisplay \n\t installed from https://github.com/wonderslug/MMM-HomeAssistantDisplay.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-HomeAssistantDisplay 
+	 installed from https://github.com/wonderslug/MMM-HomeAssistantDisplay.git
++ echo https://github.com/wonderslug/MMM-HomeAssistantDisplay.git
++ cd /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-HomeAssistantDisplay = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-HomeAssistantDisplay ']'
++ mkdir /home/sam/MM_backup/MMM-HomeAssistantDisplay
++ cp -a install.log /home/sam/MM_backup/MMM-HomeAssistantDisplay
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-FlightRadarTracker '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-FlightRadarTracker
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-FlightRadarTracker
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-FlightRadarTracker
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/jesmak/MMM-FlightRadarTracker
+++ echo /home/sam/MagicMirror/modules/MMM-FlightRadarTracker
+++ awk -F/ '{print $NF}'
++ mname=MMM-FlightRadarTracker
++ [[ https://github.com/jesmak/MMM-FlightRadarTracker == *\M\M\M\-\F\l\i\g\h\t\R\a\d\a\r\T\r\a\c\k\e\r* ]]
++ echo -e 'found module MMM-FlightRadarTracker \n\t installed from https://github.com/jesmak/MMM-FlightRadarTracker'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-FlightRadarTracker 
+	 installed from https://github.com/jesmak/MMM-FlightRadarTracker
++ echo https://github.com/jesmak/MMM-FlightRadarTracker
++ cd /home/sam/MagicMirror/modules/MMM-FlightRadarTracker
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-FlightRadarTracker = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-FlightRadarTracker ']'
++ mkdir /home/sam/MM_backup/MMM-FlightRadarTracker
++ cp -a install.log /home/sam/MM_backup/MMM-FlightRadarTracker
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Pir '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Pir
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Pir
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Pir
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/bugsounet/MMM-Pir.git
+++ echo /home/sam/MagicMirror/modules/MMM-Pir
+++ awk -F/ '{print $NF}'
++ mname=MMM-Pir
++ [[ https://github.com/bugsounet/MMM-Pir.git == *\M\M\M\-\P\i\r* ]]
++ echo -e 'found module MMM-Pir \n\t installed from https://github.com/bugsounet/MMM-Pir.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Pir 
+	 installed from https://github.com/bugsounet/MMM-Pir.git
++ echo https://github.com/bugsounet/MMM-Pir.git
++ cd /home/sam/MagicMirror/modules/MMM-Pir
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-ViewNotifications '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-ViewNotifications
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-ViewNotifications
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-ViewNotifications
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/glitch452/MMM-ViewNotifications.git
+++ echo /home/sam/MagicMirror/modules/MMM-ViewNotifications
+++ awk -F/ '{print $NF}'
++ mname=MMM-ViewNotifications
++ [[ https://github.com/glitch452/MMM-ViewNotifications.git == *\M\M\M\-\V\i\e\w\N\o\t\i\f\i\c\a\t\i\o\n\s* ]]
++ echo -e 'found module MMM-ViewNotifications \n\t installed from https://github.com/glitch452/MMM-ViewNotifications.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-ViewNotifications 
+	 installed from https://github.com/glitch452/MMM-ViewNotifications.git
++ echo https://github.com/glitch452/MMM-ViewNotifications.git
++ cd /home/sam/MagicMirror/modules/MMM-ViewNotifications
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/EXT-Detector '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/EXT-Detector
++ echo Backing up for /home/sam/MagicMirror/modules/EXT-Detector
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/EXT-Detector
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/bugsounet/EXT-Detector
+++ echo /home/sam/MagicMirror/modules/EXT-Detector
+++ awk -F/ '{print $NF}'
++ mname=EXT-Detector
++ [[ https://github.com/bugsounet/EXT-Detector == *\E\X\T\-\D\e\t\e\c\t\o\r* ]]
++ echo -e 'found module EXT-Detector \n\t installed from https://github.com/bugsounet/EXT-Detector'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module EXT-Detector 
+	 installed from https://github.com/bugsounet/EXT-Detector
++ echo https://github.com/bugsounet/EXT-Detector
++ cd /home/sam/MagicMirror/modules/EXT-Detector
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-GPollen '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-GPollen
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-GPollen
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-GPollen
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/martijndoes/MMM-GPollen
+++ echo /home/sam/MagicMirror/modules/MMM-GPollen
+++ awk -F/ '{print $NF}'
++ mname=MMM-GPollen
++ [[ https://github.com/martijndoes/MMM-GPollen == *\M\M\M\-\G\P\o\l\l\e\n* ]]
++ echo -e 'found module MMM-GPollen \n\t installed from https://github.com/martijndoes/MMM-GPollen'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-GPollen 
+	 installed from https://github.com/martijndoes/MMM-GPollen
++ echo https://github.com/martijndoes/MMM-GPollen
++ cd /home/sam/MagicMirror/modules/MMM-GPollen
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-GPollen = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-GPollen ']'
++ mkdir /home/sam/MM_backup/MMM-GPollen
++ cp -a install.log /home/sam/MM_backup/MMM-GPollen
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-ImagesPhotos '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-ImagesPhotos
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-ImagesPhotos
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-ImagesPhotos
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-ImagesPhotos.git
+++ echo /home/sam/MagicMirror/modules/MMM-ImagesPhotos
+++ awk -F/ '{print $NF}'
++ mname=MMM-ImagesPhotos
++ [[ https://github.com/sdetweil/MMM-ImagesPhotos.git == *\M\M\M\-\I\m\a\g\e\s\P\h\o\t\o\s* ]]
++ echo -e 'found module MMM-ImagesPhotos \n\t installed from https://github.com/sdetweil/MMM-ImagesPhotos.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-ImagesPhotos 
+	 installed from https://github.com/sdetweil/MMM-ImagesPhotos.git
++ echo https://github.com/sdetweil/MMM-ImagesPhotos.git
++ cd /home/sam/MagicMirror/modules/MMM-ImagesPhotos
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked='adaptivefontcolor.js
+color-thief.min.js
+uploads'
++ '[' 'adaptivefontcolor.js
+color-thief.min.js
+uploads.' '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-ImagesPhotos = 'adaptivefontcolor.js
+color-thief.min.js
+uploads'
++ '[' '!' -d /home/sam/MM_backup/MMM-ImagesPhotos ']'
++ cp -a 'adaptivefontcolor.js
+color-thief.min.js
+uploads' /home/sam/MM_backup/MMM-ImagesPhotos
+cp: cannot stat 'adaptivefontcolor.js'$'\n''color-thief.min.js'$'\n''uploads': No such file or directory
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-CalendarExt3 '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-CalendarExt3
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-CalendarExt3
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-CalendarExt3
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/MMRIZE/MMM-CalendarExt3.git
+++ echo /home/sam/MagicMirror/modules/MMM-CalendarExt3
+++ awk -F/ '{print $NF}'
++ mname=MMM-CalendarExt3
++ [[ https://github.com/MMRIZE/MMM-CalendarExt3.git == *\M\M\M\-\C\a\l\e\n\d\a\r\E\x\t\3* ]]
++ echo -e 'found module MMM-CalendarExt3 \n\t installed from https://github.com/MMRIZE/MMM-CalendarExt3.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-CalendarExt3 
+	 installed from https://github.com/MMRIZE/MMM-CalendarExt3.git
++ echo https://github.com/MMRIZE/MMM-CalendarExt3.git
++ cd /home/sam/MagicMirror/modules/MMM-CalendarExt3
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Snowflakes '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Snowflakes
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Snowflakes
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Snowflakes
++ '[' -d .git ']'
++ echo -e '\e[91m module /home/sam/MagicMirror/modules/MMM-Snowflakes was not cloned from github, so no link can be saved, not backed up \e[90m'
+[91m module /home/sam/MagicMirror/modules/MMM-Snowflakes was not cloned from github, so no link can be saved, not backed up [90m
++ tput init
+[!p[?3;4l[4l>[?69l+ echo
+
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Carousel '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Carousel
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Carousel
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Carousel
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/shbatm/MMM-Carousel.git
+++ echo /home/sam/MagicMirror/modules/MMM-Carousel
+++ awk -F/ '{print $NF}'
++ mname=MMM-Carousel
++ [[ https://github.com/shbatm/MMM-Carousel.git == *\M\M\M\-\C\a\r\o\u\s\e\l* ]]
++ echo -e 'found module MMM-Carousel \n\t installed from https://github.com/shbatm/MMM-Carousel.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Carousel 
+	 installed from https://github.com/shbatm/MMM-Carousel.git
++ echo https://github.com/shbatm/MMM-Carousel.git
++ cd /home/sam/MagicMirror/modules/MMM-Carousel
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-SmartWebDisplay '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-SmartWebDisplay
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-SmartWebDisplay
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-SmartWebDisplay
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/AgP42/MMM-SmartWebDisplay.git
+++ echo /home/sam/MagicMirror/modules/MMM-SmartWebDisplay
+++ awk -F/ '{print $NF}'
++ mname=MMM-SmartWebDisplay
++ [[ https://github.com/AgP42/MMM-SmartWebDisplay.git == *\M\M\M\-\S\m\a\r\t\W\e\b\D\i\s\p\l\a\y* ]]
++ echo -e 'found module MMM-SmartWebDisplay \n\t installed from https://github.com/AgP42/MMM-SmartWebDisplay.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-SmartWebDisplay 
+	 installed from https://github.com/AgP42/MMM-SmartWebDisplay.git
++ echo https://github.com/AgP42/MMM-SmartWebDisplay.git
++ cd /home/sam/MagicMirror/modules/MMM-SmartWebDisplay
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Moon '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Moon
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Moon
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Moon
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/EnderFlop/MMM-Moon.git
+++ echo /home/sam/MagicMirror/modules/MMM-Moon
+++ awk -F/ '{print $NF}'
++ mname=MMM-Moon
++ [[ https://github.com/EnderFlop/MMM-Moon.git == *\M\M\M\-\M\o\o\n* ]]
++ echo -e 'found module MMM-Moon \n\t installed from https://github.com/EnderFlop/MMM-Moon.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Moon 
+	 installed from https://github.com/EnderFlop/MMM-Moon.git
++ echo https://github.com/EnderFlop/MMM-Moon.git
++ cd /home/sam/MagicMirror/modules/MMM-Moon
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-FinParcel '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-FinParcel
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-FinParcel
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-FinParcel
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/jesmak/MMM-FinParcel
+++ echo /home/sam/MagicMirror/modules/MMM-FinParcel
+++ awk -F/ '{print $NF}'
++ mname=MMM-FinParcel
++ [[ https://github.com/jesmak/MMM-FinParcel == *\M\M\M\-\F\i\n\P\a\r\c\e\l* ]]
++ echo -e 'found module MMM-FinParcel \n\t installed from https://github.com/jesmak/MMM-FinParcel'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-FinParcel 
+	 installed from https://github.com/jesmak/MMM-FinParcel
++ echo https://github.com/jesmak/MMM-FinParcel
++ cd /home/sam/MagicMirror/modules/MMM-FinParcel
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-FinParcel = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-FinParcel ']'
++ mkdir /home/sam/MM_backup/MMM-FinParcel
++ cp -a install.log /home/sam/MM_backup/MMM-FinParcel
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Rugby '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Rugby
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Rugby
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Rugby
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/mumblebaj/MMM-Rugby
+++ echo /home/sam/MagicMirror/modules/MMM-Rugby
+++ awk -F/ '{print $NF}'
++ mname=MMM-Rugby
++ [[ https://github.com/mumblebaj/MMM-Rugby == *\M\M\M\-\R\u\g\b\y* ]]
++ echo -e 'found module MMM-Rugby \n\t installed from https://github.com/mumblebaj/MMM-Rugby'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Rugby 
+	 installed from https://github.com/mumblebaj/MMM-Rugby
++ echo https://github.com/mumblebaj/MMM-Rugby
++ cd /home/sam/MagicMirror/modules/MMM-Rugby
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Rugby = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-Rugby ']'
++ mkdir /home/sam/MM_backup/MMM-Rugby
++ cp -a install.log /home/sam/MM_backup/MMM-Rugby
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Strava '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Strava
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Strava
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Strava
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/ianperrin/MMM-Strava.git
+++ echo /home/sam/MagicMirror/modules/MMM-Strava
+++ awk -F/ '{print $NF}'
++ mname=MMM-Strava
++ [[ https://github.com/ianperrin/MMM-Strava.git == *\M\M\M\-\S\t\r\a\v\a* ]]
++ echo -e 'found module MMM-Strava \n\t installed from https://github.com/ianperrin/MMM-Strava.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Strava 
+	 installed from https://github.com/ianperrin/MMM-Strava.git
++ echo https://github.com/ianperrin/MMM-Strava.git
++ cd /home/sam/MagicMirror/modules/MMM-Strava
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-pages '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-pages
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-pages
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-pages
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-pages
+++ echo /home/sam/MagicMirror/modules/MMM-pages
+++ awk -F/ '{print $NF}'
++ mname=MMM-pages
++ [[ https://github.com/sdetweil/MMM-pages == *\M\M\M\-\p\a\g\e\s* ]]
++ echo -e 'found module MMM-pages \n\t installed from https://github.com/sdetweil/MMM-pages'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-pages 
+	 installed from https://github.com/sdetweil/MMM-pages
++ echo https://github.com/sdetweil/MMM-pages
++ cd /home/sam/MagicMirror/modules/MMM-pages
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-KeyBindings '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-KeyBindings
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-KeyBindings
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-KeyBindings
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/shbatm/MMM-KeyBindings.git
+++ echo /home/sam/MagicMirror/modules/MMM-KeyBindings
+++ awk -F/ '{print $NF}'
++ mname=MMM-KeyBindings
++ [[ https://github.com/shbatm/MMM-KeyBindings.git == *\M\M\M\-\K\e\y\B\i\n\d\i\n\g\s* ]]
++ echo -e 'found module MMM-KeyBindings \n\t installed from https://github.com/shbatm/MMM-KeyBindings.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-KeyBindings 
+	 installed from https://github.com/shbatm/MMM-KeyBindings.git
++ echo https://github.com/shbatm/MMM-KeyBindings.git
++ cd /home/sam/MagicMirror/modules/MMM-KeyBindings
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Flights '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Flights
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Flights
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Flights
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://gitlab.com/khassel/MMM-Flights
+++ echo /home/sam/MagicMirror/modules/MMM-Flights
+++ awk -F/ '{print $NF}'
++ mname=MMM-Flights
++ [[ https://gitlab.com/khassel/MMM-Flights == *\M\M\M\-\F\l\i\g\h\t\s* ]]
++ echo -e 'found module MMM-Flights \n\t installed from https://gitlab.com/khassel/MMM-Flights'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Flights 
+	 installed from https://gitlab.com/khassel/MMM-Flights
++ echo https://gitlab.com/khassel/MMM-Flights
++ cd /home/sam/MagicMirror/modules/MMM-Flights
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-Flights = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-Flights ']'
++ mkdir /home/sam/MM_backup/MMM-Flights
++ cp -a install.log /home/sam/MM_backup/MMM-Flights
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/mm-music-player '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/mm-music-player
++ echo Backing up for /home/sam/MagicMirror/modules/mm-music-player
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/mm-music-player
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/masters1222/mm-music-player
+++ echo /home/sam/MagicMirror/modules/mm-music-player
+++ awk -F/ '{print $NF}'
++ mname=mm-music-player
++ [[ https://github.com/masters1222/mm-music-player == *\m\m\-\m\u\s\i\c\-\p\l\a\y\e\r* ]]
++ echo -e 'found module mm-music-player \n\t installed from https://github.com/masters1222/mm-music-player'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module mm-music-player 
+	 installed from https://github.com/masters1222/mm-music-player
++ echo https://github.com/masters1222/mm-music-player
++ cd /home/sam/MagicMirror/modules/mm-music-player
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/mm-music-player = install.log
++ '[' '!' -d /home/sam/MM_backup/mm-music-player ']'
++ mkdir /home/sam/MM_backup/mm-music-player
++ cp -a install.log /home/sam/MM_backup/mm-music-player
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Tado '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Tado
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Tado
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Tado
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-Tado.git
+++ echo /home/sam/MagicMirror/modules/MMM-Tado
+++ awk -F/ '{print $NF}'
++ mname=MMM-Tado
++ [[ https://github.com/sdetweil/MMM-Tado.git == *\M\M\M\-\T\a\d\o* ]]
++ echo -e 'found module MMM-Tado \n\t installed from https://github.com/sdetweil/MMM-Tado.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Tado 
+	 installed from https://github.com/sdetweil/MMM-Tado.git
++ echo https://github.com/sdetweil/MMM-Tado.git
++ cd /home/sam/MagicMirror/modules/MMM-Tado
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-NewsFeedTicker '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-NewsFeedTicker
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-NewsFeedTicker
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-NewsFeedTicker
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-NewsFeedTicker.git
+++ echo /home/sam/MagicMirror/modules/MMM-NewsFeedTicker
+++ awk -F/ '{print $NF}'
++ mname=MMM-NewsFeedTicker
++ [[ https://github.com/sdetweil/MMM-NewsFeedTicker.git == *\M\M\M\-\N\e\w\s\F\e\e\d\T\i\c\k\e\r* ]]
++ echo -e 'found module MMM-NewsFeedTicker \n\t installed from https://github.com/sdetweil/MMM-NewsFeedTicker.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-NewsFeedTicker 
+	 installed from https://github.com/sdetweil/MMM-NewsFeedTicker.git
++ echo https://github.com/sdetweil/MMM-NewsFeedTicker.git
++ cd /home/sam/MagicMirror/modules/MMM-NewsFeedTicker
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/internet-monitor '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/internet-monitor
++ echo Backing up for /home/sam/MagicMirror/modules/internet-monitor
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/internet-monitor
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/BrianHepler/internet-monitor.git
+++ echo /home/sam/MagicMirror/modules/internet-monitor
+++ awk -F/ '{print $NF}'
++ mname=internet-monitor
++ [[ https://github.com/BrianHepler/internet-monitor.git == *\i\n\t\e\r\n\e\t\-\m\o\n\i\t\o\r* ]]
++ echo -e 'found module internet-monitor \n\t installed from https://github.com/BrianHepler/internet-monitor.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module internet-monitor 
+	 installed from https://github.com/BrianHepler/internet-monitor.git
++ echo https://github.com/BrianHepler/internet-monitor.git
++ cd /home/sam/MagicMirror/modules/internet-monitor
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=postinstall
++ '[' postinstall. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/internet-monitor = postinstall
++ '[' '!' -d /home/sam/MM_backup/internet-monitor ']'
++ mkdir /home/sam/MM_backup/internet-monitor
++ cp -a postinstall /home/sam/MM_backup/internet-monitor
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-OneCallWeather '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-OneCallWeather
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-OneCallWeather
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-OneCallWeather
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git
+++ echo /home/sam/MagicMirror/modules/MMM-OneCallWeather
+++ awk -F/ '{print $NF}'
++ mname=MMM-OneCallWeather
++ [[ https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git == *\M\M\M\-\O\n\e\C\a\l\l\W\e\a\t\h\e\r* ]]
++ echo -e 'found module MMM-OneCallWeather \n\t installed from https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-OneCallWeather 
+	 installed from https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git
++ echo https://github.com/KristjanESPERANTO/MMM-OneCallWeather.git
++ cd /home/sam/MagicMirror/modules/MMM-OneCallWeather
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/o-MMM-Carousel '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/o-MMM-Carousel
++ echo Backing up for /home/sam/MagicMirror/modules/o-MMM-Carousel
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/o-MMM-Carousel
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sdetweil/MMM-Carousel.git
+++ echo /home/sam/MagicMirror/modules/o-MMM-Carousel
+++ awk -F/ '{print $NF}'
++ mname=o-MMM-Carousel
++ [[ https://github.com/sdetweil/MMM-Carousel.git == *\o\-\M\M\M\-\C\a\r\o\u\s\e\l* ]]
++ echo -e '\e[91m module https://github.com/sdetweil/mm_backup cloned to unique folder name o-MMM-Carousel not backed up \e[90m'
+[91m module https://github.com/sdetweil/mm_backup cloned to unique folder name o-MMM-Carousel not backed up [90m
++ tput init
+[!p[?3;4l[4l>[?69l+ echo
+
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-DateCounter '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-DateCounter
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-DateCounter
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-DateCounter
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/alltopafi/MMM-DateCounter.git
+++ echo /home/sam/MagicMirror/modules/MMM-DateCounter
+++ awk -F/ '{print $NF}'
++ mname=MMM-DateCounter
++ [[ https://github.com/alltopafi/MMM-DateCounter.git == *\M\M\M\-\D\a\t\e\C\o\u\n\t\e\r* ]]
++ echo -e 'found module MMM-DateCounter \n\t installed from https://github.com/alltopafi/MMM-DateCounter.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-DateCounter 
+	 installed from https://github.com/alltopafi/MMM-DateCounter.git
++ echo https://github.com/alltopafi/MMM-DateCounter.git
++ cd /home/sam/MagicMirror/modules/MMM-DateCounter
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-CalendarExt2 '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-CalendarExt2
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-CalendarExt2
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-CalendarExt2
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/MMM-CalendarExt2/MMM-CalendarExt2.git
+++ echo /home/sam/MagicMirror/modules/MMM-CalendarExt2
+++ awk -F/ '{print $NF}'
++ mname=MMM-CalendarExt2
++ [[ https://github.com/MMM-CalendarExt2/MMM-CalendarExt2.git == *\M\M\M\-\C\a\l\e\n\d\a\r\E\x\t\2* ]]
++ echo -e 'found module MMM-CalendarExt2 \n\t installed from https://github.com/MMM-CalendarExt2/MMM-CalendarExt2.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-CalendarExt2 
+	 installed from https://github.com/MMM-CalendarExt2/MMM-CalendarExt2.git
++ echo https://github.com/MMM-CalendarExt2/MMM-CalendarExt2.git
++ cd /home/sam/MagicMirror/modules/MMM-CalendarExt2
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-OpenmapWeather '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-OpenmapWeather
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-OpenmapWeather
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-OpenmapWeather
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/sathyarajv/MMM-OpenmapWeather.git
+++ echo /home/sam/MagicMirror/modules/MMM-OpenmapWeather
+++ awk -F/ '{print $NF}'
++ mname=MMM-OpenmapWeather
++ [[ https://github.com/sathyarajv/MMM-OpenmapWeather.git == *\M\M\M\-\O\p\e\n\m\a\p\W\e\a\t\h\e\r* ]]
++ echo -e 'found module MMM-OpenmapWeather \n\t installed from https://github.com/sathyarajv/MMM-OpenmapWeather.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-OpenmapWeather 
+	 installed from https://github.com/sathyarajv/MMM-OpenmapWeather.git
++ echo https://github.com/sathyarajv/MMM-OpenmapWeather.git
++ cd /home/sam/MagicMirror/modules/MMM-OpenmapWeather
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-NOAA3 '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-NOAA3
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-NOAA3
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-NOAA3
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/cowboysdude/MMM-NOAA3
+++ echo /home/sam/MagicMirror/modules/MMM-NOAA3
+++ awk -F/ '{print $NF}'
++ mname=MMM-NOAA3
++ [[ https://github.com/cowboysdude/MMM-NOAA3 == *\M\M\M\-\N\O\A\A\3* ]]
++ echo -e 'found module MMM-NOAA3 \n\t installed from https://github.com/cowboysdude/MMM-NOAA3'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-NOAA3 
+	 installed from https://github.com/cowboysdude/MMM-NOAA3
++ echo https://github.com/cowboysdude/MMM-NOAA3
++ cd /home/sam/MagicMirror/modules/MMM-NOAA3
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=install.log
++ '[' install.log. '!=' . ']'
++ echo untracked files for module /home/sam/MagicMirror/modules/MMM-NOAA3 = install.log
++ '[' '!' -d /home/sam/MM_backup/MMM-NOAA3 ']'
++ mkdir /home/sam/MM_backup/MMM-NOAA3
++ cp -a install.log /home/sam/MM_backup/MMM-NOAA3
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Fitbit2 '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Fitbit2
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Fitbit2
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Fitbit2
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/m-roberts/MMM-Fitbit2.git
+++ echo /home/sam/MagicMirror/modules/MMM-Fitbit2
+++ awk -F/ '{print $NF}'
++ mname=MMM-Fitbit2
++ [[ https://github.com/m-roberts/MMM-Fitbit2.git == *\M\M\M\-\F\i\t\b\i\t\2* ]]
++ echo -e 'found module MMM-Fitbit2 \n\t installed from https://github.com/m-roberts/MMM-Fitbit2.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-Fitbit2 
+	 installed from https://github.com/m-roberts/MMM-Fitbit2.git
++ echo https://github.com/m-roberts/MMM-Fitbit2.git
++ cd /home/sam/MagicMirror/modules/MMM-Fitbit2
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-WeeklySchedule '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-WeeklySchedule
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-WeeklySchedule
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-WeeklySchedule
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/pinsdorf/MMM-WeeklySchedule.git
+++ echo /home/sam/MagicMirror/modules/MMM-WeeklySchedule
+++ awk -F/ '{print $NF}'
++ mname=MMM-WeeklySchedule
++ [[ https://github.com/pinsdorf/MMM-WeeklySchedule.git == *\M\M\M\-\W\e\e\k\l\y\S\c\h\e\d\u\l\e* ]]
++ echo -e 'found module MMM-WeeklySchedule \n\t installed from https://github.com/pinsdorf/MMM-WeeklySchedule.git'
++ tee -a /home/sam/MagicMirror/installers/backup.log
+found module MMM-WeeklySchedule 
+	 installed from https://github.com/pinsdorf/MMM-WeeklySchedule.git
++ echo https://github.com/pinsdorf/MMM-WeeklySchedule.git
++ cd /home/sam/MagicMirror/modules/MMM-WeeklySchedule
+++ git ls-files --other
+++ grep -v /
+++ grep -v package-lock.json
+++ grep -v package.json
++ untracked=
++ '[' . '!=' . ']'
++ cd -
++ cd -
++ for module in "${modules[@]}"
++ '[' /home/sam/MagicMirror/modules/MMM-Remote-Control.orig '!=' /home/sam/MagicMirror/modules ']'
++ cd /home/sam/MagicMirror/modules/MMM-Remote-Control.orig
++ echo Backing up for /home/sam/MagicMirror/modules/MMM-Remote-Control.orig
++ tee -a /home/sam/MagicMirror/installers/backup.log
+Backing up for /home/sam/MagicMirror/modules/MMM-Remote-Control.orig
++ '[' -d .git ']'
+++ git remote -v
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo1=https://github.com/Jopyth/MMM-Remote-Control.git
+++ echo /home/sam/MagicMirror/modules/MMM-Remote-Control.orig
+++ awk -F/ '{print $NF}'
++ mname=MMM-Remote-Control.orig
++ [[ https://github.com/Jopyth/MMM-Remote-Control.git == *\M\M\M\-\R\e\m\o\t\e\-\C\o\n\t\r\o\l\.\o\r\i\g* ]]
++ echo -e '\e[91m module https://github.com/sdetweil/mm_backup cloned to unique folder name MMM-Remote-Control.orig not backed up \e[90m'
+[91m module https://github.com/sdetweil/mm_backup cloned to unique folder name MMM-Remote-Control.orig not backed up [90m
++ tput init
+[!p[?3;4l[4l>[?69l+ echo
+
++ cd -
++ '[' -e /home/sam/MM_backup/module_list ']'
++ savefile=temp
++ cat /home/sam/MM_backup/module_list
++ sort -t/ -k5
++ rm /home/sam/MM_backup/module_list
++ mv temp /home/sam/MM_backup/module_list
++ cd /home/sam/MM_backup
+++ git config user.email
++ '[' sdetweil@gmail.com. == . ']'
++ git add .
+++ date
++ git commit -m 'updated on Fri Jan 24 09:06:02 AM CST 2025 '
+[restore-branch 6b9405d] updated on Fri Jan 24 09:06:02 AM CST 2025
+ 20 files changed, 624 insertions(+), 586 deletions(-)
+ create mode 100644 MMM-AirQuality/install.log
+ create mode 100644 MMM-BMI/install.log
+ create mode 100644 MMM-EmbedURL/install.log
+ create mode 100644 MMM-Facts/install.log
+ create mode 100644 MMM-FinParcel/install.log
+ create mode 100644 MMM-FlightRadarTracker/install.log
+ create mode 100644 MMM-Flights/install.log
+ create mode 100644 MMM-Forum/install.log
+ create mode 100644 MMM-GPollen/install.log
+ create mode 100644 MMM-HomeAssistantDisplay/install.log
+ create mode 100644 MMM-Lottery/install.log
+ create mode 100644 MMM-MARS/install.log
+ create mode 100644 MMM-NOAA3/install.log
+ create mode 100644 MMM-Rugby/install.log
+ create mode 100644 MMM-Surf/install.log
+ create mode 100644 mm-hide-all/install.log
+ create mode 100644 mm-music-player/install.log
+++ git for-each-ref --sort=creatordate --format '%(refname)'
+++ grep tags
+++ grep -v -
+++ awk -F/ '{print $3}'
+++ sort -r -g
+++ head -n1
++ last_tag=13
++ '[' 13. '!=' . ']'
++ next_tagnumber=14
++ '[' Linux '!=' Darwin ']'
++ SAVEIFS=
++ IFS='
+'
++ tag_list=($(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep - | awk -F/ {'print $3'}))
+++ git for-each-ref --sort=creatordate --format '%(refname)'
+++ grep tags
+++ grep -
+++ awk -F/ '{print $3}'
++ '[' Linux '!=' Darwin ']'
++ IFS=
++ '[' 0 -gt 0 ']'
++ :
+++ date
++ git tag -a 14 -m 'backup on Fri Jan 24 09:06:02 AM CST 2025 '
++ echo backup completed, see the git repo at /home/sam/MM_backup
++ tee -a /home/sam/MagicMirror/installers/backup.log
+backup completed, see the git repo at /home/sam/MM_backup
++ remote=false
++ '[' true. == . ']'
++ cd /home/sam/MM_backup
++ '[' mm_backup. '!=' . ']'
++ remote=true
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo=
++ '[' . == . ']'
++ git remote add origin https://github.com/sdetweil/mm_backup.git
++ git branch -M main
+++ git remote -v
+++ grep fetch -m1
+++ awk '{ print $2}'
++ repo=https://github.com/sdetweil/mm_backup.git
++ git push -u origin main --tags
+To https://github.com/sdetweil/mm_backup.git
+ ! [rejected]        main -> main (fetch first)
+ ! [rejected]        1 -> 1 (already exists)
+ ! [rejected]        10 -> 10 (already exists)
+ ! [rejected]        11 -> 11 (already exists)
+ ! [rejected]        12 -> 12 (already exists)
+ ! [rejected]        13 -> 13 (already exists)
+ ! [rejected]        14 -> 14 (already exists)
+ ! [rejected]        2 -> 2 (already exists)
+ ! [rejected]        3 -> 3 (already exists)
+ ! [rejected]        4 -> 4 (already exists)
+ ! [rejected]        5 -> 5 (already exists)
+ ! [rejected]        6 -> 6 (already exists)
+ ! [rejected]        7 -> 7 (already exists)
+ ! [rejected]        8 -> 8 (already exists)
+ ! [rejected]        9 -> 9 (already exists)
+error: failed to push some refs to 'https://github.com/sdetweil/mm_backup.git'
+hint: Updates were rejected because the tag already exists in the remote.
++ echo see this link for how to fetch tags for restore
+see this link for how to fetch tags for restore
++ echo https://devconnected.com/how-to-list-git-tags/
+https://devconnected.com/how-to-list-git-tags/
++ echo or run the list_tags.sh command from this repo
+or run the list_tags.sh command from this repo
++ cd -
++ date '+backup ended  - %a %b %e %H:%M:%S %Z %Y'
