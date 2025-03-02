@@ -6,6 +6,7 @@ known_list="request valid-url jsdom node-fetch digest-fetch"
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
+logpath=$HOME/MagicMirror/installers
 logfile=$HOME/MagicMirror/installers/restore.log
 # is this a mac
 mac=$(uname -s)
@@ -134,6 +135,10 @@ if [ $mac == 'Darwin' ]; then
 else
 	cmd=readlink
 fi
+
+if [ ! -d $logpath ]; then
+	mkdir $logpath
+fi
 date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
 echo
@@ -148,6 +153,13 @@ if [ "$fetch." != "." ]; then
 						# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 				echo folder $saveDir does not exist, will clone it from github | tee -a $logfile
+				touch $savedir &>/dev/null
+				if [ $? -ne 0 ]; then
+					echo unable to create backup folder $saveDir
+					exit
+				else
+				  rm $savedir
+				fi
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
 				cd $saveDir
 			else

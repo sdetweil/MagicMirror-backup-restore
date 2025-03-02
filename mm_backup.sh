@@ -213,7 +213,9 @@ do
 						echo "username specified with -u $user_name doesn't match the user in the github repo $useru, aborting" | tee -a $logfile
 						exit 6
 					fi
-
+				else
+					# no -u parm, taken from repo url
+					user_name=$useru
 				fi
 			else
 				reponame=$repo
@@ -297,7 +299,7 @@ cp -p $base/css/custom.css $saveDir 2>/dev/null
 	fi 
 	# get the installed module list
 	# split putput on new lines, not spaces
-	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -J % echo "%"))
+	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
 	if [ $mac != 'Darwin' ]; then
 		IFS=$SAVEIFS
 	fi
@@ -394,32 +396,44 @@ git add .
 # commit them to the local repo
 git commit -m "updated on $(date) $msg"
 	# check for any new named tags
-	last_tag=$(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep -v - | awk -F/ {'print $3'} | sort -r -g | head -n1)
+	#last_tag=$(git tag | grep -v origin | sort -nr | head -n1)
+	# last_tag=$(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep -v - | awk -F/ {'print $3'} | sort -r -g | head -n1)
 	# if we found some then we have the highest number
-	if [ "$last_tag." != "." ]; then
-		next_tagnumber=$((last_tag+1))
-	fi
+	#if [ "$last_tag." != "." ]; then
+  #	next_tagnumber=$((last_tag+1))
+	#fi
 	# lets check  rename any old date named tags
 	if [ $mac != 'Darwin' ]; then
 		SAVEIFS=$IFS   # Save current IFS
 		IFS=$'\n'
 	fi
-	# split output on new lines, not spaces
-	tag_list=($(git for-each-ref --sort=creatordate --format '%(refname)'  | grep tags | grep - | awk -F/ {'print $3'}))
-	if [ $mac != 'Darwin' ]; then
-		IFS=$SAVEIFS
-	fi
-	if [ ${#tag_list} -gt 0 ]; then
-		for tag in "${tag_list[@]}"
-		do
-			git tag $next_tagnumber $tag 2>/dev/null
-			git tag -d $tag 2>/dev/null
-			next_tagnumber=$((next_tagnumber+1))
-		done
+	# get the last local tag
+	last_local_tag=$(git tag | grep -v origin | sort -nr | head -n1)
+	# get the last remote tag
+	remote_tag=$(git ls-remote --tags origin | grep -v "{}" | tr '/' ' ' | sort -k 4nr | head -n1 | awk '{print $NF}')
+	# if they are not equal
+	if [ "$last_local_tag" != "$remote_tag" ]; then
+		# tags are not equal, host wins
+		# is remote not set
+		if [ "$remote_tag." != "."  ]; then
+				next_tagnumber=$remote_tag
+		else
+		# if local not set
+			if [ "$last_local_tag." != "." ]; then
+					next_tagnumber=$last_local_tag
+			else
+					next_tagnumber=0
+			fi
+		fi
 	else
-		:
+		echo tags match >>$logfile
+		next_tagnumber=$last_local_tag
+		# if tag numbers are equal, nothing to do
 	fi
+	# increment to next
+	next_tagnumber=$((next_tagnumber+1))
 
+# set the tag use the message
 git tag -a $next_tagnumber -m "backup on $(date) $msg"
 echo backup completed, see the git repo at $saveDir| tee -a $logfile
 remote=false
@@ -452,7 +466,7 @@ else
 		#	git remote add origin https://github.com/$user_name/$reponame.git
 		#	git branch -M main
 		#fi
-		git push -u origin main --tags
+		git push -u origin main refs/tags/$next_tagnumber >>$logfile
 	fi
 
 fi
