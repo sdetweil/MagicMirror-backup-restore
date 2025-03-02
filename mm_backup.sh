@@ -128,7 +128,6 @@ do
 			echo -e "\t -u github username"
 			echo -e	"\t\tdefault none"
 			echo
-			echo -e "\t -u github password or token"
 			echo -e	"\t\tdefault none"
 			exit 1
 	 	;;

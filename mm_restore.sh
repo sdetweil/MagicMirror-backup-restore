@@ -123,8 +123,8 @@ done
 
 # if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
 
-if [[ $0 == *.sh ]]; then
-  process_args "$0 $@"
+if [[ "$0" == *.sh ]]; then
+  process_args "$@"
 else
   process_args "$0 $@"
 fi
