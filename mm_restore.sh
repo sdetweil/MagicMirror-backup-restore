@@ -127,7 +127,7 @@ done
 if [[ "$0" == *.sh ]]; then
   process_args "$@"
 else
-  if [ $# -gt 1 ]; then 
+  if [ $# -ge 1 ]; then 
   	process_args "$0 $@"
   else
   	process_args "$0"
