@@ -221,7 +221,7 @@ do
 				reponame=$repo
 			fi
 		;;
-    		p)
+    	p)
 			# push requested
 			push=true
 			# ignore the repo name , get the one from the save folder, if the folder exists and remote is set
@@ -253,7 +253,11 @@ done
 if [[ "$0" == *.sh ]]; then 
   process_args "$@"
 else
-  process_args "$0 $@"
+  if [ "#@." != "." ]; then
+  	process_args "$0 $@"
+  else
+    process_args "$0"
+  fi
 fi
 
 date +"backup starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile

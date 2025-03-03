@@ -79,11 +79,11 @@ do
 			fi
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
-		u)
+	u)
 			# username
 			user_name=$(echo $OPTARG | tr -d [:blank:])
 		;;
-		r)
+	r)
 			# github repo name or url
 			repo=$OPTARG
 			# check for full url specified, we only want the name
@@ -107,7 +107,7 @@ do
 				fetch=true
 			fi
 		;;
-	  	f)
+	f)
 			fetch=true
 			fetch_tag=
 			vparm=${@:$OPTIND}
@@ -116,7 +116,7 @@ do
           		   OPTIND=$((OPTIND+1))
       			fi
 		;;
-	  *) echo "Illegal option '-$OPTARG'" && exit 3
+	*) #echo "Illegal option '$OPTARG'" && exit 3
 	 ;;
     esac
 done
@@ -127,9 +127,13 @@ done
 if [[ "$0" == *.sh ]]; then
   process_args "$@"
 else
-  process_args "$0 $@"
+  if [ "$@." != "." ]; then 
+  	process_args "$0 $@"
+  else
+  	process_args "$0"
+  fi
 fi
-
+exit
 if [ $mac == 'Darwin' ]; then
 	cmd=greadlink
 else
