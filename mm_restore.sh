@@ -116,7 +116,7 @@ do
           		   OPTIND=$((OPTIND+1))
       			fi
 		;;
-	*) #echo "Illegal option '$OPTARG'" && exit 3
+	*) echo "Illegal option '-$OPTARG'" && exit 3
 	 ;;
     esac
 done
@@ -133,7 +133,7 @@ else
   	process_args "$0"
   fi
 fi
-exit
+
 if [ $mac == 'Darwin' ]; then
 	cmd=greadlink
 else
