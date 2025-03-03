@@ -193,7 +193,7 @@ do
 			# check for fulll url specified, we only want the name
 			IFS='/'; repoIN=($OPTARG); unset IFS;
 			# if there were slashes
-			if [ ${#repoIN[@]} -gt 0 ]; then
+			if [ ${#repoIN[@]} -gt 1 ]; then
 				# get the last element of split array
 				index=${#repoIN[@]}
 				# get the  name
@@ -218,7 +218,7 @@ do
 					user_name=$useru
 				fi
 			else
-				reponame=$repo
+				repo_name=$(echo $repo | tr -d [[:blank:]])
 			fi
 		;;
     	p)

@@ -8,6 +8,7 @@ base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
 logpath=$HOME/MagicMirror/installers
 logfile=$HOME/MagicMirror/installers/restore.log
+user_name=''
 # is this a mac
 mac=$(uname -s)
 fetch=
@@ -103,7 +104,7 @@ do
 				repo_name=${repoN[0]}
 				fetch=true
 			else
-				repo_name=$repo
+				repo_name=$(echo $repo | tr -d [[:blank:]])
 				fetch=true
 			fi
 		;;
@@ -151,7 +152,7 @@ cd $HOME
 # fetch  use latest tag (bu highest number)
 
 if [ "$fetch." != "." ]; then
-	echo trying to fetch repo from github | tee -a $logfile
+	echo trying to fetch $repo_name from github | tee -a $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
 						# and we have username and repo name
