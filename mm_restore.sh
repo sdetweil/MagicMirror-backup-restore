@@ -89,7 +89,7 @@ do
 			# check for full url specified, we only want the name
 			IFS='/'; repoIN=($OPTARG); unset IFS;
 			# if there were slashes
-			if [ ${#repoIN[@]} -gt 0 ]; then
+			if [ ${#repoIN[@]} -gt 1 ]; then
 				# get the last element of split array
 				index=${#repoIN[@]}
 				# get the  name
