@@ -105,7 +105,7 @@ bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-back
 # getting the github access token
 * on github, select your profile
 
-* select password and authentication <br>
+* select settings <br>
 * select developer settings <br>
 * personal access tokens <br>
 * classic token <br>
