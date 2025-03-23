@@ -147,6 +147,15 @@ fi
 date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
 echo
+if [ ! -e node_modules/@electron/rebuild ];  then 
+    if [ -e node_modules/.bin/electron-rebuild ]; then 
+	# remove the old version
+      npm uninstall electron-rebuild >>$logfile 2>&1
+	fi	  
+	# install the new version 
+	npm install @electron/rebuild >>$logfile 2>&1
+fi
+
 cd $HOME
 
 # fetch  use latest tag (bu highest number)

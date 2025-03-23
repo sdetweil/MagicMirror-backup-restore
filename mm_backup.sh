@@ -328,31 +328,41 @@ if [ ${#modules[@]} -gt 0 ]; then
 				# if it has a git repo, then it was cloned
 				if [ -d ".git" ]; then
 					# get the remote repo url
-				    repo1=$(git remote -v | git remote -v| grep fetch -m1 | awk '{ print $2}')
+				    repo1=$(git remote -v | grep fetch -m1 | awk '{ print $2}')
 				    # just the module name, not the path
 				    mname=$(echo $module |awk -F/ '{print $NF}')
 				    if [[ "$repo1" == *"$mname"* ]]; then
 					    echo -e "found module $mname \n\t installed from $repo1" | tee -a $logfile
-					    # save it to the file
-					    echo $repo1 >>$repo_list
-					    cd $module
-					    untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json)
-					    if [ "$untracked." != "." ]; then
-					    	echo untracked files for module $module = $untracked >> $logfile
-					    	# if the folder doesn't exist
-					    	if [ ! -d $saveDir/$mname ]; then
-					    		# create it.
-					    		mkdir $saveDir/$mname 2>/dev/null
-					    	fi
-					    	# copy the untracked(extra)  files to the backup for this module
-					    	cp -a $untracked $saveDir/$mname
-					    fi
-                                    	    cd - >/dev/null
-        			    else
-						echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
-						# reset the echo ansi code back to default
-						# could save the folder name along with the url
-						# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
+						r=$(curl --head -L --silent --write-out "%{http_code}" --output /dev/null $repo1)
+						if [ $r -eq 200 ]; then 
+							# save it to the file
+							echo $repo1 >>$repo_list
+							cd $module
+							exclude=""
+							if [ -e "ls_exclude" ]; then
+							  exclude="-X ls_exclude"
+							fi  
+							untracked=$(git ls-files $exclude --other | grep -v / | grep -v package-lock.json | grep -v package.json)
+							if [ "$untracked." != "." ]; then
+								echo untracked files for module $module = $untracked >> $logfile
+								# if the folder doesn't exist
+								if [ ! -d $saveDir/$mname ]; then
+									# create it.
+									mkdir $saveDir/$mname 2>/dev/null
+								fi
+								# copy the untracked(extra)  files to the backup for this module
+								cp -a $untracked $saveDir/$mname
+
+							else
+								echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
+								# reset the echo ansi code back to default
+								# could save the folder name along with the url
+								# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
+							fi														
+							cd - >/dev/null
+						else 
+							echo remote URL not found $repo1 | tee -a $logfile
+						fi
 						tput init 2>/dev/null
 						echo
 				    fi
@@ -412,27 +422,31 @@ git commit -m "updated on $(date) $msg"
 		IFS=$'\n'
 	fi
 	# get the last local tag
-	last_local_tag=$(git tag | grep -v origin | sort -nr | head -n1)
+	last_local_tag=$(git tag |  sort -nr | head -n1)
 	# get the last remote tag
-	remote_tag=$(git ls-remote --tags origin | grep -v "{}" | tr '/' ' ' | sort -k 4nr | head -n1 | awk '{print $NF}')
-	# if they are not equal
-	if [ "$last_local_tag" != "$remote_tag" ]; then
-		# tags are not equal, host wins
-		# is remote not set
-		if [ "$remote_tag." != "."  ]; then
-				next_tagnumber=$remote_tag
-		else
-		# if local not set
-			if [ "$last_local_tag." != "." ]; then
-					next_tagnumber=$last_local_tag
+	if [ $(git remote -v | grep -m1 origin) ]; then 
+		remote_tag=$(git ls-remote --tags origin | grep -v "{}" | tr '/' ' ' | sort -k 4nr | head -n1 | awk '{print $NF}')
+		# if they are not equal
+		if [ "$last_local_tag" != "$remote_tag" ]; then
+			# tags are not equal, host wins
+			# is remote not set
+			if [ "$remote_tag." != "."  ]; then
+					next_tagnumber=$remote_tag
 			else
-					next_tagnumber=0
+			# if local not set
+				if [ "$last_local_tag." != "." ]; then
+						next_tagnumber=$last_local_tag
+				else
+						next_tagnumber=0
+				fi
 			fi
+		else
+			echo tags match >>$logfile
+			next_tagnumber=$last_local_tag
+			# if tag numbers are equal, nothing to do
 		fi
-	else
-		echo tags match >>$logfile
-		next_tagnumber=$last_local_tag
-		# if tag numbers are equal, nothing to do
+	else 	
+	  next_tagnumber=$last_local_tag
 	fi
 	# increment to next
 	next_tagnumber=$((next_tagnumber+1))
