@@ -147,9 +147,10 @@ fi
 date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
 echo
-if [ ! -e node_modules/@electron/rebuild ];  then 
-    if [ -e node_modules/.bin/electron-rebuild ]; then 
-	# remove the old version
+if [ ! -e $base/node_modules/@electron/rebuild ];  then 
+    cd $base
+    if [ -e $base/node_modules/.bin/electron-rebuild ]; then 
+	# remove the old version	  
       npm uninstall electron-rebuild >>$logfile 2>&1
 	fi	  
 	# install the new version 
@@ -167,12 +168,12 @@ if [ "$fetch." != "." ]; then
 						# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 				echo folder $saveDir does not exist, will clone it from github | tee -a $logfile
-				touch $savedir &>/dev/null
+				touch $saveDir &>/dev/null
 				if [ $? -ne 0 ]; then
 					echo unable to create backup folder $saveDir
 					exit
 				else
-				  rm $savedir
+				  rm $saveDir
 				fi
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
 				cd $saveDir
@@ -248,6 +249,11 @@ if [ -e $repo_list ]; then
 			# loop thru the modules listed
 			for repo_url in "${urls[@]}"
 			do
+				if [[ $repo_url =~ "bugsounet" ]]; then
+					echo -----WARNING source repo, $repo_url removed, skipping | tee -a $logfile
+					echo
+					continue
+				fi
 				module=$(echo $repo_url | awk -F/ '{print $(NF)}' | awk -F. '{print $1}')
 				# if the module folder does not exist
 				if [ ! -d $module ]; then
