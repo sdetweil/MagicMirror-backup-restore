@@ -263,7 +263,7 @@ if [ -e $repo_list ]; then
 					if [ $gc_rc -eq 0 ]; then
 						cd $module
 						if [ -e package.json ]; then
-							if [ $(grep \""dependencies\"" package.json | wc -l) -gt 0 ]; then
+							if [ $(grep -e \""dependencies\"" -e \""postinstall\"" package.json | wc -l) -gt 0  ]; then
 								echo module $module contains package.json, doing npm install | tee -a $logfile
 								npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>&1 >> $logfile
 							fi
