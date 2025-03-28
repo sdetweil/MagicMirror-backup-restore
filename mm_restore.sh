@@ -274,7 +274,7 @@ if [ -e $repo_list ]; then
 						if [ -d $saveDir/$module ]; then
 							# copy them from the backup
 							echo there were files saved for this module , restoring | tee -a $logfile
-							cp -a $saveDir/$module/. ~/MagicMirror/modules/$module
+							cp -a $saveDir/$module/. $base/modules/$module
 						fi
 						cd - >/dev/null
 					fi

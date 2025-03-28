@@ -297,16 +297,17 @@ cp -p $base/config/config.js $saveDir
 # copy custom.css, no error if not found
 cp -p $base/css/custom.css $saveDir 2>/dev/null
 
-	if [ $mac != 'Darwin' ]; then
-		SAVEIFS=$IFS   # Save current IFS
-		IFS=$'\n'
-	fi 
-	# get the installed module list
-	# split putput on new lines, not spaces
-	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
-	if [ $mac != 'Darwin' ]; then
-		IFS=$SAVEIFS
-	fi
+
+	SAVEIFS=$IFS   # Save current IFS
+#if [ $mac != 'Darwin' ]; then	
+	IFS=$'\n'
+#else  
+#    IFS=
+#fi 
+# get the installed module list
+# split putput on new lines, not spaces
+modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
+echo $modules 
 
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
@@ -342,27 +343,38 @@ if [ ${#modules[@]} -gt 0 ]; then
 							if [ -e "ls_exclude" ]; then
 							  exclude="-X ls_exclude"
 							fi  
-							untracked=$(git ls-files $exclude --other | grep -v / | grep -v package-lock.json | grep -v package.json)
+							#IFS=$'\n'
+							#untracked=$(git ls-files $exclude --other | grep -v / | grep -v package-lock.json | grep -v package.json| grep -v node_modules)
+							untracked=($(git add -A -n | grep -v node_modules/ | grep -v .git/ | grep -v package-lock.json | grep -v package.json | grep -v install.log| grep add | awk '{print $2}'| tr -d "'" | xargs -I % echo "%"))
+
 							if [ "$untracked." != "." ]; then
-								echo untracked files for module $module = $untracked >> $logfile
+							    echo untracked files for module $module = "$untracked" >> $logfile
 								# if the folder doesn't exist
 								if [ ! -d $saveDir/$mname ]; then
 									# create it.
 									mkdir $saveDir/$mname 2>/dev/null
 								fi
 								# copy the untracked(extra)  files to the backup for this module
-								cp -a $untracked $saveDir/$mname
+								for f in "${untracked[@]}"
+								do
+								   # if the file path has a slash, there is a directory
+								   if echo "$f" | grep -q "/"; then
+								      #  loop thru and create the directories too, then copy
+								      dirname $f | while read path;do mkdir -p "$saveDir/$mname/$path"; done && cp -p $f $saveDir/$mname/$f
+								   else
+								   	  # just a file, copy it
+									  cp -p $f $saveDir/$mname
+								   fi								   
+								done 
 
 							else
 								echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
-								# reset the echo ansi code back to default
-								# could save the folder name along with the url
-								# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
 							fi														
 							cd - >/dev/null
 						else 
 							echo remote URL not found $repo1 | tee -a $logfile
 						fi
+						# reset the echo ansi code back to default						
 						tput init 2>/dev/null
 						echo
 				    fi
@@ -381,6 +393,9 @@ if [ ${#modules[@]} -gt 0 ]; then
 		rm $repo_list
 		mv $savefile $repo_list
 	fi 
+	#if [ $mac != 'Darwin' ]; then
+		IFS=$SAVEIFS
+	#fi
 fi
 
 cd $saveDir
