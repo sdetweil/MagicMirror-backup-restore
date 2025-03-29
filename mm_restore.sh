@@ -265,7 +265,7 @@ if [ -e $repo_list ]; then
 						if [ -e package.json ]; then
 							if [ $(grep -e \""dependencies\"" -e \""postinstall\"" package.json | wc -l) -gt 0  ]; then
 								echo module $module contains package.json, doing npm install | tee -a $logfile
-								npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>&1 >> $logfile
+								npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>>$logfile >> $logfile
 							fi
 						else
 							echo module $module DOES NOT contain package.json | tee -a $logfile
