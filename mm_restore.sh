@@ -8,6 +8,7 @@ base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
 logpath=$HOME/MagicMirror/installers
 logfile=$HOME/MagicMirror/installers/restore.log
+user_name=''
 # is this a mac
 mac=$(uname -s)
 fetch=
@@ -79,17 +80,17 @@ do
 			fi
 			echo backup folder is $saveDir | tee -a $logfile
     ;;
-		u)
+	u)
 			# username
 			user_name=$(echo $OPTARG | tr -d [:blank:])
 		;;
-		r)
+	r)
 			# github repo name or url
 			repo=$OPTARG
 			# check for full url specified, we only want the name
 			IFS='/'; repoIN=($OPTARG); unset IFS;
 			# if there were slashes
-			if [ ${#repoIN[@]} -gt 0 ]; then
+			if [ ${#repoIN[@]} -gt 1 ]; then
 				# get the last element of split array
 				index=${#repoIN[@]}
 				# get the  name
@@ -103,11 +104,11 @@ do
 				repo_name=${repoN[0]}
 				fetch=true
 			else
-				repo_name=$repo
+				repo_name=$(echo $repo | tr -d [[:blank:]])
 				fetch=true
 			fi
 		;;
-	  	f)
+	f)
 			fetch=true
 			fetch_tag=
 			vparm=${@:$OPTIND}
@@ -116,7 +117,7 @@ do
           		   OPTIND=$((OPTIND+1))
       			fi
 		;;
-	  *) echo "Illegal option '-$OPTARG'" && exit 3
+	*) echo "Illegal option '-$OPTARG'" && exit 3
 	 ;;
     esac
 done
@@ -124,10 +125,14 @@ done
 
 # if this script was started directly then arg0 is 'mm_backup.sh', else it is the first argument provided (oops) 
 
-if [[ $0 == *.sh ]]; then
-  process_args "$0 $@"
+if [[ "$0" == *.sh ]]; then
+  process_args "$@"
 else
-  process_args "$0 $@"
+  if [ $# -ge 1 ]; then 
+  	process_args "$0 $@"
+  else
+  	process_args "$0"
+  fi
 fi
 
 if [ $mac == 'Darwin' ]; then
@@ -142,23 +147,33 @@ fi
 date +"restore starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 echo restoring MM configuration from $saveDir to $base | tee -a $logfile
 echo
+if [ ! -e $base/node_modules/@electron/rebuild ];  then 
+    cd $base
+    if [ -e $base/node_modules/.bin/electron-rebuild ]; then 
+	# remove the old version	  
+      npm uninstall electron-rebuild >>$logfile 2>&1
+	fi	  
+	# install the new version 
+	npm install @electron/rebuild >>$logfile 2>&1
+fi
+
 cd $HOME
 
 # fetch  use latest tag (bu highest number)
 
 if [ "$fetch." != "." ]; then
-	echo trying to fetch repo from github | tee -a $logfile
+	echo trying to fetch $repo_name from github | tee -a $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
 						# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 				echo folder $saveDir does not exist, will clone it from github | tee -a $logfile
-				touch $savedir &>/dev/null
+				touch $saveDir &>/dev/null
 				if [ $? -ne 0 ]; then
 					echo unable to create backup folder $saveDir
 					exit
 				else
-				  rm $savedir
+				  rm $saveDir
 				fi
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
 				cd $saveDir
@@ -234,6 +249,11 @@ if [ -e $repo_list ]; then
 			# loop thru the modules listed
 			for repo_url in "${urls[@]}"
 			do
+				if [[ $repo_url =~ "bugsounet" ]]; then
+					echo -----WARNING source repo, $repo_url removed, skipping | tee -a $logfile
+					echo
+					continue
+				fi
 				module=$(echo $repo_url | awk -F/ '{print $(NF)}' | awk -F. '{print $1}')
 				# if the module folder does not exist
 				if [ ! -d $module ]; then
@@ -243,9 +263,9 @@ if [ -e $repo_list ]; then
 					if [ $gc_rc -eq 0 ]; then
 						cd $module
 						if [ -e package.json ]; then
-							if [ $(grep \""dependencies\"" package.json | wc -l) -gt 0 ]; then
+							if [ $(grep -e \""dependencies\"" -e \""postinstall\"" package.json | wc -l) -gt 0  ]; then
 								echo module $module contains package.json, doing npm install | tee -a $logfile
-								npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>&1 >> $logfile
+								npm install --only=prod --no-audit --no-fund --loglevel error --legacy-peer-deps 2>>$logfile >> $logfile
 							fi
 						else
 							echo module $module DOES NOT contain package.json | tee -a $logfile
@@ -254,7 +274,7 @@ if [ -e $repo_list ]; then
 						if [ -d $saveDir/$module ]; then
 							# copy them from the backup
 							echo there were files saved for this module , restoring | tee -a $logfile
-							cp -a $saveDir/$module/. ~/MagicMirror/modules/$module
+							cp -a $saveDir/$module/. $base/modules/$module
 						fi
 						cd - >/dev/null
 					fi

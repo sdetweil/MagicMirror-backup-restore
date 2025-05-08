@@ -105,10 +105,11 @@ bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-back
 # getting the github access token
 * on github, select your profile
 
-* select password and authentication <br>
+* select settings <br>
 * select developer settings <br>
 * personal access tokens <br>
 * classic token <br>
+* make sure to select write/update repository permissions <br>
 * generate <br>
 
  >you will use this string for your password on the command prompt for the git password

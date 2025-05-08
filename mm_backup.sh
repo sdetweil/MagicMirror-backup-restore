@@ -128,7 +128,6 @@ do
 			echo -e "\t -u github username"
 			echo -e	"\t\tdefault none"
 			echo
-			echo -e "\t -u github password or token"
 			echo -e	"\t\tdefault none"
 			exit 1
 	 	;;
@@ -194,7 +193,7 @@ do
 			# check for fulll url specified, we only want the name
 			IFS='/'; repoIN=($OPTARG); unset IFS;
 			# if there were slashes
-			if [ ${#repoIN[@]} -gt 0 ]; then
+			if [ ${#repoIN[@]} -gt 1 ]; then
 				# get the last element of split array
 				index=${#repoIN[@]}
 				# get the  name
@@ -219,10 +218,10 @@ do
 					user_name=$useru
 				fi
 			else
-				reponame=$repo
+				repo_name=$(echo $repo | tr -d [[:blank:]])
 			fi
 		;;
-    		p)
+    	p)
 			# push requested
 			push=true
 			# ignore the repo name , get the one from the save folder, if the folder exists and remote is set
@@ -254,7 +253,11 @@ done
 if [[ "$0" == *.sh ]]; then 
   process_args "$@"
 else
-  process_args "$0 $@"
+  if [ $# -ge 1 ]; then 
+  	process_args "$0 $@"
+  else
+    process_args "$0"
+  fi
 fi
 
 date +"backup starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
@@ -294,16 +297,17 @@ cp -p $base/config/config.js $saveDir
 # copy custom.css, no error if not found
 cp -p $base/css/custom.css $saveDir 2>/dev/null
 
-	if [ $mac != 'Darwin' ]; then
-		SAVEIFS=$IFS   # Save current IFS
-		IFS=$'\n'
-	fi 
-	# get the installed module list
-	# split putput on new lines, not spaces
-	modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
-	if [ $mac != 'Darwin' ]; then
-		IFS=$SAVEIFS
-	fi
+
+	SAVEIFS=$IFS   # Save current IFS
+#if [ $mac != 'Darwin' ]; then	
+	IFS=$'\n'
+#else  
+#    IFS=
+#fi 
+# get the installed module list
+# split putput on new lines, not spaces
+modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
+echo $modules 
 
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
@@ -325,7 +329,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 				# if it has a git repo, then it was cloned
 				if [ -d ".git" ]; then
 					# get the remote repo url
-				    repo1=$(git remote -v | git remote -v| grep fetch -m1 | awk '{ print $2}')
+				    repo1=$(git remote -v | grep fetch -m1 | awk '{ print $2}')
 				    # just the module name, not the path
 				    mname=$(echo $module |awk -F/ '{print $NF}')
 				    if [[ "$repo1" == *"$mname"* ]]; then
@@ -371,6 +375,9 @@ if [ ${#modules[@]} -gt 0 ]; then
 		rm $repo_list
 		mv $savefile $repo_list
 	fi 
+	#if [ $mac != 'Darwin' ]; then
+		IFS=$SAVEIFS
+	#fi
 fi
 
 cd $saveDir
@@ -412,7 +419,7 @@ git commit -m "updated on $(date) $msg"
 		IFS=$'\n'
 	fi
 	# get the last local tag
-	last_local_tag=$(git tag | grep -v origin | sort -nr | head -n1)
+	last_local_tag=$(git tag |  sort -nr | head -n1)
 	# get the last remote tag
 	remote_tag=$(git ls-remote --tags origin | grep -v "{}" | tr '/' ' ' | sort -k 4nr | head -n1 | awk '{print $NF}')
 	# if they are not equal
@@ -430,17 +437,16 @@ git commit -m "updated on $(date) $msg"
 				next_tagnumber=$remote_tag
 			fi 
 		else
-		# if local not set
+			# if local not set
 			if [ "$last_local_tag." != "." ]; then
 					next_tagnumber=$last_local_tag
 			else
 					next_tagnumber=0
 			fi
-		fi
-	else
-		echo tags match >>$logfile
-		next_tagnumber=$last_local_tag
-		# if tag numbers are equal, nothing to do
+		fi			
+	else 	
+	  # tags equal use local number
+	  next_tagnumber=$last_local_tag
 	fi
 	# increment to next
 	next_tagnumber=$((next_tagnumber+1))
