@@ -331,31 +331,34 @@ if [ ${#modules[@]} -gt 0 ]; then
 				    if [[ "$repo1" == *"$mname"* ]]; then
 					    echo -e "found module $mname \n\t installed from $repo1" | tee -a $logfile
 					    # save it to the file
-					    echo $repo1 >>$repo_list
-					    cd $module
-					    untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json)
-					    if [ "$untracked." != "." ]; then
-					    	echo untracked files for module $module = $untracked >> $logfile
-					    	# if the folder doesn't exist
-					    	if [ ! -d $saveDir/$mname ]; then
-					    		# create it.
-					    		mkdir $saveDir/$mname 2>/dev/null
-					    	fi
-					    	# copy the untracked(extra)  files to the backup for this module
-					    	cp -a $untracked $saveDir/$mname
-					    fi
-                                    	    cd - >/dev/null
+						if [ -d $module ]; then 
+					    	echo $repo1 >>$repo_list						
+							cd $module
+							untracked=$(git status --short| grep  '^?' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
+							# untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json | grep -v install.log)
+							if [ "$untracked." != "." ]; then
+								echo untracked files for module $module = $untracked >> $logfile
+								# if the folder doesn't exist
+								if [ ! -d $saveDir/$mname ]; then
+									# create it.
+									mkdir $saveDir/$mname 2>/dev/null
+								fi
+								# copy the untracked(extra)  files to the backup for this module
+								cp -a --parents $untracked $saveDir/$mname					    
+							fi
         			    else
-						echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
-						# reset the echo ansi code back to default
-						# could save the folder name along with the url
-						# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
-						tput init 2>/dev/null
-						echo
+							echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
+							# reset the echo ansi code back to default
+							# could save the folder name along with the url
+							# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
+							tput init 2>/dev/null
+							echo
+						fi
+						cd - >/dev/null
 				    fi
 				else
-           			    echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
-			            tput init 2>/dev/null
+					echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
+					tput init 2>/dev/null
 				    echo
 				fi
 			# back to the current folder
@@ -417,7 +420,15 @@ git commit -m "updated on $(date) $msg"
 		# tags are not equal, host wins
 		# is remote not set
 		if [ "$remote_tag." != "."  ]; then
+			# if local tag is greater than remote
+			# local backed up, but not pushed
+			if [ "$last_local_tag" -gt "$remote_tag" ]; then
+				# use it
+				next_tagnumber=$last_local_tag
+			else
+				# use remote
 				next_tagnumber=$remote_tag
+			fi 
 		else
 		# if local not set
 			if [ "$last_local_tag." != "." ]; then
