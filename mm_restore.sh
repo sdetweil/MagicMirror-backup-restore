@@ -6,8 +6,8 @@ known_list="request valid-url jsdom node-fetch digest-fetch"
 
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
-logpath=$HOME/MagicMirror/installers
-logfile=$HOME/MagicMirror/installers/restore.log
+logpath=$base/installers
+logfile=$logpath/restore.log
 user_name=''
 # is this a mac
 mac=$(uname -s)
