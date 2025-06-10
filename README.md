@@ -1,6 +1,10 @@
 # MagicMirror-backup-restore
 scripts for backing up magicmirror config and module github urls  and using that to restore at a later time
 
+# DO NOT CLONE this repo, execute by copy/pasting one of the command lines below
+# that way you always use the most up to date script(s)
+# DO NOT CLONE this repo
+
 these scripts will  save the config.js , custom.css and the list of installed modules (and where they are loaded from (github urls)
 into a git repo, so they can be versioned and uploaded to a ===>**private**<===  github repository
   if you wish to use github and never have, see below for how to get the required access token
