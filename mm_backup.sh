@@ -338,7 +338,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 						if [ -d $module ]; then 
 					    	echo $repo1 >>$repo_list						
 							cd $module
-							untracked=$(git status --short| grep  '^?' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
+							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
 							# untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json | grep -v install.log)
 							if [ "$untracked." != "." ]; then
 								echo untracked files for module $module = $untracked >> $logfile
