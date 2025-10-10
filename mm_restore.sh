@@ -220,6 +220,10 @@ git checkout tags/$last_tag -b restore-branch >/dev/null 2>&1
 echo created git branch from last tag = $last_tag | tee -a $logfile
 # restore the config for MM
 cp -p $saveDir/config.js $base/config
+# copy the config template files, toss any errors
+cp -p $saveDir/config.js.template $base/config 2>/dev/null
+cp -p $saveDir/config.env $base/config 2>/dev/null
+
 # restore the custom/.css for MM (no error if not found)
 cp -p $saveDir/custom.css $base/css 2>/dev/null
 

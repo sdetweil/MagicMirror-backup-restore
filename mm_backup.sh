@@ -294,6 +294,14 @@ repo_list=$saveDir/module_list
 echo $msg_prefix folder $saveDir | tee -a $logfile
 #copy config.js
 cp -p $base/config/config.js $saveDir
+# copy the config template files if they exist
+if [ -e $base/config/config.js.template ]; then
+	cp -p $base/config/config.js.template $saveDir
+fi
+# the environment file too, might not exist if user using ENV variables instead
+if [ -e $base/config/config.env ]; then
+	cp -p $base/config/config.env $saveDir
+fi
 # copy custom.css, no error if not found
 cp -p $base/css/custom.css $saveDir 2>/dev/null
 
