@@ -355,7 +355,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 						if [ -d $module ]; then 
 					    	echo $repo1 >>$repo_list						
 							cd $module
-							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
+							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' -e '^ M' | awk '{print $NF}' | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
 							# untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json | grep -v install.log)
 							if [ "$untracked." != "." ]; then
 								echo untracked files for module $module = $untracked >> $logfile
@@ -368,7 +368,11 @@ if [ ${#modules[@]} -gt 0 ]; then
 								echo other files $untracked
                                                                 #rsync -aSvuc `echo $untracked` $savedir/$mname
                                                                 # have to figure out what to do about subfolders on mac, no --parents option
-								cp -a --parents $untracked $saveDir/$mname					    
+								if [ $mac == "Darwin" ]; then 
+                                                                  rsync -R $untracked $saveDir/$mname
+								else 
+								  cp -a --parents $untracked $saveDir/$mname					    
+								fi
 							fi
         			    else
 							echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
