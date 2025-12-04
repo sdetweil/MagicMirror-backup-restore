@@ -303,6 +303,14 @@ repo_list=$saveDir/module_list
 echo $msg_prefix folder $saveDir | tee -a $logfile
 #copy config.js
 cp -p $base/config/config.js $saveDir
+# copy the config template files if they exist
+if [ -e $base/config/config.js.template ]; then
+	cp -p $base/config/config.js.template $saveDir
+fi
+# the environment file too, might not exist if user using ENV variables instead
+if [ -e $base/config/config.env ]; then
+	cp -p $base/config/config.env $saveDir
+fi
 # copy custom.css, no error if not found
 cp -p $base/css/custom.css $saveDir 2>/dev/null
 
@@ -347,7 +355,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 						if [ -d $module ]; then 
 					    	echo $repo1 >>$repo_list						
 							cd $module
-							untracked=$(git status --short| grep  '^?' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
+							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
 							# untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json | grep -v install.log)
 							if [ "$untracked." != "." ]; then
 								echo untracked files for module $module = $untracked >> $logfile
