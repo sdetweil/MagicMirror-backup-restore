@@ -61,7 +61,7 @@ do
 			echo processing backup parm
 		# backup folder
 			saveDir=$(echo $OPTARG | tr -d [:blank:])
-			# if the backup/restrore folder exists in users home
+			# if the backup/restore folder exists in users home
 			if [ -d $HOME/$saveDir ]; then
 				  # use it
 					saveDir=$HOME/$saveDir
@@ -176,7 +176,12 @@ if [ "$fetch." != "." ]; then
 				  rm $saveDir
 				fi
 				git clone "https://github.com/$user_name/$repo_name" $saveDir >/dev/null 2>&1
-				cd $saveDir
+				if [ ! -d $saveDir ]; then
+					echo "git clone failed, either the repo name $repo_name is wrong, or you don't have access to it with that userid/password combination"
+					exit 1
+				else
+					cd $saveDir
+				fi
 			else
 				echo -e "\t\t need both the github username and the github repository name to retrieve the github repo" | tee -a $logfile
 				exit 4
