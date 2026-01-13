@@ -9,7 +9,8 @@ default_user=temp
 user_name=$default_user
 email=$user_name@somemail.com
 default_email=$email
-logfile=$base/installers/backup.log
+logpath=$base/installers
+logfile=$logpath/backup.log
 push=false
 
 # is this a mac
@@ -138,12 +139,16 @@ do
 				base=$HOME/$b
 			else
 				if [ -d $b ]; then
-					base=$b
+					base=$b                                        
 				else
+					
 					echo unable to find Source folder $OPTARG | tee -a $logfile
 					exit 2
 				fi
 			fi
+			if [ ! -d $base/installers ]; then 
+                          mkdir $base/installers
+                        fi
 			logfile=$base/installers/backup.log
 			echo source MagicMirror folder is $base | tee -a $logfile
     		;;
@@ -260,6 +265,10 @@ else
   fi
 fi
 
+if [ ! -d $logpath ]; then
+   mkdir $logpath
+fi 
+
 date +"backup starting  - %a %b %e %H:%M:%S %Z %Y" >>$logfile
 
 if [ ! -d $saveDir ]; then
@@ -346,7 +355,7 @@ if [ ${#modules[@]} -gt 0 ]; then
 						if [ -d $module ]; then 
 					    	echo $repo1 >>$repo_list						
 							cd $module
-							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' | cut -d\  -f2- | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
+							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' -e '^ M' | awk '{print $NF}' | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
 							# untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json | grep -v install.log)
 							if [ "$untracked." != "." ]; then
 								echo untracked files for module $module = $untracked >> $logfile
@@ -356,7 +365,14 @@ if [ ${#modules[@]} -gt 0 ]; then
 									mkdir $saveDir/$mname 2>/dev/null
 								fi
 								# copy the untracked(extra)  files to the backup for this module
-								cp -a --parents $untracked $saveDir/$mname					    
+								echo other files $untracked
+                                                                #rsync -aSvuc `echo $untracked` $savedir/$mname
+                                                                # have to figure out what to do about subfolders on mac, no --parents option
+								if [ $mac == "Darwin" ]; then 
+                                                                  rsync -R $untracked $saveDir/$mname
+								else 
+								  cp -a --parents $untracked $saveDir/$mname					    
+								fi
 							fi
         			    else
 							echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
