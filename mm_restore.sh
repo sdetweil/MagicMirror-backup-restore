@@ -32,6 +32,9 @@ do
 				echo -e "\t -f "
 				echo -e	"\t\tfetch/clone repo and restore latest tag"
 				echo
+				echo -e "\t -f tagnum"
+				echo -e	"\t\tfetch/clone repo and restore tag (tagnum)"				
+				echo
 				echo -e "\t -r github repository name (reponame)"
 				echo -e	"\t\ttypically https://github.com/username/reponame.git"
 				echo -e	"\t\tdefault output of git remote -v (if set)"
@@ -115,7 +118,7 @@ do
 			if [[ ${vparm:0:1} != "-" ]];then
           		   fetch_tag=$(echo ${@:$OPTIND}| cut -d' ' -f1)
           		   OPTIND=$((OPTIND+1))
-      			fi
+      		fi
 		;;
 	*) echo "Illegal option '-$OPTARG'" && exit 3
 	 ;;
@@ -188,6 +191,11 @@ if [ "$fetch." != "." ]; then
 			fi
   else
   	cd $saveDir
+	# get on some known branch
+	git checkout main >/dev/null 2>&1
+	# delete the temp branch for the restore
+	git branch -D restore-branch >/dev/null 2>&1
+
   	if [ "$(git remote -v)." != "." ]; then
   		repo_name=$(git remote -v | head -n1 | awk '{print $2}')
   		echo $saveDir exists fetching all tags from $repo_name | tee -a $logfile
@@ -215,10 +223,7 @@ if [ "$fetch_tag." != "." ]; then
 else
 	last_tag=$(git tag -l  | sort -g -r | head -n1)
 fi
-# get on some known branch
-git checkout main >/dev/null 2>&1
-# delete the temp branch for the restore
-git branch -D restore-branch >/dev/null 2>&1
+
 # create the branch from the tag
 git checkout tags/$last_tag -b restore-branch >/dev/null 2>&1
 
@@ -339,5 +344,11 @@ if [ -e $repo_list ]; then
 	echo restore completed, you can start MagicMirror now | tee -a $logfile
 else
 	echo no saved module repo list | tee -a $logfile
+fi
+# check and reset the branch back to main
+current_branch=$(git branch | grep '^*' | awk '{print $2}')
+if [ $current_branch != 'main' ]; then
+   git checkout main >/dev/null 2>1
+   git branch -D $current_branch >/dev/null 2>&1
 fi
 date +"restore ended  - %a %b %e %H:%M:%S %Z %Y" >>$logfile

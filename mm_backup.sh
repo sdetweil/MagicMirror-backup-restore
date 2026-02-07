@@ -298,6 +298,14 @@ else
 fi
 check_for_push
 
+cd $saveDir 2>/dev/null
+current_branch=$(git branch | grep '^*' | awk '{print $2}')
+if [ $current_branch != 'main' ]; then
+   git checkout main >/dev/null 2>1
+   git branch -D $current_branch >/dev/null 2>&1
+fi
+cd -
+
 repo_list=$saveDir/module_list
 
 echo $msg_prefix folder $saveDir | tee -a $logfile
@@ -445,7 +453,7 @@ git commit -m "updated on $(date) $msg"
 	# get the last local tag
 	last_local_tag=$(git tag |  sort -nr | head -n1)
 	# get the last remote tag
-	remote_tag=$(git ls-remote --tags origin | grep -v "{}" | tr '/' ' ' | sort -k 4nr | head -n1 | awk '{print $NF}')
+	remote_tag=$(git ls-remote --tags origin 2>/dev/null  | grep -v "{}" | tr '/' ' ' | sort -k 4nr | head -n1 | awk '{print $NF}')
 	# if they are not equal
 	if [ "$last_local_tag" != "$remote_tag" ]; then
 		# tags are not equal, host wins
@@ -480,7 +488,7 @@ git tag -a $next_tagnumber -m "backup on $(date) $msg"
 echo backup completed, see the git repo at $saveDir| tee -a $logfile
 remote=false
 # should we push now?
-if [ "$push." == "." ]; then
+if [ $push == false ]; then
 	# no, tell user to do it
 	echo "because you didn't request push"
 	echo recommended you "git push --tags" from this folder \($saveDir\) to backup your repo on github | tee -a $logfile
