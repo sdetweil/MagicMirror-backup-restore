@@ -45,18 +45,19 @@ help for backup is
 		default none
 
 	 -p auto push to github (will need repo name, username,  user password or token
-		default false
+	    the password/token will be prompted for by git
+	    unless you set it in the -b backup folder git with git config
+		default no push
 
-	 -r github_repository_name (reponame)
-		typically https://github.com/${username}/reponame.git
+	 -r github repository name (reponame)
+		typically https://github.com/username/reponame.git
 		default output of git remote -v (if set)
 		 -r overrides the git remote setting
 
-	 -u github_username
+	 -u github username
+	    the username will be extracted from the -r parm if the full url is used
 		default none
 
-	 -e users_email_address
-		default none
 # and to restore
 ```bash
 bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-backup-restore/main/mm_restore.sh)" with any parms
@@ -119,4 +120,25 @@ bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-back
  >you will use this string for your password on the command prompt for the git password
 
  Note: github  will NOT SHOW you this token again. so if you forget it, you have to generate a new token
+
+to set your github password so you won't be prompted there are 2 choices,  system wide(global) or 
+on each repo (local) 
+
+For global settings, open the terminal (from anywhere), run the following:
+```bash
+git config --global user.name "your username"
+git config --global user.password "your password"
+```
+By that, any Git repository that you have on your machine will use that information.
+
+You can individually configure for each repository by doing:
+
+open the terminal at the repository folder.
+
+run the following:
+```bash
+git config user.name "your username"
+git config user.password "your password"
+```
+It affects only that folder (because your configuration is local)
  
