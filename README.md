@@ -121,24 +121,19 @@ bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror-back
 
  Note: github  will NOT SHOW you this token again. so if you forget it, you have to generate a new token
 
-to set your github password so you won't be prompted there are 2 choices,  system wide(global) or 
-on each repo (local) 
+# to set your github password so you won't be prompted you have to use the credential store
 
-For global settings, open the terminal (from anywhere), run the following:
-```bash
-git config --global user.name "your username"
-git config --global user.password "your password"
+* to setup 
+
 ```
-By that, any Git repository that you have on your machine will use that information.
+# change to the backup folder, here using the default foldername
+cd ~/MM_backup 
+git config credential.helper store
+#
+#then push the repo once, the username and password will be prompted by git
+#
+git push https://github.com/xxxxx/yyyyy.git 
 
-You can individually configure for each repository by doing:
+# where xxxx is your github username, and yyyy is the name of the repo you want to save the local in
 
-open the terminal at the repository folder.
 
-run the following:
-```bash
-git config user.name "your username"
-git config user.password "your password"
-```
-It affects only that folder (because your configuration is local)
- 
