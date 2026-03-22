@@ -4,6 +4,11 @@ known_list="request valid-url jsdom node-fetch digest-fetch"
 
 #  backup MM modules  config
 
+#
+#  figure out what to do for old backup to new restore for css files moving to config folder
+#  also add support for css files in config folder
+#
+
 base=$HOME/MagicMirror
 saveDir=$HOME/MM_backup
 logpath=$base/installers
@@ -168,7 +173,7 @@ if [ "$fetch." != "." ]; then
 	echo trying to fetch $repo_name from github | tee -a $logfile
 	# if the directory doesn't exist
 	if [ ! -d $saveDir ]; then
-						# and we have username and repo name
+			# and we have username and repo name
 			if [ "$user_name." != "." -a "$repo_name." != "." ]; then
 				echo folder $saveDir does not exist, will clone it from github | tee -a $logfile
 				touch $saveDir &>/dev/null
@@ -235,8 +240,24 @@ cp -p $saveDir/config.js.template $base/config 2>/dev/null
 cp -p $saveDir/config.env $base/config 2>/dev/null
 
 # restore the custom/.css for MM (no error if not found)
-cp -p $saveDir/custom.css $base/css 2>/dev/null
-
+# if this is 2.35 or after, user files moved to config folder
+if [ -d $base/defaultmodules ]; then
+	if [ -d $saveDir/config ]; then 
+            # next backup will move sep files to config folder.
+	    # if the template file exists, copy to config.js as config.js now supports the variables
+            cp -p $saveDir/config.js.template $base/config/config.js 2>/dev/null
+	    # if the standalone files exist, copy first
+            cp -p $saveDir/config.env $base/config 2>/dev/null
+            cp -p $saveDir/custom.css $base/config 2>/dev/null
+	    find $saveDir/config -type f | xargs -I {} cp -p {} $base/config
+	else   
+		cp -p $saveDir/config.js $base/config
+		# copy the config template files, toss any errors
+		cp -p $saveDir/config.js.template $base/config 2>/dev/null
+		cp -p $saveDir/config.env $base/config 2>/dev/null
+		cp -p $saveDir/custom.css $base/config 2>/dev/null
+	fi
+fi
 echo restored config.js and custom.css | tee -a $logfile
 
 repo_list=$saveDir/module_list
@@ -348,7 +369,7 @@ fi
 # check and reset the branch back to main
 current_branch=$(git branch | grep '^*' | awk '{print $2}')
 if [ $current_branch != 'main' ]; then
-   git checkout main >/dev/null 2>1
+   git checkout main >/dev/null 2>&1
    git branch -D $current_branch >/dev/null 2>&1
 fi
 date +"restore ended  - %a %b %e %H:%M:%S %Z %Y" >>$logfile

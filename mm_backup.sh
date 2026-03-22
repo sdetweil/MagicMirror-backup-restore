@@ -11,6 +11,10 @@ email=$user_name@somemail.com
 default_email=$email
 logpath=$base/installers
 logfile=$logpath/backup.log
+#  list css to backup find . -maxdepth 1 -type f \( -not -name "font-awesome.css" -not -name "main.css" -not -name "roboto.css" \)
+#
+#  add support for backup css files in config folder
+#
 push=false
 
 # is this a mac
@@ -119,7 +123,9 @@ do
 			echo -e	"\t\tdefault none"
 			echo
 			echo -e "\t -p auto push to github (will need repo name, username,  user password or token"
-			echo -e	"\t\tdefault false"
+			echo -e "\t    the password/token will be prompted for by git"
+                        echo -e "\t    unless you set it in the -b backup folder git with git config"
+			echo -e	"\t\tdefault no push"
 			echo
 			echo -e "\t -r github repository name (reponame)"
 			echo -e	"\t\ttypically https://github.com/username/reponame.git"
@@ -127,9 +133,9 @@ do
 			echo -e "\t\t -r overrides the git remote setting"
 			echo
 			echo -e "\t -u github username"
+			echo -e "\t    the username will be extracted from the -r parm if the full url is used"
 			echo -e	"\t\tdefault none"
-			echo
-			echo -e	"\t\tdefault none"
+			echo			
 			exit 1
 	 	;;
     		s)
@@ -310,20 +316,27 @@ repo_list=$saveDir/module_list
 
 echo $msg_prefix folder $saveDir | tee -a $logfile
 #copy config.js
-cp -p $base/config/config.js $saveDir
-# copy the config template files if they exist
-if [ -e $base/config/config.js.template ]; then
-	cp -p $base/config/config.js.template $saveDir
-fi
-# the environment file too, might not exist if user using ENV variables instead
-if [ -e $base/config/config.env ]; then
-	cp -p $base/config/config.env $saveDir
-fi
-# copy custom.css, no error if not found
-cp -p $base/css/custom.css $saveDir 2>/dev/null
+if [ d $base/defaultmodules ]; then
+	mkdir $saveDir/config 2>/dev/null
+	# if files that were separate exist
+	# move them to the config folder
+	mv $saveDir/config.js $saveDir/config 2>/dev/null
+	mv $saveDir/config.env $saveDir/config 2>/dev/null
+	mv $saveDir/config.js.template $saveDir/config/config.js 2>/dev/null
+        mv $saveDir/custom.css $saveDir/config 2>/dev/null
+        find $base/config  -maxdepth 1 -type f \( -not -name "font-awesome.css" -not -name "main.css" -not -name "roboto.css" -not -name config.js.sample -not -name custom.css.sample \) | xargs -I {} cp -p {} $saveDir/config 
+else
+	cp -p $base/config/config.js $saveDir
+	# copy the config template files if they exist
+	cp -p $base/config/config.js.template $saveDir 2>/dev/null
+	# the environment file too, might not exist if user using ENV variables instead
+	cp -p $base/config/config.env $saveDir 2>/dev/null
+	# copy custom.css, no error if not found
+	cp -p $base/config/custom.css $saveDir 2>/dev/null
+        cp -p $base/css/custom.css $saveDir 2>/dev/null 
+fi 
 
-
-	SAVEIFS=$IFS   # Save current IFS
+SAVEIFS=$IFS   # Save current IFS
 #if [ $mac != 'Darwin' ]; then	
 	IFS=$'\n'
 #else  
@@ -332,7 +345,7 @@ cp -p $base/css/custom.css $saveDir 2>/dev/null
 # get the installed module list
 # split putput on new lines, not spaces
 modules=($(find $base/modules -maxdepth 1 -type d | grep -v default | xargs -I % echo "%"))
-echo $modules 
+#xecho $modules 
 
 # if there is a modules list, erase it, creating new
 if [ ${#modules[@]} -gt 0 ]; then
