@@ -234,10 +234,10 @@ git checkout tags/$last_tag -b restore-branch >/dev/null 2>&1
 
 echo created git branch from last tag = $last_tag | tee -a $logfile
 # restore the config for MM
-cp -p $saveDir/config.js $base/config
+#cp -p $saveDir/config.js $base/config
 # copy the config template files, toss any errors
-cp -p $saveDir/config.js.template $base/config 2>/dev/null
-cp -p $saveDir/config.env $base/config 2>/dev/null
+#cp -p $saveDir/config.js.template $base/config 2>/dev/null
+#cp -p $saveDir/config.env $base/config 2>/dev/null
 
 # restore the custom/.css for MM (no error if not found)
 # if this is 2.35 or after, user files moved to config folder
@@ -245,13 +245,13 @@ if [ -d $base/defaultmodules ]; then
 	if [ -d $saveDir/config ]; then 
             # next backup will move sep files to config folder.
 	    # if the template file exists, copy to config.js as config.js now supports the variables
-            cp -p $saveDir/config.js.template $base/config/config.js 2>/dev/null
+            cp -p $saveDir/config/config.js.template $base/config/config.js 2>/dev/null
 	    # if the standalone files exist, copy first
-            cp -p $saveDir/config.env $base/config 2>/dev/null
-            cp -p $saveDir/custom.css $base/config 2>/dev/null
+            cp -p $saveDir/config/config.env $base/config 2>/dev/null
+            cp -p $saveDir/config/custom.css $base/config 2>/dev/null
 	    find $saveDir/config -type f | xargs -I {} cp -p {} $base/config
 	else   
-		cp -p $saveDir/config.js $base/config
+		cp -p $saveDir/config.js $base/config 2>/dev/null
 		# copy the config template files, toss any errors
 		cp -p $saveDir/config.js.template $base/config 2>/dev/null
 		cp -p $saveDir/config.env $base/config 2>/dev/null
@@ -284,19 +284,24 @@ if [ -e $repo_list ]; then
 			# loop thru the modules listed
 			for repo_url in "${urls[@]}"
 			do
+				unset foldername
 				if [[ $repo_url =~ "bugsounet" ]]; then
 					echo -----WARNING source repo, $repo_url removed, skipping | tee -a $logfile
 					echo
 					continue
 				fi
 				module=$(echo $repo_url | awk -F/ '{print $(NF)}' | awk -F. '{print $1}')
+				if [ $(echo $repo_url | wc -w) -gt 1 ]; then
+					read -r repo_url foldername < <(echo "$repo_url" | awk '{print $1, $2}')
+				fi
+				module_folder="${foldername:-$module}"
 				# if the module folder does not exist
-				if [ ! -d $module ]; then
+				if [ ! -d $module_folder ]; then
 					echo restoring $module | tee -a $logfile
-					gc=$(git clone $repo_url 2>&1)
+					gc=$(git clone $repo_url $foldername 2>&1)
 					gc_rc=$?
 					if [ $gc_rc -eq 0 ]; then
-						cd $module
+						cd $module_folder
 						if [ -e package.json ]; then
 							if [ $(grep -e \""dependencies\"" -e \""postinstall\"" package.json | wc -l) -gt 0  ]; then
 								echo module $module contains package.json, doing npm install | tee -a $logfile
@@ -306,10 +311,10 @@ if [ -e $repo_list ]; then
 							echo module $module DOES NOT contain package.json | tee -a $logfile
 						fi
 						# if there is a folder of module specific files saved by backup
-						if [ -d $saveDir/$module ]; then
+						if [ -d $saveDir/$module_folder ]; then
 							# copy them from the backup
-							echo there were files saved for this module , restoring | tee -a $logfile
-							cp -a $saveDir/$module/. $base/modules/$module
+							echo there were files saved for this module $module, restoring | tee -a $logfile
+							cp -a $saveDir/$module_folder/. $base/modules/$module_folder
 						fi
 						cd - >/dev/null
 					fi

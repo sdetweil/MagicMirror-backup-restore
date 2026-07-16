@@ -310,13 +310,14 @@ if [ $current_branch != 'main' ]; then
    git checkout main >/dev/null 2>1
    git branch -D $current_branch >/dev/null 2>&1
 fi
-cd -
+cd - >/dev/null
 
 repo_list=$saveDir/module_list
 
 echo $msg_prefix folder $saveDir | tee -a $logfile
+
 #copy config.js
-if [ d $base/defaultmodules ]; then
+if [ -d $base/defaultmodules ]; then
 	mkdir $saveDir/config 2>/dev/null
 	# if files that were separate exist
 	# move them to the config folder
@@ -363,18 +364,27 @@ if [ ${#modules[@]} -gt 0 ]; then
 
 			# change to the that module folder
 			cd "$module"
-			    echo Backing up for $module | tee -a $logfile
+			   echo Backing up for $module | tee -a $logfile
 				# if it has a git repo, then it was cloned
 				if [ -d ".git" ]; then
 					# get the remote repo url
 				    repo1=$(git remote -v | grep fetch -m1 | awk '{ print $2}')
-				    # just the module name, not the path
-				    mname=$(echo $module |awk -F/ '{print $NF}')
-				    if [[ "$repo1" == *"$mname"* ]]; then
-					    echo -e "found module $mname \n\t installed from $repo1" | tee -a $logfile
+				    # just the module name, not the path or extension from the remote url
+				    mname=$(echo $repo1 |awk -F / '{print $NF}'| awk -F. '{print $1}')
+
+				    # local_name is raw folder name
+					  local_name=$(echo $module | awk -F/ '{print $NF}')
+				    # if [[ "$module" == *"$mname"* ]]; then
+					  echo -e "found module $local_name \n\t installed from $repo1" | tee -a $logfile
 					    # save it to the file
 						if [ -d $module ]; then 
-					    	echo $repo1 >>$repo_list						
+							  # if the names are the same,
+							  if [ $local_name == $mname ]; then
+							  	# no need to change name on clone on restore
+							  	local_name=
+							  fi
+							  # add the repo and local folder name (if not empty)
+					    	echo $repo1 $local_name >>$repo_list
 							cd $module
 							untracked=$(git status --short --ignored | grep  -e '^?' -e '^!' -e '^ M' | awk '{print $NF}' | grep -v package.json | grep -v package-lock.json | grep -v install.log | grep -v node_modules)
 							# untracked=$(git ls-files --other | grep -v / | grep -v package-lock.json | grep -v package.json | grep -v install.log)
@@ -387,24 +397,24 @@ if [ ${#modules[@]} -gt 0 ]; then
 								fi
 								# copy the untracked(extra)  files to the backup for this module
 								echo other files $untracked
-                                                                #rsync -aSvuc `echo $untracked` $savedir/$mname
-                                                                # have to figure out what to do about subfolders on mac, no --parents option
+                  #rsync -aSvuc `echo $untracked` $savedir/$mname
+                  # have to figure out what to do about subfolders on mac, no --parents option
 								if [ $mac == "Darwin" ]; then 
-                                                                  rsync -R $untracked $saveDir/$mname
+                   rsync -R --exclude '.git' $untracked $saveDir/$mname
 								else 
-								  cp -a --parents $untracked $saveDir/$mname					    
+								  	cp -a --parents $untracked $saveDir/$mname
 								fi
 							fi
-        			    else
-							echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
+        			#    else
+							#echo -e "\e[91m module $repo cloned to unique folder name $mname not backed up \e[90m"
 							# reset the echo ansi code back to default
 							# could save the folder name along with the url
 							# and then clone to the correct folder, rename the modulename.js and use sed to change the register clause too..
-							tput init 2>/dev/null
-							echo
+							#tput init 2>/dev/null
+							#echo
 						fi
 						cd - >/dev/null
-				    fi
+					# fi
 				else
 					echo -e "\e[91m module $module was not cloned from github, so no link can be saved, not backed up \e[90m"
 					tput init 2>/dev/null
@@ -412,6 +422,16 @@ if [ ${#modules[@]} -gt 0 ]; then
 				fi
 			# back to the current folder
 			cd - >/dev/null
+		fi
+	done
+	cd $saveDir
+
+
+	gitlist=$(IFS=$'\n' find . -type d -name '.git')
+	for git_folder in ${gitlist[@]}
+	do
+		if [ $git_folder != './.git' ]; then
+			 rm -rf $git_folder >/dev/null 2>/dev/null
 		fi
 	done
 	if [ -e $repo_list ]; then 
@@ -426,6 +446,8 @@ if [ ${#modules[@]} -gt 0 ]; then
 fi
 
 cd $saveDir
+
+
 # check for local info on username  email so commits work
 #  get the git userid , if any
 if [ "$(git config user.email)." == "." ]; then
