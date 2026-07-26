@@ -306,7 +306,7 @@ check_for_push
 
 cd $saveDir 2>/dev/null
 current_branch=$(git branch | grep '^*' | awk '{print $2}')
-if [ $current_branch != 'main' ]; then
+if [ '$current_branch.' != 'main.' ]; then
    git checkout main >/dev/null 2>1
    git branch -D $current_branch >/dev/null 2>&1
 fi
